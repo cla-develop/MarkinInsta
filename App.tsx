@@ -39,7 +39,7 @@ import PhonNum from './src/component/SignIn/PhonNum/PhonNum';
 import Name from './src/component/SignIn/Name/Name';
 import Category from './src/component/SignIn/Category/Category';
 import Alarm from './src/component/Alarm/Alarm';
-// import Body from './src/component/Body';
+import FeedBack from './src/component/MainPage/Sections/FeedBack';
 import Detail from './src/component/Activity/Detail/Detail';
 import Activity from './src/component/Activity/Activity';
 import {Settings} from 'react-native-fbsdk-next';
@@ -109,9 +109,10 @@ function App() {
         <Stack.Screen name="Name" component={Name} />
         <Stack.Screen name="AgeChoose" component={AgeChoose} />
         <Stack.Screen name="Category" component={Category} />
-
+        {/* 홈 */}
         <Stack.Screen name="Main" component={Main} />
         <Stack.Screen name="Alarm" component={Alarm} />
+        <Stack.Screen name="FeedBack" component={FeedBack} />
         {/* <Stack.Screen name="Ranking" component={Ranking} /> */}
         <Stack.Screen name="Body" component={Body} />
         {/* <Stack.Screen name="Fblogin" component={FbLogin} /> */}

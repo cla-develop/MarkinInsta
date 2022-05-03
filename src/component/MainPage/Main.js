@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import RankList from '../Ranking/Sections/RankList/RankList';
-import Feed from './Feed/Feed';
+
 // import ChatBot from './Sections/ChatBot';
 import DayChange from './Sections/DayChange';
 import DayPosting from './Sections/DayPosting';
@@ -21,7 +21,7 @@ import Banner from '../../images/Banner.png';
 import {useNavigation} from '@react-navigation/native';
 
 // tslint:disable-next-line: no-any
-export default function Main(props: any) {
+export default function Main(props) {
   const navigation = useNavigation();
   const navigateToHome = () => {
     props.navigation.navigate('Home');
@@ -59,7 +59,7 @@ export default function Main(props: any) {
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={{backgroundColor: '#F5F4F8'}}>
-          <TouchableOpacity onPress={() => navigation.navigate('Ask')}>
+          <TouchableOpacity onPress={() => navigation.navigate('FeedBack')}>
             <View
               style={{
                 width: '100%',
@@ -83,7 +83,7 @@ export default function Main(props: any) {
           </View>
         </ScrollView>
       )}
-      {stateChange === 2 && <Feed />}
+      {/* {stateChange === 2 && <Feed />} */}
       {stateChange === 3 && (
         <View style={{width: '100%'}}>
           <RankList />
