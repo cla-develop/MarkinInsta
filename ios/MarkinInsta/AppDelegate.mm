@@ -3,7 +3,7 @@
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
-
+#import "RNSplashScreen.h"
 #import <React/RCTAppSetupUtils.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h> // <- Add This Import
 #import <React/RCTLinkingManager.h> // <- Add This Import
@@ -55,6 +55,7 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+   [RNSplashScreen show]; 
   [FBSDKApplicationDelegate.sharedInstance initializeSDK];
   return YES;
 }

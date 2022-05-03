@@ -43,6 +43,7 @@ import FeedBack from './src/component/MainPage/Sections/FeedBack';
 import Detail from './src/component/Activity/Detail/Detail';
 import Activity from './src/component/Activity/Activity';
 import {Settings} from 'react-native-fbsdk-next';
+import SplashScreen from 'react-native-splash-screen';
 
 const Stack = createStackNavigator();
 
@@ -50,6 +51,9 @@ function App() {
   useEffect(() => {
     Settings.setAdvertiserTrackingEnabled(true);
   }, []);
+  useEffect(() => {
+    SplashScreen.hide();
+  });
   return (
     <NavigationContainer>
       <Stack.Navigator
