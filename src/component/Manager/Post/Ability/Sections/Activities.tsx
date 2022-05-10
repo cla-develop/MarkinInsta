@@ -26,26 +26,7 @@ export default function Activities() {
             </View>
           </TouchableOpacity>
         </View>
-        <View style={{width: 200}}>
-          <TouchableOpacity style={{width: 180}}>
-            <Image source={issue2} style={styles.ImgStyle} />
-            <View style={{height: 30}}>
-              <Text style={styles.subText}>
-                크러쉬 조이, 음색 끝판왕 둘의 만남
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={{width: 200}}>
-          <TouchableOpacity style={{width: 180}}>
-            <Image source={issue2} style={styles.ImgStyle} />
-            <View style={{height: 30}}>
-              <Text style={styles.subText}>
-                크러쉬 조이, 음색 끝판왕 둘의 만남
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+
         <View style={{width: 100}}></View>
       </View>
     </ScrollView>

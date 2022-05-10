@@ -19,7 +19,7 @@ export default function LinkChanel({navigation, route}: any) {
         'grant_type=authorization_code' +
         '&code=' +
         asd +
-        '&client_id=987475768520032' +
+        '&client_id=3166995646907322' +
         '&client_secret=2c6f26fb28c338d8be2e94d42493e8ba' +
         '&redirect_uri=https://www.markin-app.site/app/auth';
 

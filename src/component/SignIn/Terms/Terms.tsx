@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Icons from '../../Icons/Icons';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Terms({navigation, route}: any) {
   const [Must, setMust] = useState(false);
   const [Choose, setChoose] = useState(false);
@@ -41,6 +41,21 @@ export default function Terms({navigation, route}: any) {
   const ChooseWay = () => {
     navigation.navigate('PhonNum', {AccessToken, Agreesns, AgreeEmail});
   };
+  React.useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('accessToken');
+      if (value !== null) {
+        console.log(value);
+      } else console.log(value);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <View style={{flex: 1, backgroundColor: 'white', paddingTop: '15%'}}>
       <TouchableOpacity

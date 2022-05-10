@@ -1,8 +1,22 @@
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Home = props => {
+  React.useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('accessToken');
+      if (value !== null) {
+        console.log(value);
+      } else console.log(value);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   Icon.loadFont();
   return (
     <View

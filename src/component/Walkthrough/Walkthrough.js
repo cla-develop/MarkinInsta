@@ -134,7 +134,7 @@ export default function Splash() {
           style={{position: 'absolute', top: 730, left: '5%', width: '100%'}}>
           <TouchableOpacity onPress={() => navigation.navigate('ChooseWay')}>
             <View style={styles.purpleBtn}>
-              <Text style={styles.instaText}>계정 연결 완료하기</Text>
+              <Text style={styles.instaText}>마킨 시작하기</Text>
             </View>
           </TouchableOpacity>
         </View>

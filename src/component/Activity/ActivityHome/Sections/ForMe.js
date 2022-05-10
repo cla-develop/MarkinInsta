@@ -7,8 +7,7 @@ import {
   Image,
   StyleSheet,
 } from 'react-native';
-import issue1 from '../../../../images/issue1.png';
-import issue2 from '../../../../images/issue2.png';
+import noprofile from '../../../../images/noprofile.png';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 export default function ForMe() {
@@ -53,7 +52,9 @@ export default function ForMe() {
                 key={item.advertisementNo}>
                 <View style={{width: 300, marginRight: -30}}>
                   <Image
-                    source={{uri: item.thumnail}}
+                    source={
+                      item.thumnail === '' ? noprofile : {uri: item.thumnail}
+                    }
                     style={styles.ImgStyle}
                   />
                   <View style={{width: 255}}>

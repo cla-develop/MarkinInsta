@@ -17,14 +17,14 @@ import FollowerSoon from './Modals/FollowerSoon';
 import LocalModal from './Modals/LocalModal';
 import axios from 'axios';
 export default function ActivityAll() {
-  const [SortText, setSortText] = useState('최신순');
+  const [SortText, setSortText] = useState<string>('최신순');
   const [SearchModalVis, setSearchModalVis] = useState(false);
   const [FollowModalVis, setFollowModalVis] = useState(false);
   const [LocalModalVis, setLocalModalVis] = useState(false);
   const [AllResult, setAllResult] = useState([]);
-  const [Category, setCategory] = useState('전체');
-  const [Type, setType] = useState('전체 유형');
-  const [Local, setLocal] = useState('전체 지역');
+  const [Category, setCategory] = useState<string>('전체');
+  const [Type, setType] = useState<string>('전체 유형');
+  const [Local, setLocal] = useState<string>('전체지역');
 
   useEffect(() => {
     axios
@@ -33,7 +33,7 @@ export default function ActivityAll() {
       )
       .then(response => {
         setAllResult(response.data.result);
-        console.log(AllResult);
+        console.log(response.data.result);
       })
       .catch(err => {
         console.log(err);
@@ -41,7 +41,7 @@ export default function ActivityAll() {
   }, [Category, Type, Local, SortText]);
   useEffect(() => {
     if (Type !== '방문형') {
-      setLocal('전체 지역');
+      setLocal('전체지역');
     }
   }, [Type]);
   return (

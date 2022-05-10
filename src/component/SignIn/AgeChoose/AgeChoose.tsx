@@ -7,11 +7,17 @@ import Icons from '../../Icons/Icons';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import 'moment/locale/ko';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function AgeChoose({navigation, route}: any) {
   const {Email, Name, AccessToken, isPhNum, Agreesns, AgreeEmail} =
     route.params;
-
+  const storeData = async (value: any) => {
+    try {
+      await AsyncStorage.setItem('JWT', value);
+    } catch (e) {
+      console.log('qwwqqqqqq');
+    }
+  };
   const stCom = StyleSheet.create({
     greyBtn: {
       width: '100%',
@@ -80,6 +86,7 @@ export default function AgeChoose({navigation, route}: any) {
         }).then(response => {
           if (response.data.isSuccess === true) {
             setJWT(response.data.result.jwt);
+            storeData(response.data.result.jwt);
           } else {
             Alert.alert(response.data.message + 'asd');
           }
@@ -110,6 +117,7 @@ export default function AgeChoose({navigation, route}: any) {
         }).then(response => {
           if (response.data.isSuccess === true) {
             setJWT(response.data.result.jwt);
+            storeData(response.data.result.jwt);
           } else {
             Alert.alert(response.data.message + 'asd');
           }

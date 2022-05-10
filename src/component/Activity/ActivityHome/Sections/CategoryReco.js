@@ -7,9 +7,9 @@ import {
   Image,
   StyleSheet,
 } from 'react-native';
-import issue1 from '../../../../images/issue1.png';
-import issue2 from '../../../../images/issue2.png';
+import noprofile from '../../../../images/noprofile.png';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function CategoryReco() {
   const [Result, setResult] = useState([]);
   useEffect(() => {
@@ -43,7 +43,12 @@ export default function CategoryReco() {
           {Result.map(item => (
             <TouchableOpacity key={item.advertisementNo}>
               <View style={{width: 300, marginRight: -30}}>
-                <Image source={{uri: item.thumnail}} style={styles.ImgStyle} />
+                <Image
+                  source={
+                    item.thumnail === '' ? noprofile : {uri: item.thumnail}
+                  }
+                  style={styles.ImgStyle}
+                />
                 <View style={{width: 255}}>
                   <Text
                     ellipsizeMode="tail"

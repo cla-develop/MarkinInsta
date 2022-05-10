@@ -25,14 +25,6 @@ export default function Issue() {
             </Text>
           </TouchableOpacity>
         </View>
-        <View style={{width: 300}}>
-          <TouchableOpacity style={{width: 280}}>
-            <Image source={issue2} style={styles.ImgStyle} />
-            <Text style={styles.subText}>
-              크러쉬 조이, 음색 끝판왕 둘의 만남
-            </Text>
-          </TouchableOpacity>
-        </View>
       </View>
     </ScrollView>
   );

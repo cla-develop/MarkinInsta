@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Home from './src/component/Home/Home';
@@ -42,38 +42,44 @@ import Alarm from './src/component/Alarm/Alarm';
 import FeedBack from './src/component/MainPage/Sections/FeedBack';
 import Detail from './src/component/Activity/Detail/Detail';
 import Activity from './src/component/Activity/Activity';
+import EmailSignup from './src/component/SignIn/Email/EmailSignup';
+import SplashPage from './src/component/SplashPage';
 import {Settings} from 'react-native-fbsdk-next';
 import SplashScreen from 'react-native-splash-screen';
-
 const Stack = createStackNavigator();
 
 function App() {
+  // const [isJwt, setisJwt] = useState('');
+  // React.useEffect(() => {
+  //   getData();
+  // }, []);
+
+  // const getData = async () => {
+  //   try {
+  //     const value = await AsyncStorage.getItem('accessToken');
+  //     if (value !== null) {
+  //       setisJwt(value);
+  //     } else console.log(value);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
+
   useEffect(() => {
     Settings.setAdvertiserTrackingEnabled(true);
   }, []);
-  useEffect(() => {
-    SplashScreen.hide();
-  });
+
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Home"
+        initialRouteName="SplashPage"
         screenOptions={{headerShown: false}}>
+        <Stack.Screen name="SplashPage" component={SplashPage} />
         <Stack.Screen name="Home" component={Home} />
-        {/* <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="YourFeed" component={YourFeed} />
-        <Stack.Screen name="Search" component={Search} />
-        
-        <Stack.Screen name="Message" component={Message} />
-        <Stack.Screen name="Feed" component={Feed} />        
-        <Stack.Screen name="LinkChanel" component={LinkChanel} />
-        <Stack.Screen name="FindEmail" component={FindEmail} />
-        <Stack.Screen name="FindPW" component={FindPW} />
-        <Stack.Screen name="ShowEmail" component={ShowEmail} />
-        <Stack.Screen name="HaveNoID" component={HaveNoID} />
-        <Stack.Screen name="ResetPW" component={ResetPW} />
-        
-         */}
+
         <Stack.Screen name="Detail" component={Detail} />
         <Stack.Screen name="Walkthrough" component={Walkthrough} />
         <Stack.Screen name="FacebookLogin" component={FacebookLogin} />
@@ -113,6 +119,7 @@ function App() {
         <Stack.Screen name="Name" component={Name} />
         <Stack.Screen name="AgeChoose" component={AgeChoose} />
         <Stack.Screen name="Category" component={Category} />
+        <Stack.Screen name="EmailSignup" component={EmailSignup} />
         {/* 홈 */}
         <Stack.Screen name="Main" component={Main} />
         <Stack.Screen name="Alarm" component={Alarm} />
@@ -126,3 +133,35 @@ function App() {
 }
 
 export default App;
+{
+  /* <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="YourFeed" component={YourFeed} />
+      <Stack.Screen name="Search" component={Search} />
+      
+      <Stack.Screen name="Message" component={Message} />
+      <Stack.Screen name="Feed" component={Feed} />        
+      <Stack.Screen name="LinkChanel" component={LinkChanel} />
+      <Stack.Screen name="FindEmail" component={FindEmail} />
+      <Stack.Screen name="FindPW" component={FindPW} />
+      <Stack.Screen name="ShowEmail" component={ShowEmail} />
+      <Stack.Screen name="HaveNoID" component={HaveNoID} />
+      <Stack.Screen name="ResetPW" component={ResetPW} />
+      
+       */
+}
+{
+  /* <Stack.Screen name="Login" component={Login} />
+    <Stack.Screen name="YourFeed" component={YourFeed} />
+    <Stack.Screen name="Search" component={Search} />
+    
+    <Stack.Screen name="Message" component={Message} />
+    <Stack.Screen name="Feed" component={Feed} />        
+    <Stack.Screen name="LinkChanel" component={LinkChanel} />
+    <Stack.Screen name="FindEmail" component={FindEmail} />
+    <Stack.Screen name="FindPW" component={FindPW} />
+    <Stack.Screen name="ShowEmail" component={ShowEmail} />
+    <Stack.Screen name="HaveNoID" component={HaveNoID} />
+    <Stack.Screen name="ResetPW" component={ResetPW} />
+    
+     */
+}

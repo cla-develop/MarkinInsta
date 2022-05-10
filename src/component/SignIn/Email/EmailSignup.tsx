@@ -145,7 +145,7 @@ export default function EmailSignup({navigation, route}: any) {
       {/* api */}
 
       {/*api*/}
-      {EVali === true || Email === '' ? (
+      {EVali === true ? (
         <TouchableOpacity style={styles.btnDesign} onPress={() => ChooseWay()}>
           <Text style={styles.btnText}>다음</Text>
         </TouchableOpacity>
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
   warnView: {
     borderTopColor: '#FF5959',
     borderTopWidth: 2,
-    width: '70%',
+    width: '95%',
     paddingTop: 5,
     marginTop: -2,
   },

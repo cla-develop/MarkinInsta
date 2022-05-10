@@ -2,25 +2,37 @@ import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import axios from 'axios';
 import UnOAuth from '../../../Utils/UnOAuth/UnOAuth';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function DayChange(props) {
   const [FollowChange, setFollowChange] = useState(1);
   const [PostingChange, setPostingChange] = useState(0);
   const [todayFollower, settodayFollower] = useState(0);
   const [todayProfileView, settodayProfileView] = useState(0);
   const [todayClickMessage, settodayClickMessage] = useState(0);
+  const [JWT, setJWT] = useState('');
   useEffect(() => {
-    axios
-      .get('https://www.markin-app.site/app/home/channel', {
-        headers: {
-          'x-access-token':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImluc3RhZ3JhbUlkIjoiNDIzNDQwMzAxMzMyODU5MiIsImlhdCI6MTY0MzQ4MDg1MCwiZXhwIjoxNjc1MDE2ODUwLCJzdWIiOiJ1c2VySW5mbyJ9.MlsJ3tZcye9WdqRwz-AKY5KNZf46B1gFQ8nqgrJxGMg',
-        },
+    const apiCall = () => {
+      axios
+        .get('https://www.markin-app.site/app/home/channel', {
+          headers: {
+            'x-access-token':
+              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImluc3RhZ3JhbUlkIjoxNzg0MTQwMDIyOTcwMTgyOCwiaWF0IjoxNjUxNDc1NjY5LCJleHAiOjE2ODMwMTE2NjksInN1YiI6InVzZXJJbmZvIn0.j4u8erTV0-NPxnCELratkdGsQe4AXDFM4tE1iQC-zaw',
+          },
+        })
+        .then(response => {
+          console.log(JWT + 'asdasda');
+          settodayFollower(response.data.result.todayFollower);
+          settodayProfileView(response.data.result.todayProfileView);
+          settodayClickMessage(response.data.result.todayClickMessage);
+        });
+    };
+    AsyncStorage.getItem('JWT')
+      .then(value => {
+        setJWT(value);
+        console.log(value);
       })
-      .then(response => {
-        settodayFollower(response.data.result.todayFollower);
-        settodayProfileView(response.data.result.todayProfileView);
-        settodayClickMessage(response.data.result.todayClickMessage);
-      });
+      .then(apiCall());
   }, []);
   return (
     <View style={styles.FollowView}>

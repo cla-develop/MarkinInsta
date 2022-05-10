@@ -78,7 +78,6 @@ export default function PhonNum({navigation, route}: any) {
             phone: isPhNum,
           },
         }).then(response => {
-          smsCall();
           if (response.data.isSuccess === true) {
             smsCall();
           } else {

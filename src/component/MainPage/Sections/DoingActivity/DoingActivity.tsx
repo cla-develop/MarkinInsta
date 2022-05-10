@@ -5,7 +5,7 @@ import {View, Text, StyleSheet, Image} from 'react-native';
 import styles from '../../../Styles';
 
 export default function DoingActivity() {
-  const [Menu, setMenu] = useState('종료');
+  const [Menu, setMenu] = useState('진행중');
   const [Activties, setActivities] = useState([]);
   useEffect(() => {
     // tslint:disable-next-line: no-floating-promises
@@ -27,7 +27,7 @@ export default function DoingActivity() {
       <Text style={{fontFamily: 'NotoSansKR-Bold', fontSize: 18}}>
         진행중인 활동
       </Text>
-      {Menu === '종료' && Activties !== [] ? (
+      {Menu === '진행중' && Activties === [] ? (
         <View>
           {Activties.map(item => (
             // tslint:disable-next-line: jsx-key

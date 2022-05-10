@@ -2,8 +2,7 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {Div} from 'reactnative-ui-bootstrap';
-import issue1 from '../../../../images/issue1.png';
-import issue2 from '../../../../images/issue2.png';
+import noprofile from '../../../../images/noprofile.png';
 import axios from 'axios';
 import {useNavigation} from '@react-navigation/native';
 export default function Popular() {
@@ -38,7 +37,9 @@ export default function Popular() {
               }>
               <View style={styles.ImageView}>
                 <Image
-                  source={{uri: item.thumnail}}
+                  source={
+                    item.thumnail === '' ? noprofile : {uri: item.thumnail}
+                  }
                   style={styles.Imagestyle}
                 />
               </View>

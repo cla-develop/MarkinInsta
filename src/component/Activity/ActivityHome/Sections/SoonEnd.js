@@ -7,8 +7,7 @@ import {
   Image,
   StyleSheet,
 } from 'react-native';
-import issue1 from '../../../../images/issue1.png';
-import issue2 from '../../../../images/issue2.png';
+import noprofile from '../../../../images/noprofile.png';
 import axios from 'axios';
 export default function SoonEnd() {
   const [Result, setResult] = useState([]);
@@ -37,7 +36,12 @@ export default function SoonEnd() {
           {Result.map(item => (
             <TouchableOpacity key={item.advertisementNo}>
               <View style={{width: 300, marginRight: -30}}>
-                <Image source={{uri: item.thumnail}} style={styles.ImgStyle} />
+                <Image
+                  source={
+                    item.thumnail === '' ? noprofile : {uri: item.thumnail}
+                  }
+                  style={styles.ImgStyle}
+                />
                 <View style={{width: 255}}>
                   <Text
                     ellipsizeMode="tail"
@@ -57,16 +61,6 @@ export default function SoonEnd() {
               </View>
             </TouchableOpacity>
           ))}
-
-          <TouchableOpacity>
-            <View style={{width: 300}}>
-              <Image source={issue2} style={styles.ImgStyle} />
-              <Text style={styles.TitleText}>강소백</Text>
-              <Text style={styles.subText}>
-                크러쉬 조이, 음색 끝판왕 둘의 만남
-              </Text>
-            </View>
-          </TouchableOpacity>
         </View>
       </ScrollView>
     </View>

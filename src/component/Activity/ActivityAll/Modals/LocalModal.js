@@ -5,7 +5,7 @@ import GestureRecognizer from 'react-native-swipe-gestures';
 
 export default function LocalModal(props) {
   const location1 = [
-    {key: 1, loca: '전체 지역'},
+    {key: 1, loca: '전체지역'},
     {key: 2, loca: '서울'},
     {key: 3, loca: '경기/인천'},
   ];
@@ -19,7 +19,11 @@ export default function LocalModal(props) {
     {key: 2, loca: '강원'},
     {key: 3, loca: '제주'},
   ];
-
+  const [Local, setLocal] = useState('전체지역');
+  const closeModal = () => {
+    props.setLocal(Local);
+    props.setLocalModalVis(false);
+  };
   return (
     <GestureRecognizer
       style={{flex: 1}}
@@ -33,7 +37,7 @@ export default function LocalModal(props) {
             <Text style={styles.focusTitle}> 지역 선택</Text>
             <TouchableOpacity
               style={{marginLeft: 210, marginTop: 2}}
-              onPress={() => props.setLocal('전체 지역')}>
+              onPress={() => setLocal('전체 지역')}>
               <Text style={{fontSize: 16, fontFamily: 'NotoSansKR-Medium'}}>
                 초기화
               </Text>
@@ -47,16 +51,16 @@ export default function LocalModal(props) {
                     styles.nonClickBut,
                     {
                       backgroundColor:
-                        props.Local === item.loca ? '#7553FF' : 'white',
-                      borderWidth: props.Local === item.loca ? 0 : 1,
+                        Local === item.loca ? '#7553FF' : 'white',
+                      borderWidth: Local === item.loca ? 0 : 1,
                     },
                   ]}
-                  onPress={() => props.setLocal(item.loca)}
+                  onPress={() => setLocal(item.loca)}
                   key={item.key}>
                   <Text
                     style={[
                       styles.inText,
-                      {color: props.Local === item.loca ? 'white' : 'black'},
+                      {color: Local === item.loca ? 'white' : 'black'},
                     ]}>
                     {item.loca}
                   </Text>
@@ -71,16 +75,16 @@ export default function LocalModal(props) {
                     styles.nonClickBut,
                     {
                       backgroundColor:
-                        props.Local === item.loca ? '#7553FF' : 'white',
-                      borderWidth: props.Local === item.loca ? 0 : 1,
+                        Local === item.loca ? '#7553FF' : 'white',
+                      borderWidth: Local === item.loca ? 0 : 1,
                     },
                   ]}
-                  onPress={() => props.setLocal(item.loca)}
+                  onPress={() => setLocal(item.loca)}
                   key={item.key}>
                   <Text
                     style={[
                       styles.inText,
-                      {color: props.Local === item.loca ? 'white' : 'black'},
+                      {color: Local === item.loca ? 'white' : 'black'},
                     ]}>
                     {item.loca}
                   </Text>
@@ -95,16 +99,16 @@ export default function LocalModal(props) {
                     styles.nonClickBut,
                     {
                       backgroundColor:
-                        props.Local === item.loca ? '#7553FF' : 'white',
-                      borderWidth: props.Local === item.loca ? 0 : 1,
+                        Local === item.loca ? '#7553FF' : 'white',
+                      borderWidth: Local === item.loca ? 0 : 1,
                     },
                   ]}
-                  onPress={() => props.setLocal(item.loca)}
+                  onPress={() => setLocal(item.loca)}
                   key={item.key}>
                   <Text
                     style={[
                       styles.inText,
-                      {color: props.Local === item.loca ? 'white' : 'black'},
+                      {color: Local === item.loca ? 'white' : 'black'},
                     ]}>
                     {item.loca}
                   </Text>
@@ -114,7 +118,7 @@ export default function LocalModal(props) {
           </View>
           <TouchableOpacity
             style={styles.settingBut}
-            onPress={() => props.setLocalModalVis(false)}>
+            onPress={() => closeModal()}>
             <Text style={styles.settingText}>설정</Text>
           </TouchableOpacity>
         </View>

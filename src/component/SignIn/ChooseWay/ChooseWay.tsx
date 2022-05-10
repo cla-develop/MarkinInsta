@@ -8,21 +8,31 @@ import WebViewModal from '../LinkChannel/InstaWebView/WebViewModal';
 // import {useNavigation} from '@react-navigation/native';
 // import appLogo from '../../../images/appLogo.png';
 // import GoogleWebview from './GoogleLogin/GoogleWebview';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export default function ChooseWay({navigation}: any) {
   const [HandleModal, setHandleModal] = useState<boolean>(false);
   const [code, setcode] = useState<string>('');
   const [AccessToken, setAccessToken] = useState<string>('');
+  const [Id, setId] = useState(0);
   // const [Pass, setPass] = useState<boolean>(false);
-
+  const storeData = async (value: any) => {
+    try {
+      await AsyncStorage.setItem('accessToken', value);
+    } catch (e) {
+      console.log('qwwqqqqqq');
+    }
+  };
   useEffect(() => {
     const getToken = async () => {
       const asd: string = code[1].substring(0, code[1].length - 2);
+      console.log(asd);
       var postVal =
         'grant_type=authorization_code' +
         '&code=' +
         asd +
-        '&client_id=987475768520032' +
-        '&client_secret=2c6f26fb28c338d8be2e94d42493e8ba' +
+        '&client_id=3166995646907322' +
+        '&client_secret=27c9680ceb08c5af42f442b5089d6c42' +
         '&redirect_uri=https://www.markin-app.site/app/auth';
 
       await axios({
@@ -34,7 +44,9 @@ export default function ChooseWay({navigation}: any) {
         .then(response => {
           //console.log(props.code[1]);
           // setPass(true);
+          storeData(response.data.access_token);
           setAccessToken(response.data.access_token);
+          setId(response.data.use_id);
         })
         .catch(err => {
           console.log(err);
@@ -52,6 +64,7 @@ export default function ChooseWay({navigation}: any) {
         method: 'post',
         data: {
           access_token: AccessToken,
+          id: Id,
         },
       })
         .then(response => {

@@ -20,13 +20,11 @@ export default function SearchFilterModal(props) {
       color: '#B2B2B2',
     },
   });
-  useEffect(() => {
+  const closeModal = () => {
     props.setCategory(Cat);
-    console.log(props.Category);
-  }, [Cat]);
-  useEffect(() => {
     props.setType(TypeCh);
-  }, [TypeCh]);
+    props.setSearchModalVis(false);
+  };
   return (
     <GestureRecognizer
       style={{flex: 1}}
@@ -92,7 +90,7 @@ export default function SearchFilterModal(props) {
           )} */}
           <TouchableOpacity
             style={styles.settingBut}
-            onPress={() => props.setSearchModalVis(false)}>
+            onPress={() => closeModal()}>
             <Text style={styles.settingText}>설정</Text>
           </TouchableOpacity>
         </View>
