@@ -9,7 +9,7 @@ export default function Terms({navigation, route}: any) {
   const [IsMarketing, setIsMarketing] = useState(false);
   const [Agreesns, setAgreesns] = useState<boolean>(false);
   const [AgreeEmail, setEmail] = useState<boolean>(false);
-  const {AccessToken} = route.params;
+  const {AccessToken, Id} = route.params;
   const onAllAgree = () => {
     if (IsAll === true) {
       setIsAll(false);
@@ -38,23 +38,24 @@ export default function Terms({navigation, route}: any) {
       setEmail(true);
     }
   };
+  console.log(Id);
   const ChooseWay = () => {
-    navigation.navigate('PhonNum', {AccessToken, Agreesns, AgreeEmail});
+    navigation.navigate('PhonNum', {AccessToken, Agreesns, AgreeEmail, Id});
   };
-  React.useEffect(() => {
-    getData();
-  }, []);
+  // React.useEffect(() => {
+  //   getData();
+  // }, []);
 
-  const getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('accessToken');
-      if (value !== null) {
-        console.log(value);
-      } else console.log(value);
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  // const getData = async () => {
+  //   try {
+  //     const value = await AsyncStorage.getItem('accessToken');
+  //     if (value !== null) {
+  //       console.log(value);
+  //     } else console.log(value);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
 
   return (
     <View style={{flex: 1, backgroundColor: 'white', paddingTop: '15%'}}>

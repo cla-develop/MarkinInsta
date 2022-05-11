@@ -18,7 +18,7 @@ export default function EmailSignup({navigation, route}: any) {
   // const [ConfirmPassword, setConfirmPassword] = useState<string>('');
   // const [PVali, setPVali] = useState<boolean>(false);
   // const [CPVali, setCPVali] = useState<boolean>(false);
-  const {AccessToken, isPhNum, Agreesns, AgreeEmail} = route.params;
+  const {AccessToken, isPhNum, Agreesns, AgreeEmail, Id} = route.params;
   const onChangeName = (event: string) => {
     setName(event);
   };
@@ -71,6 +71,7 @@ export default function EmailSignup({navigation, route}: any) {
       isPhNum,
       Agreesns,
       AgreeEmail,
+      Id,
     });
   };
 

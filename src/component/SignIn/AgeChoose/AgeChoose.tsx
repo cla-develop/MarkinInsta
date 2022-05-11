@@ -9,7 +9,7 @@ import moment from 'moment';
 import 'moment/locale/ko';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function AgeChoose({navigation, route}: any) {
-  const {Email, Name, AccessToken, isPhNum, Agreesns, AgreeEmail} =
+  const {Email, Name, AccessToken, isPhNum, Agreesns, AgreeEmail, Id} =
     route.params;
   const storeData = async (value: any) => {
     try {
@@ -75,6 +75,7 @@ export default function AgeChoose({navigation, route}: any) {
           url: 'https://www.markin-app.site/app/users/instagram',
           data: {
             access_token: AccessToken,
+            instagramId: Id,
             email: Email,
             name: Name,
             phone: isPhNum,
@@ -106,6 +107,7 @@ export default function AgeChoose({navigation, route}: any) {
           url: 'https://www.markin-app.site/app/users/instagram',
           data: {
             access_token: AccessToken,
+            instagramId: Id,
             email: Email,
             name: Name,
             phone: isPhNum,

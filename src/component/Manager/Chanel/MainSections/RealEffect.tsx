@@ -1,9 +1,33 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import Icons from '../../../Icons/Icons';
 import {useNavigation} from '@react-navigation/native';
+import UnOAuth from '../../../../Utils/UnOAuth/UnOAuth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 export default function RealEffect(props: any) {
   const navigation = useNavigation();
+  const [isFb, setisFb] = useState(false);
+  const [realFollower, setrealFollower] = useState(0);
+
+  useEffect(() => {
+    axios
+      .get('https://www.markin-app.site/app/channel/influence', {
+        headers: {
+          'x-access-token': props.JWT,
+        },
+      })
+      .then(response => {
+        console.log(response.data.code + 'asdsadsa');
+        if (response.data.code === 3008) {
+          setisFb(false);
+        } else {
+          setisFb(true);
+          setrealFollower(response.data.result.realFollower);
+        }
+      });
+  }, [props.JWT]);
+
   return (
     <View style={{marginTop: 15}}>
       <TouchableOpacity onPress={() => navigation.navigate('RealEffect')}>
@@ -23,10 +47,7 @@ export default function RealEffect(props: any) {
               </View>
             </View>
             <Text style={styles.numText}>
-              {props.realEffectCount
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-              명
+              {realFollower.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}명
             </Text>
           </View>
         </View>

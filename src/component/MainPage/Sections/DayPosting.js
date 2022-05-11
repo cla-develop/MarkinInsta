@@ -2,77 +2,95 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import UnOAuth from '../../../Utils/UnOAuth/UnOAuth';
-export default function DayPosting() {
+import AsyncStorage from '@react-native-async-storage/async-storage';
+export default function DayPosting(props) {
   const [todayImpressions, settodayImpressions] = useState(0);
   const [todayReach, settodayReach] = useState(0);
   const [todayLike, settodayLike] = useState(0);
   const [todayComment, settodayComment] = useState(0);
+  const [isFb, setisFb] = useState(false);
 
   useEffect(() => {
     axios
       .get('https://www.markin-app.site/app/home/post', {
         headers: {
-          'x-access-token':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImluc3RhZ3JhbUlkIjoxNzg0MTQwMDIyOTcwMTgyOCwiaWF0IjoxNjUxNDc1NjY5LCJleHAiOjE2ODMwMTE2NjksInN1YiI6InVzZXJJbmZvIn0.j4u8erTV0-NPxnCELratkdGsQe4AXDFM4tE1iQC-zaw',
+          'x-access-token': props.JWT,
         },
       })
       .then(response => {
-        settodayImpressions(response.data.result.todayImpressions);
-        settodayReach(response.data.result.todayReach);
-        settodayLike(response.data.result.todayLike);
-        settodayComment(response.data.result.todayComment);
+        console.log(response.data.code);
+        if (response.data.code === 3008) {
+          setisFb(false);
+        } else {
+          setisFb(true);
+          settodayImpressions(response.data.result.todayImpressions);
+          settodayReach(response.data.result.todayReach);
+          settodayLike(response.data.result.todayLike);
+          settodayComment(response.data.result.todayComment);
+        }
       });
-  }, []);
+  }, [props.JWT]);
   return (
     <View style={styles.PostView}>
       <View style={{flexDirection: 'row'}}>
         <Text style={styles.TopText}>일별 포스팅 분석</Text>
       </View>
-      <View style={{flexDirection: 'row', marginTop: 20}}>
-        <View style={{width: '50%'}}>
-          <Text style={styles.LightText}>도달 수</Text>
-        </View>
-        <View style={{width: '50%'}}>
-          <Text style={styles.numberText}>
-            {todayReach.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 회
-          </Text>
-        </View>
-      </View>
-      <View style={{flexDirection: 'row', marginTop: 10}}>
-        <View style={{width: '50%'}}>
-          <Text style={styles.LightText}>노출 수</Text>
-        </View>
-        <View style={{width: '50%'}}>
-          <Text style={{textAlign: 'right', marginRight: '10%', fontSize: 16}}>
-            {todayImpressions.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
-            회
-          </Text>
-        </View>
-      </View>
-      <View style={{flexDirection: 'row', marginTop: 10}}>
-        <View style={{width: '50%'}}>
-          <Text style={styles.LightText}>댓글</Text>
-        </View>
-        <View style={{width: '50%'}}>
-          <Text style={{textAlign: 'right', marginRight: '10%', fontSize: 16}}>
-            {todayLike.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 명
-          </Text>
-        </View>
-      </View>
-      <View style={{flexDirection: 'row', marginTop: 10}}>
-        <View style={{width: '50%'}}>
-          <Text style={styles.LightText}>좋아요</Text>
-        </View>
-        <View style={{width: '50%'}}>
-          <Text style={{textAlign: 'right', marginRight: '10%', fontSize: 16}}>
-            {todayComment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 개
-          </Text>
-        </View>
-      </View>
 
-      {/* <View style={{marginBottom: 30}}>
-        <UnOAuth />
-      </View> */}
+      {isFb === true ? (
+        <>
+          <View style={{flexDirection: 'row', marginTop: 20}}>
+            <View style={{width: '50%'}}>
+              <Text style={styles.LightText}>도달 수</Text>
+            </View>
+            <View style={{width: '50%'}}>
+              <Text style={styles.numberText}>
+                {todayReach.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 회
+              </Text>
+            </View>
+          </View>
+          <View style={{flexDirection: 'row', marginTop: 10}}>
+            <View style={{width: '50%'}}>
+              <Text style={styles.LightText}>노출 수</Text>
+            </View>
+            <View style={{width: '50%'}}>
+              <Text
+                style={{textAlign: 'right', marginRight: '10%', fontSize: 16}}>
+                {todayImpressions
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
+                회
+              </Text>
+            </View>
+          </View>
+          <View style={{flexDirection: 'row', marginTop: 10}}>
+            <View style={{width: '50%'}}>
+              <Text style={styles.LightText}>댓글</Text>
+            </View>
+            <View style={{width: '50%'}}>
+              <Text
+                style={{textAlign: 'right', marginRight: '10%', fontSize: 16}}>
+                {todayLike.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 명
+              </Text>
+            </View>
+          </View>
+          <View style={{flexDirection: 'row', marginTop: 10}}>
+            <View style={{width: '50%'}}>
+              <Text style={styles.LightText}>좋아요</Text>
+            </View>
+            <View style={{width: '50%'}}>
+              <Text
+                style={{textAlign: 'right', marginRight: '10%', fontSize: 16}}>
+                {todayComment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
+                개
+              </Text>
+            </View>
+          </View>
+        </>
+      ) : (
+        <View style={{marginBottom: 30}}>
+          <UnOAuth />
+        </View>
+      )}
     </View>
   );
 }

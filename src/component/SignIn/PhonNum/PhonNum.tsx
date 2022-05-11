@@ -12,7 +12,7 @@ import Sms from '../../../API/LogInSignin/SMS/Sms';
 import OverLapModal from '../Modal/OverLapModal';
 import axios from 'axios';
 export default function PhonNum({navigation, route}: any) {
-  const {AccessToken, Agreesns, AgreeEmail} = route.params;
+  const {AccessToken, Agreesns, AgreeEmail, Id} = route.params;
   const [isPhNum, setisPhNum] = useState<string>('');
   const [ProveNum, setProveNum] = useState<string>('');
   const [PNVali, setPNVali] = useState<boolean>(false);
@@ -52,6 +52,7 @@ export default function PhonNum({navigation, route}: any) {
               isPhNum,
               Agreesns,
               AgreeEmail,
+              Id,
             });
           } else {
             setIsError(true);

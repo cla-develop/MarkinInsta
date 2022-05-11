@@ -8,7 +8,22 @@ import chat from './images/chat.png';
 import link from './images/link.png';
 import question from './images/question.png';
 import user from './images/user.png';
+import Exit from './images/exit.png';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function SetUp() {
+  const nDAta = null;
+  const storeData = async value => {
+    try {
+      await AsyncStorage.removeItem('JWT').then(
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'ChooseWay'}],
+        }),
+      );
+    } catch (e) {
+      console.log('qwwqqqqqq');
+    }
+  };
   const navigation = useNavigation();
   return (
     <View style={styles.allView}>
@@ -76,6 +91,20 @@ export default function SetUp() {
             </View>
             <View style={{justifyContent: 'center', marginLeft: 10}}>
               <Text style={styles.NotoReg16}>채널 연결관리</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        {/* 채널연결관리 */}
+        <TouchableOpacity onPress={() => storeData(nDAta)}>
+          <View style={{flexDirection: 'row', height: 50}}>
+            <View style={{justifyContent: 'center'}}>
+              <Image
+                source={Exit}
+                style={{height: 20, width: 20, marginLeft: 2.5}}
+              />
+            </View>
+            <View style={{justifyContent: 'center', marginLeft: 12.5}}>
+              <Text style={styles.NotoReg16}>로그아웃</Text>
             </View>
           </View>
         </TouchableOpacity>

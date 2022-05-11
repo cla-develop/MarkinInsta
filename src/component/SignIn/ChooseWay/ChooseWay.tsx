@@ -9,20 +9,13 @@ import WebViewModal from '../LinkChannel/InstaWebView/WebViewModal';
 // import appLogo from '../../../images/appLogo.png';
 // import GoogleWebview from './GoogleLogin/GoogleWebview';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 export default function ChooseWay({navigation}: any) {
   const [HandleModal, setHandleModal] = useState<boolean>(false);
   const [code, setcode] = useState<string>('');
   const [AccessToken, setAccessToken] = useState<string>('');
   const [Id, setId] = useState(0);
   // const [Pass, setPass] = useState<boolean>(false);
-  const storeData = async (value: any) => {
-    try {
-      await AsyncStorage.setItem('accessToken', value);
-    } catch (e) {
-      console.log('qwwqqqqqq');
-    }
-  };
+
   useEffect(() => {
     const getToken = async () => {
       const asd: string = code[1].substring(0, code[1].length - 2);
@@ -44,34 +37,44 @@ export default function ChooseWay({navigation}: any) {
         .then(response => {
           //console.log(props.code[1]);
           // setPass(true);
-          storeData(response.data.access_token);
           setAccessToken(response.data.access_token);
-          setId(response.data.use_id);
+          setId(response.data.user_id);
+          console.log(response.data.user_id);
         })
         .catch(err => {
           console.log(err);
-          console.log('what the fuck');
         });
     };
     if (code !== '') {
       getToken();
     }
   }, [code]);
+
+  const storeData = async (value: any) => {
+    try {
+      await AsyncStorage.setItem('JWT', value);
+    } catch (e) {
+      console.log('qwwqqqqqq');
+    }
+  };
   useEffect(() => {
     const LinkInsta = async () => {
       await axios({
         url: `https://www.markin-app.site/app/users/instagram/check`,
         method: 'post',
         data: {
-          access_token: AccessToken,
-          id: Id,
+          accessToken: AccessToken,
+          instagramId: Id,
         },
       })
         .then(response => {
+          storeData(response.data.result.jwt);
+          console.log(response.data.message);
+          console.log('userId:' + Id);
           if (response.data.isSuccess === true) {
             navigation.navigate('Body', {AccessToken});
           } else {
-            navigation.navigate('Terms', {AccessToken});
+            navigation.navigate('Terms', {AccessToken, Id});
           }
         })
         .catch(err => {
@@ -82,7 +85,7 @@ export default function ChooseWay({navigation}: any) {
     if (AccessToken !== '') {
       LinkInsta();
     }
-  }, [AccessToken, navigation]);
+  }, [AccessToken, Id]);
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>

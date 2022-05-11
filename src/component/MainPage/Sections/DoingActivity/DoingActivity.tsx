@@ -4,7 +4,7 @@ import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import styles from '../../../Styles';
 
-export default function DoingActivity() {
+export default function DoingActivity(props) {
   const [Menu, setMenu] = useState('진행중');
   const [Activties, setActivities] = useState([]);
   useEffect(() => {
@@ -12,22 +12,21 @@ export default function DoingActivity() {
     axios
       .get(`https://www.markin-app.site/app/users/activity?status=${Menu}`, {
         headers: {
-          'x-access-token':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImluc3RhZ3JhbUlkIjoiNDIzNDQwMzAxMzMyODU5MiIsImlhdCI6MTY0MzQ4MDg1MCwiZXhwIjoxNjc1MDE2ODUwLCJzdWIiOiJ1c2VySW5mbyJ9.MlsJ3tZcye9WdqRwz-AKY5KNZf46B1gFQ8nqgrJxGMg',
+          'x-access-token': props.JWT,
         },
       })
       .then(response => {
         setActivities(response.data.result);
       })
       .catch(err => console.log(err));
-  }, []);
+  }, [props.JWT]);
 
   return (
     <View style={instyles.FollowView}>
       <Text style={{fontFamily: 'NotoSansKR-Bold', fontSize: 18}}>
         진행중인 활동
       </Text>
-      {Menu === '진행중' && Activties === [] ? (
+      {Menu === '진행중' && Activties.length !== 0 ? (
         <View>
           {Activties.map(item => (
             // tslint:disable-next-line: jsx-key

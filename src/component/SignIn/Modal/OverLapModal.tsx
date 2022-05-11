@@ -1,7 +1,9 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Modal from 'react-native-modal';
+import {useNavigation} from '@react-navigation/native';
 export default function OverLapModal(props: any) {
+  const navigation = useNavigation();
   return (
     <Modal isVisible={props.IsOverlap}>
       <View style={styles.ModalView}>
@@ -15,7 +17,7 @@ export default function OverLapModal(props: any) {
               <Text style={styles.reText}>다시 입력하기</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => props.goLogin()}>
+          <TouchableOpacity onPress={() => navigation.navigate('ChooseWay')}>
             <View style={styles.blackView}>
               <Text style={styles.LoginText}>로그인하러 가기</Text>
             </View>

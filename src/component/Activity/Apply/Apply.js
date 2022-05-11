@@ -70,13 +70,8 @@ export default function Apply({route}) {
         url: `https://www.markin-app.site/app/activity/${Id}`,
       });
       setSuccess(response.data);
-
-      if (Success.isSuccess === true) {
-        navigateToBack();
-      } else {
-        console.log(Success);
-        console.log(Address.replace(/\"/gi, '') + ', ' + DetailAd);
-      }
+      console.log(Success);
+      navigateToBack();
     } catch (e) {
       console.log(e);
     }
@@ -232,7 +227,7 @@ export default function Apply({route}) {
         Address !== '' &&
         DetailAd !== '' ? (
           <View style={styles.btnView}>
-            <TouchableOpacity onPress={ApplyActivity()}>
+            <TouchableOpacity onPress={() => ApplyActivity()}>
               <View style={[styles.footerView, {backgroundColor: 'black'}]}>
                 <Text style={styles.footerText}>신청하기</Text>
               </View>

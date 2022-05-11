@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -19,7 +19,7 @@ import MainHeader from './Sections/MainHeader';
 import DoingActivity from './Sections/DoingActivity/DoingActivity';
 import Banner from '../../images/Banner.png';
 import {useNavigation} from '@react-navigation/native';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // tslint:disable-next-line: no-any
 export default function Main(props) {
   const navigation = useNavigation();
@@ -40,7 +40,18 @@ export default function Main(props) {
   };
 
   const [stateChange, setstateChange] = useState(1);
-
+  const [JWT, setJWT] = useState('');
+  useEffect(() => {
+    AsyncStorage.getItem('JWT').then(value => {
+      setJWT(value);
+    });
+  }, []);
+  const [asd, setasd] = useState(0);
+  useEffect(() => {
+    setTimeout(() => {
+      setasd(1);
+    }, 100);
+  }, []);
   return (
     <View style={{backgroundColor: 'white', height: '100%'}}>
       {/* Header */}
@@ -72,15 +83,19 @@ export default function Main(props) {
           </TouchableOpacity>
           {/* DayChange */}
           <View style={{width: '100%', marginTop: 10}}>
-            <DayChange />
+            <DayChange JWT={JWT} />
           </View>
-          <View style={{width: '100%', marginTop: 10}}>
-            {/* <DaySchedule /> */}
-            <DayPosting />
-          </View>
-          <View style={{marginTop: 10, marginBottom: 150, width: '100%'}}>
-            <DoingActivity />
-          </View>
+          {/* <DayPosting /> */}
+          {asd === 1 && (
+            <View style={{width: '100%', marginTop: 10}}>
+              <DayPosting JWT={JWT} />
+            </View>
+          )}
+          {asd === 1 && (
+            <View style={{marginTop: 10, marginBottom: 150, width: '100%'}}>
+              <DoingActivity JWT={JWT} />
+            </View>
+          )}
         </ScrollView>
       )}
       {/* {stateChange === 2 && <Feed />} */}

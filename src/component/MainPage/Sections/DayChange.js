@@ -2,79 +2,83 @@ import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import axios from 'axios';
 import UnOAuth from '../../../Utils/UnOAuth/UnOAuth';
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useIsFocused} from '@react-navigation/native';
 export default function DayChange(props) {
-  const [FollowChange, setFollowChange] = useState(1);
-  const [PostingChange, setPostingChange] = useState(0);
   const [todayFollower, settodayFollower] = useState(0);
   const [todayProfileView, settodayProfileView] = useState(0);
   const [todayClickMessage, settodayClickMessage] = useState(0);
-  const [JWT, setJWT] = useState('');
+  const [isFb, setisFb] = useState(false);
+
   useEffect(() => {
-    const apiCall = () => {
-      axios
-        .get('https://www.markin-app.site/app/home/channel', {
-          headers: {
-            'x-access-token':
-              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImluc3RhZ3JhbUlkIjoxNzg0MTQwMDIyOTcwMTgyOCwiaWF0IjoxNjUxNDc1NjY5LCJleHAiOjE2ODMwMTE2NjksInN1YiI6InVzZXJJbmZvIn0.j4u8erTV0-NPxnCELratkdGsQe4AXDFM4tE1iQC-zaw',
-          },
-        })
-        .then(response => {
-          console.log(JWT + 'asdasda');
+    axios
+      .get('https://www.markin-app.site/app/home/channel', {
+        headers: {
+          'x-access-token': props.JWT,
+        },
+      })
+      .then(response => {
+        console.log(response.data.code);
+        if (response.data.code === 3008) {
+          setisFb(false);
+        } else {
+          setisFb(true);
           settodayFollower(response.data.result.todayFollower);
           settodayProfileView(response.data.result.todayProfileView);
           settodayClickMessage(response.data.result.todayClickMessage);
-        });
-    };
-    AsyncStorage.getItem('JWT')
-      .then(value => {
-        setJWT(value);
-        console.log(value);
-      })
-      .then(apiCall());
-  }, []);
+        }
+      });
+  }, [props.JWT]);
   return (
     <View style={styles.FollowView}>
       <View style={{flexDirection: 'row', marginBottom: 10}}>
         <Text style={styles.TopText}>일별 팔로워 변화</Text>
       </View>
-
-      <View style={{flexDirection: 'row', marginTop: 10}}>
-        <View style={{width: '50%'}}>
-          <Text style={styles.LightText}>팔로워 증가 수</Text>
+      {isFb === true ? (
+        <>
+          <View style={{flexDirection: 'row', marginTop: 10}}>
+            <View style={{width: '50%'}}>
+              <Text style={styles.LightText}>팔로워 증가 수</Text>
+            </View>
+            <View style={{width: '50%'}}>
+              <Text style={styles.numberText}>
+                {todayFollower.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
+                명
+              </Text>
+            </View>
+          </View>
+          <View style={{flexDirection: 'row', marginTop: 10}}>
+            <View style={{width: '50%'}}>
+              <Text style={styles.LightText}>계정 방문자 수</Text>
+            </View>
+            <View style={{width: '50%'}}>
+              <Text style={styles.numberText}>
+                {todayProfileView
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
+                명
+              </Text>
+            </View>
+          </View>
+          <View style={{flexDirection: 'row', marginTop: 10}}>
+            <View style={{width: '50%'}}>
+              <Text style={styles.LightText}>DM 클릭 수</Text>
+            </View>
+            <View style={{width: '50%'}}>
+              <Text style={styles.numberText}>
+                {todayClickMessage
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
+                명
+              </Text>
+            </View>
+          </View>
+        </>
+      ) : (
+        <View style={{marginBottom: 30}}>
+          <UnOAuth />
         </View>
-        <View style={{width: '50%'}}>
-          <Text style={styles.numberText}>
-            {todayFollower.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 명
-          </Text>
-        </View>
-      </View>
-      <View style={{flexDirection: 'row', marginTop: 10}}>
-        <View style={{width: '50%'}}>
-          <Text style={styles.LightText}>계정 방문자 수</Text>
-        </View>
-        <View style={{width: '50%'}}>
-          <Text style={styles.numberText}>
-            {todayProfileView.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
-            명
-          </Text>
-        </View>
-      </View>
-      <View style={{flexDirection: 'row', marginTop: 10}}>
-        <View style={{width: '50%'}}>
-          <Text style={styles.LightText}>DM 클릭 수</Text>
-        </View>
-        <View style={{width: '50%'}}>
-          <Text style={styles.numberText}>
-            {todayClickMessage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
-            명
-          </Text>
-        </View>
-      </View>
-      {/* <View style={{marginBottom: 30}}>
-        <UnOAuth />
-      </View> */}
+      )}
     </View>
   );
 }

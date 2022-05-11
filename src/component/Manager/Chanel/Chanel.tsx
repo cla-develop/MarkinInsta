@@ -6,18 +6,28 @@ import MyRank from './MainSections/MyRank';
 import FollowerChange from './MainSections/FollowerChange';
 import FollowAgeGender from './MainSections/FollowAgeGender';
 import FollowRegion from './MainSections/FollowRegion';
-import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Chanel(any) {
   const [realEffectCount, setrealEffectCount] = useState(0);
   const [ranking, setRanking] = useState(0);
-
-  const [followerTopCity, setfollowerTopCity] = useState([]);
+  const [JWT, setJWT] = useState('');
+  useEffect(() => {
+    AsyncStorage.getItem('JWT').then(value => {
+      setJWT(value);
+    });
+  }, []);
+  const [asd, setasd] = useState(0);
+  useEffect(() => {
+    setTimeout(() => {
+      setasd(1);
+    }, 100);
+  }, []);
 
   return (
     <>
       {/* 진짜 영향력 */}
-      <RealEffect realEffectCount={realEffectCount} />
+      {asd === 1 && <RealEffect JWT={JWT} />}
       {/* 내 랭킹 */}
       <MyRank ranking={ranking} />
       {/* 팔로우 변화 추이 */}
