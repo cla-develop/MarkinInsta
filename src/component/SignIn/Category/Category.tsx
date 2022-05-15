@@ -10,7 +10,7 @@ import Icons from '../../Icons/Icons';
 import CatBut from './Sections/CatBut';
 import axios from 'axios';
 import {NavigationActions, StackActions} from 'react-navigation';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Category({navigation, route}: any) {
   // const {JWT} = route.params;
 
@@ -45,6 +45,12 @@ export default function Category({navigation, route}: any) {
     if (isLove === true) isCategory.push('연애');
     if (isMusic === true) isCategory.push('음악');
   }, [isCnt]);
+  const [JWT, setJWT] = useState('');
+  useEffect(() => {
+    AsyncStorage.getItem('JWT').then(value => {
+      setJWT(value);
+    });
+  }, []);
 
   const CategoryApi = () => {
     const API = async () => {
@@ -53,8 +59,7 @@ export default function Category({navigation, route}: any) {
           method: 'post',
           url: `https://www.markin-app.site/app/users/categories`,
           headers: {
-            'x-access-token':
-              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImluc3RhZ3JhbUlkIjoiNDIzNDQwMzAxMzMyODU5MiIsImlhdCI6MTY0MzQ4MDg1MCwiZXhwIjoxNjc1MDE2ODUwLCJzdWIiOiJ1c2VySW5mbyJ9.MlsJ3tZcye9WdqRwz-AKY5KNZf46B1gFQ8nqgrJxGMg',
+            'x-access-token': JWT,
           },
           data: {
             categories: isCategory,

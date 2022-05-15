@@ -1,5 +1,6 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, Alert} from 'react-native';
 import man from './images/man.png';
 import girl from './images/girl.png';
 import axios from 'axios';
@@ -21,7 +22,7 @@ export default function FollowAgeGender(props: any) {
   const [fourSum, setfourSum] = useState(0);
   const [fifSum, setfifSum] = useState(0);
   const [sixSum, setsixSum] = useState(0);
-
+  const [Max, setMax] = useState(100);
   useEffect(() => {
     const getchannel = async () => {
       try {
@@ -29,10 +30,12 @@ export default function FollowAgeGender(props: any) {
           .get('https://www.markin-app.site/app/channel', {
             headers: {
               'x-access-token':
-                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImluc3RhZ3JhbUlkIjoiNDIzNDQwMzAxMzMyODU5MiIsImlhdCI6MTY0MzQ4MDg1MCwiZXhwIjoxNjc1MDE2ODUwLCJzdWIiOiJ1c2VySW5mbyJ9.MlsJ3tZcye9WdqRwz-AKY5KNZf46B1gFQ8nqgrJxGMg',
+                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImluc3RhZ3JhbUlkIjoxNzg0MTQwMDIyOTcwMTgyOCwiaWF0IjoxNjUyMzQxMTExLCJleHAiOjE2ODM4NzcxMTEsInN1YiI6InVzZXJJbmZvIn0.8XSYKlxZeS0DwR7OeMcbizT-mvIR0nlFs7oYO37Q6jM',
             },
           })
           .then(response => {
+            console.log(response.data.result.followerGenderAge['maxValue']);
+            setMax(response.data.result.followerGenderAge['maxValue']);
             setfirst(response.data.result.followerGenderAge['13-17']);
             setSecond(response.data.result.followerGenderAge['18-24']);
             setThird(response.data.result.followerGenderAge['25-34']);
@@ -78,7 +81,12 @@ export default function FollowAgeGender(props: any) {
     };
     getchannel();
   }, []);
-  const max = 200;
+  const [asd, setasd] = useState(0);
+  useEffect(() => {
+    setTimeout(() => {
+      setasd(1);
+    }, 2000);
+  }, []);
   return (
     <View style={{marginTop: 10}}>
       <View style={styles.mainView}>
@@ -107,48 +115,78 @@ export default function FollowAgeGender(props: any) {
             </View>
           </View>
         </View>
-
-        <View style={{flexDirection: 'row', paddingLeft: 13, height: 250}}>
-          <View style={styles.GraphView}>
-            <View style={[styles.greyGraph, {height: firSum}]}></View>
-            <Text style={styles.ageText}>13-17</Text>
+        {asd === 1 && (
+          <View style={{flexDirection: 'row', paddingLeft: 13, height: 250}}>
+            <View style={styles.GraphView}>
+              <View
+                style={[
+                  styles.greyGraph,
+                  {
+                    backgroundColor: firSum === Max ? '#7603FF' : '#EDEDED',
+                    height: 200 / (Max / firSum),
+                  },
+                ]}></View>
+              <Text style={styles.ageText}>13-17</Text>
+            </View>
+            <View style={styles.GraphView}>
+              <View
+                style={[
+                  styles.greyGraph,
+                  {
+                    backgroundColor: secSum === Max ? '#7603FF' : '#EDEDED',
+                    height: 200 / (215 / secSum),
+                  },
+                ]}></View>
+              <Text>18-24</Text>
+            </View>
+            <View style={styles.GraphView}>
+              <Text
+                style={{marginBottom: 5, fontFamily: 'NotoSansKR-Bold'}}></Text>
+              <View
+                style={[
+                  styles.greyGraph,
+                  {
+                    backgroundColor: thirSum === Max ? '#7603FF' : '#EDEDED',
+                    height: 200 / (215 / thirSum),
+                  },
+                ]}></View>
+              <Text style={styles.ageText}>25-34</Text>
+            </View>
+            <View style={styles.GraphView}>
+              <View
+                style={[
+                  styles.greyGraph,
+                  {
+                    backgroundColor: fifSum === Max ? '#7603FF' : '#EDEDED',
+                    height: 200 / (Max / fifSum),
+                  },
+                ]}></View>
+              <Text style={styles.ageText}>35-44</Text>
+            </View>
+            <View style={styles.GraphView}>
+              <View
+                style={[
+                  styles.greyGraph,
+                  {
+                    backgroundColor: fifSum === Max ? '#7603FF' : '#EDEDED',
+                    height: 200 / (Max / fifSum),
+                  },
+                ]}></View>
+              <Text style={styles.ageText}>45-54</Text>
+            </View>
+            <View style={styles.GraphView}>
+              <View
+                style={[
+                  styles.greyGraph,
+                  {
+                    backgroundColor: sixSum === Max ? '#7603FF' : '#EDEDED',
+                    height: 200 / (Max / sixSum),
+                  },
+                ]}></View>
+              <Text style={styles.ageText}>55+</Text>
+            </View>
           </View>
-          <View style={styles.GraphView}>
-            <View style={[styles.greyGraph, {height: secSum}]}></View>
-            <Text>18-24</Text>
-          </View>
-          <View style={styles.GraphView}>
-            <Text style={{marginBottom: 5, fontFamily: 'NotoSansKR-Bold'}}>
-              {thirSum}명
-            </Text>
-            <View style={[styles.purpleGraph, {height: max / thirSum}]}></View>
-            <Text style={styles.ageText}>25-34</Text>
-          </View>
-          <View style={styles.GraphView}>
-            <View
-              style={[
-                styles.greyGraph,
-                // {height: (200 * thirSum) / max},
-              ]}></View>
-            <Text style={styles.ageText}>35-44</Text>
-          </View>
-          <View style={styles.GraphView}>
-            <View
-              style={[
-                styles.greyGraph,
-                // {height: (200 * thirSum) / max},
-              ]}></View>
-            <Text style={styles.ageText}>45-54</Text>
-          </View>
-          <View style={styles.GraphView}>
-            <View
-              style={[
-                styles.greyGraph,
-                // {height: (200 * thirSum) / max},
-              ]}></View>
-            <Text style={styles.ageText}>55+</Text>
-          </View>
-        </View>
+        )}
       </View>
     </View>
   );
@@ -187,7 +225,6 @@ const styles = StyleSheet.create({
     borderRadius: 7,
   },
   greyGraph: {
-    backgroundColor: '#EDEDED',
     width: 43,
     marginBottom: 10,
     borderRadius: 7,

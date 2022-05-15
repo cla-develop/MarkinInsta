@@ -4,9 +4,35 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Linking} from 'react-native';
 import Icons from '../../Icons/Icons';
 import MyCarousel from './MyCarosel';
+import {LoginManager, AccessToken, LoginButton} from 'react-native-fbsdk-next';
+
+const loginWithFacebook = () => {
+  LoginManager.logInWithPermissions(['public_profile']).then(
+    function (result) {
+      if (result.isCancelled) {
+        console.log('==> Login cancelled');
+      } else if (error) {
+        console.log(
+          'login has error' + result.error,
+          // '==> Login success with permissions: ' +
+          //   result.grantedPermissions.toString(),
+        );
+      } else {
+        AccessToken.getCurrentAccessToken().then(data => {
+          console.log(data.accessToken.toString());
+        });
+      }
+    },
+    function (error) {
+      console.log('==> Login fail with error: ' + error);
+    },
+  );
+};
+
 export default function LinkMarkin() {
   const navigation = useNavigation();
   const [Page, setPage] = useState(0);
+
   return (
     <View style={styles.allView}>
       <View style={{alignItems: 'center'}}>
@@ -109,14 +135,28 @@ export default function LinkMarkin() {
       )}
       {Page !== 4 ? (
         <View style={{top: 120, left: '5%'}}>
-          <TouchableOpacity
-            onPress={() => {
-              Linking.openURL('https://www.facebook.com/');
-            }}>
+          {/* <TouchableOpacity onPress={() => loginWithFacebook()}>
             <View style={styles.purpleBtn}>
               <Text style={styles.instaText}>Facebook으로 로그인 하기</Text>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
+          <View style={{top: 10}}>
+            <LoginButton
+              style={{width: '90%', height: 50, borderRadius: 20}}
+              onLoginFinished={(error, result) => {
+                if (error) {
+                  console.log('login has error: ' + result.error);
+                } else if (result.isCancelled) {
+                  console.log('login is cancelled.');
+                } else {
+                  AccessToken.getCurrentAccessToken().then(data => {
+                    console.log(data.accessToken.toString());
+                  });
+                }
+              }}
+              onLogoutFinished={() => console.log('logout.')}
+            />
+          </View>
         </View>
       ) : (
         <View style={{top: 85, left: '5%'}}>

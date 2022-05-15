@@ -20,7 +20,7 @@ export default function FollowRegion(props: any) {
       .get('https://www.markin-app.site/app/channel', {
         headers: {
           'x-access-token':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImluc3RhZ3JhbUlkIjoiNDIzNDQwMzAxMzMyODU5MiIsImlhdCI6MTY0MzQ4MDg1MCwiZXhwIjoxNjc1MDE2ODUwLCJzdWIiOiJ1c2VySW5mbyJ9.MlsJ3tZcye9WdqRwz-AKY5KNZf46B1gFQ8nqgrJxGMg',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImluc3RhZ3JhbUlkIjoxNzg0MTQwMDIyOTcwMTgyOCwiaWF0IjoxNjUxNDc1NjY5LCJleHAiOjE2ODMwMTE2NjksInN1YiI6InVzZXJJbmZvIn0.j4u8erTV0-NPxnCELratkdGsQe4AXDFM4tE1iQC-zaw',
         },
       })
       .then(response => {
@@ -42,6 +42,7 @@ export default function FollowRegion(props: any) {
             }),
           ),
         );
+        console.log(followerTopCity);
       });
   }, []);
 
@@ -109,7 +110,7 @@ export default function FollowRegion(props: any) {
             <View style={{marginTop: 20}}>
               {followerTopCountry.map(item => (
                 // tslint:disable-next-line: jsx-key
-                <View style={{marginRight: 40, width: 140}}>
+                <View style={{marginRight: 40, width: 140}} key={item.country}>
                   <View style={{flexDirection: 'row', marginTop: 6}}>
                     <View style={{flexDirection: 'row', width: 90}}>
                       <View
@@ -150,7 +151,7 @@ export default function FollowRegion(props: any) {
             <View style={{marginTop: 20}}>
               {followerTopCity.map(item => (
                 // tslint:disable-next-line: jsx-key
-                <View style={{marginRight: 40, width: 140}}>
+                <View style={{marginRight: 40, width: 140}} key={item.city}>
                   <View style={{flexDirection: 'row', marginTop: 6}}>
                     <View style={{flexDirection: 'row', width: 90}}>
                       <View
@@ -172,7 +173,7 @@ export default function FollowRegion(props: any) {
               <View style={{position: 'absolute', right: 16}}>
                 <PieChart
                   widthAndHeight={widthAndHeight}
-                  series={series}
+                  series={cityseries}
                   sliceColor={sliceColor}
                   doughnut={true}
                   coverRadius={0.45}
@@ -182,7 +183,7 @@ export default function FollowRegion(props: any) {
             </View>
             <View style={styles.GraphcenterView}>
               <Text style={{fontFamily: 'NotoSansKR-Medium'}}>
-                {followerTopCountry[0].country} {followerTopCountry[0].ratio}%
+                {followerTopCity[0].city} {followerTopCity[0].ratio}%
               </Text>
             </View>
           </View>

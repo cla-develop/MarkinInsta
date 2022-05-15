@@ -5,23 +5,29 @@ import ChangeMan from './images/ChangeMan.png';
 import visit from './images/visit.png';
 import click from './images/click.png';
 import Icons from '../../../Icons/Icons';
+import UnOAuth from '../../../../Utils/UnOAuth/UnOAuth';
 // import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 export default function FollowerChange(props) {
   // const navigation = useNavigation();
+  const [isFb, setisFb] = useState(false);
   const [Data, setData] = useState([]);
   useEffect(() => {
     axios
       .get('https://www.markin-app.site/app/channel/follower', {
         headers: {
-          'x-access-token':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImluc3RhZ3JhbUlkIjoiNDIzNDQwMzAxMzMyODU5MiIsImlhdCI6MTY0MzQ4MDg1MCwiZXhwIjoxNjc1MDE2ODUwLCJzdWIiOiJ1c2VySW5mbyJ9.MlsJ3tZcye9WdqRwz-AKY5KNZf46B1gFQ8nqgrJxGMg',
+          'x-access-token': props.JWT,
         },
       })
       .then(response => {
-        setData(response.data.result);
+        if (response.data.code === 3008) {
+          isFb(false);
+        } else {
+          setData(response.data.result);
+          isFb(true);
+        }
       });
-  }, []);
+  }, [props.JWT]);
 
   return (
     <View style={{marginTop: 10}}>
@@ -33,75 +39,83 @@ export default function FollowerChange(props) {
             <Icons.AntDesign name="right" color="#DEDEDE" size={20} />
           </View> */}
         </View>
-        <View style={styles.imagesViews}>
-          <View style={{flexDirection: 'row'}}>
-            <Image source={ChangeMan} style={{height: 56, width: 56}} />
-            <View style={{marginTop: 5, marginLeft: 20}}>
-              <Text style={styles.Textlet}>팔로워 수</Text>
-              <View style={{flexDirection: 'row', marginTop: 5}}>
-                <Text style={styles.numText}>{Data.follower}</Text>
-                <Text style={styles.Textlet}> 명</Text>
-                <View style={{flexDirection: 'row', marginTop: 3}}>
-                  <Icons.AntDesign
-                    name="arrowup"
-                    color="#57C971"
-                    size={15}
-                    style={{marginTop: 1, marginLeft: 10}}
-                  />
-                  <Text style={styles.UpText}>{Data.followerTrend}</Text>
-                </View>
-              </View>
-            </View>
-          </View>
-          <View style={{flexDirection: 'row', marginTop: 15}}>
-            <Image source={visit} style={{height: 56, width: 56}} />
-            <View style={{marginTop: 5, marginLeft: 20}}>
-              <Text style={styles.Textlet}>계정 방문자 수</Text>
-              <View style={{flexDirection: 'row', marginTop: 5}}>
-                <Text style={styles.numText}>{Data.profileview}</Text>
-                <Text style={styles.Textlet}> 명</Text>
-                <View style={{flexDirection: 'row', marginTop: 3}}>
-                  <Icons.AntDesign
-                    name="arrowup"
-                    color="#57C971"
-                    size={15}
-                    style={{marginTop: 1, marginLeft: 10}}
-                  />
-                  <Text style={styles.UpText}>{Data.profileviewTrend}</Text>
-                </View>
-              </View>
-            </View>
-          </View>
-          <View style={{flexDirection: 'row', marginTop: 15}}>
-            <Image source={click} style={{height: 56, width: 56}} />
-            <View style={{marginTop: 5, marginLeft: 20}}>
-              <Text style={styles.Textlet}>DM 클릭 수</Text>
-              <View style={{flexDirection: 'row', marginTop: 5}}>
-                <Text style={styles.numText}>{Data.clickMessage}</Text>
-                <Text style={styles.Textlet}> 명</Text>
-                <View style={{flexDirection: 'row', marginTop: 3}}>
-                  {Data.clickMessageTrend > 0 ? (
+        {isFb === true ? (
+          <View style={styles.imagesViews}>
+            <View style={{flexDirection: 'row'}}>
+              <Image source={ChangeMan} style={{height: 56, width: 56}} />
+              <View style={{marginTop: 5, marginLeft: 20}}>
+                <Text style={styles.Textlet}>팔로워 수</Text>
+                <View style={{flexDirection: 'row', marginTop: 5}}>
+                  <Text style={styles.numText}>{Data.follower}</Text>
+                  <Text style={styles.Textlet}> 명</Text>
+                  <View style={{flexDirection: 'row', marginTop: 3}}>
                     <Icons.AntDesign
                       name="arrowup"
                       color="#57C971"
                       size={15}
                       style={{marginTop: 1, marginLeft: 10}}
                     />
-                  ) : (
+                    <Text style={styles.UpText}>{Data.followerTrend}</Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <View style={{flexDirection: 'row', marginTop: 15}}>
+              <Image source={visit} style={{height: 56, width: 56}} />
+              <View style={{marginTop: 5, marginLeft: 20}}>
+                <Text style={styles.Textlet}>계정 방문자 수</Text>
+                <View style={{flexDirection: 'row', marginTop: 5}}>
+                  <Text style={styles.numText}>{Data.profileview}</Text>
+                  <Text style={styles.Textlet}> 명</Text>
+                  <View style={{flexDirection: 'row', marginTop: 3}}>
                     <Icons.AntDesign
-                      name="arrowdown"
-                      color="#FF5959"
+                      name="arrowup"
+                      color="#57C971"
                       size={15}
                       style={{marginTop: 1, marginLeft: 10}}
                     />
-                  )}
+                    <Text style={styles.UpText}>{Data.profileviewTrend}</Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <View style={{flexDirection: 'row', marginTop: 15}}>
+              <Image source={click} style={{height: 56, width: 56}} />
+              <View style={{marginTop: 5, marginLeft: 20}}>
+                <Text style={styles.Textlet}>DM 클릭 수</Text>
+                <View style={{flexDirection: 'row', marginTop: 5}}>
+                  <Text style={styles.numText}>{Data.clickMessage}</Text>
+                  <Text style={styles.Textlet}> 명</Text>
+                  <View style={{flexDirection: 'row', marginTop: 3}}>
+                    {Data.clickMessageTrend > 0 ? (
+                      <Icons.AntDesign
+                        name="arrowup"
+                        color="#57C971"
+                        size={15}
+                        style={{marginTop: 1, marginLeft: 10}}
+                      />
+                    ) : (
+                      <Icons.AntDesign
+                        name="arrowdown"
+                        color="#FF5959"
+                        size={15}
+                        style={{marginTop: 1, marginLeft: 10}}
+                      />
+                    )}
 
-                  <Text style={styles.DownText}>{Data.clickMessageTrend}</Text>
+                    <Text style={styles.DownText}>
+                      {Data.clickMessageTrend}
+                    </Text>
+                  </View>
                 </View>
               </View>
             </View>
           </View>
-        </View>
+        ) : (
+          <View style={{paddingBottom: 50}}>
+            <UnOAuth />
+          </View>
+        )}
       </View>
       {/* </TouchableOpacity> */}
     </View>

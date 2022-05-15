@@ -8,7 +8,7 @@ import FollowAgeGender from './MainSections/FollowAgeGender';
 import FollowRegion from './MainSections/FollowRegion';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Chanel(any) {
+export default function Chanel() {
   const [realEffectCount, setrealEffectCount] = useState(0);
   const [ranking, setRanking] = useState(0);
   const [JWT, setJWT] = useState('');
@@ -29,7 +29,7 @@ export default function Chanel(any) {
       {/* 진짜 영향력 */}
       {asd === 1 && <RealEffect JWT={JWT} />}
       {/* 내 랭킹 */}
-      <MyRank ranking={ranking} />
+      {asd === 1 && <MyRank ranking={ranking} JWT={JWT} />}
       {/* 팔로우 변화 추이 */}
       {/* <View style={styles.UnOAuthView}>
         <View style={{flexDirection: 'row', marginTop: 15, marginLeft: 15}}>
@@ -40,7 +40,7 @@ export default function Chanel(any) {
         </View>
         <UnOAuth />
       </View> */}
-      <FollowerChange />
+      {asd === 1 && <FollowerChange JWT={JWT} />}
       {/* 팔로워 연령 및 성비 */}
       {/* <View style={styles.UnOAuthView}>
         <View style={{flexDirection: 'row', marginTop: 15, marginLeft: 15}}>

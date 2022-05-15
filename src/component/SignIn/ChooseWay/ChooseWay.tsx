@@ -80,6 +80,7 @@ export default function ChooseWay({navigation}: any) {
         .catch(err => {
           console.log(err);
           console.log('sfdsf');
+          navigation.navigate('Terms', {AccessToken, Id});
         });
     };
     if (AccessToken !== '') {

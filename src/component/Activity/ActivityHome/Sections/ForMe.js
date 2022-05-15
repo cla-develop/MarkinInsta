@@ -7,18 +7,24 @@ import {
   Image,
   StyleSheet,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import noprofile from '../../../../images/noprofile.png';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 export default function ForMe() {
   const navigation = useNavigation();
   const [Result, setResult] = useState([]);
+  const [JWT, setJWT] = useState('');
+  useEffect(() => {
+    AsyncStorage.getItem('JWT').then(value => {
+      setJWT(value);
+    });
+  }, []);
   useEffect(() => {
     axios
       .get(`https://www.markin-app.site/app/activity/popular`, {
         headers: {
-          'x-access-token':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImluc3RhZ3JhbUlkIjoiNDIzNDQwMzAxMzMyODU5MiIsImlhdCI6MTY0MzQ4MDg1MCwiZXhwIjoxNjc1MDE2ODUwLCJzdWIiOiJ1c2VySW5mbyJ9.MlsJ3tZcye9WdqRwz-AKY5KNZf46B1gFQ8nqgrJxGMg',
+          'x-access-token': JWT,
         },
       })
       .then(response => {
@@ -26,7 +32,7 @@ export default function ForMe() {
         console.log(Result);
       })
       .catch(err => console.log(err));
-  }, []);
+  }, [JWT]);
   return (
     <View>
       {/* <View style={{flexDirection: 'row'}}> */}

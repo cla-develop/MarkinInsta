@@ -21,13 +21,25 @@ export default function Profile(props) {
           <View style={{marginLeft: 35, width: 195}}>
             <View style={{flexDirection: 'row', marginTop: 10}}>
               <Text style={[styles.normalText]}>실제 영향력</Text>
-              <Text style={styles.NumText}>
-                {(props.realFollower / 1000).toFixed(1)}K
-              </Text>
+              {props.realFollower >= 1000000 ? (
+                <Text style={styles.followerText}>
+                  {(props.realFollower / 1000000).toFixed(1)} M
+                </Text>
+              ) : (
+                <Text style={styles.followerText}>
+                  {(props.realFollower / 1000).toFixed(1)} k
+                </Text>
+              )}
               <Text style={[styles.normalText, {marginLeft: 25}]}>팔로워</Text>
-              <Text style={styles.NumText}>
-                {(props.followers_count / 1000).toFixed(1)}K
-              </Text>
+              {props.followers_count >= 1000000 ? (
+                <Text style={styles.followerText}>
+                  {(props.followers_count / 1000000).toFixed(1)} M
+                </Text>
+              ) : (
+                <Text style={styles.followerText}>
+                  {(props.followers_count / 1000).toFixed(1)} k
+                </Text>
+              )}
             </View>
             <TouchableOpacity onPress={() => navigation.navigate('Category')}>
               <View style={{flexDirection: 'row', marginTop: 13}}>

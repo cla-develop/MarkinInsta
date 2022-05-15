@@ -65,14 +65,26 @@ export default function RList(props: any) {
                 </Text>
               </View>
               <View style={{width: 70}}>
-                <Text style={styles.realFollowerText}>
-                  {(item.realFollowerCount / 1000).toFixed(1)} k
-                </Text>
+                {item.realFollowerCount >= 1000000 ? (
+                  <Text style={styles.realFollowerText}>
+                    {(item.realFollowerCount / 1000000).toFixed(1)} M
+                  </Text>
+                ) : (
+                  <Text style={styles.realFollowerText}>
+                    {(item.realFollowerCount / 1000).toFixed(1)} k
+                  </Text>
+                )}
               </View>
               <View style={{width: 75}}>
-                <Text style={styles.followerText}>
-                  {(item.followerCount / 1000).toFixed(1)} k
-                </Text>
+                {item.followerCount >= 1000000 ? (
+                  <Text style={styles.followerText}>
+                    {(item.followerCount / 1000000).toFixed(1)} M
+                  </Text>
+                ) : (
+                  <Text style={styles.followerText}>
+                    {(item.followerCount / 1000).toFixed(1)} k
+                  </Text>
+                )}
               </View>
             </View>
           </View>
