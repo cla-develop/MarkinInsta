@@ -29,8 +29,7 @@ export default function FollowAgeGender(props: any) {
         await axios
           .get('https://www.markin-app.site/app/channel', {
             headers: {
-              'x-access-token':
-                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImluc3RhZ3JhbUlkIjoxNzg0MTQwMDIyOTcwMTgyOCwiaWF0IjoxNjUyMzQxMTExLCJleHAiOjE2ODM4NzcxMTEsInN1YiI6InVzZXJJbmZvIn0.8XSYKlxZeS0DwR7OeMcbizT-mvIR0nlFs7oYO37Q6jM',
+              'x-access-token': props.JWT,
             },
           })
           .then(response => {
@@ -80,7 +79,7 @@ export default function FollowAgeGender(props: any) {
       }
     };
     getchannel();
-  }, []);
+  }, [props.JWT]);
   const [asd, setasd] = useState(0);
   useEffect(() => {
     setTimeout(() => {
@@ -123,7 +122,7 @@ export default function FollowAgeGender(props: any) {
                   styles.greyGraph,
                   {
                     backgroundColor: firSum === Max ? '#7603FF' : '#EDEDED',
-                    height: 200 / (Max / firSum),
+                    height: 180 / (Max / firSum),
                   },
                 ]}></View>
               <Text style={styles.ageText}>13-17</Text>
@@ -134,7 +133,7 @@ export default function FollowAgeGender(props: any) {
                   styles.greyGraph,
                   {
                     backgroundColor: secSum === Max ? '#7603FF' : '#EDEDED',
-                    height: 200 / (215 / secSum),
+                    height: 180 / (Max / secSum),
                   },
                 ]}></View>
               <Text>18-24</Text>
@@ -147,7 +146,7 @@ export default function FollowAgeGender(props: any) {
                   styles.greyGraph,
                   {
                     backgroundColor: thirSum === Max ? '#7603FF' : '#EDEDED',
-                    height: 200 / (215 / thirSum),
+                    height: 180 / (Max / thirSum),
                   },
                 ]}></View>
               <Text style={styles.ageText}>25-34</Text>
@@ -158,7 +157,7 @@ export default function FollowAgeGender(props: any) {
                   styles.greyGraph,
                   {
                     backgroundColor: fifSum === Max ? '#7603FF' : '#EDEDED',
-                    height: 200 / (Max / fifSum),
+                    height: 180 / (Max / fifSum),
                   },
                 ]}></View>
               <Text style={styles.ageText}>35-44</Text>
@@ -169,7 +168,7 @@ export default function FollowAgeGender(props: any) {
                   styles.greyGraph,
                   {
                     backgroundColor: fifSum === Max ? '#7603FF' : '#EDEDED',
-                    height: 200 / (Max / fifSum),
+                    height: 180 / (Max / fifSum),
                   },
                 ]}></View>
               <Text style={styles.ageText}>45-54</Text>
@@ -180,7 +179,7 @@ export default function FollowAgeGender(props: any) {
                   styles.greyGraph,
                   {
                     backgroundColor: sixSum === Max ? '#7603FF' : '#EDEDED',
-                    height: 200 / (Max / sixSum),
+                    height: 180 / (Max / sixSum),
                   },
                 ]}></View>
               <Text style={styles.ageText}>55+</Text>

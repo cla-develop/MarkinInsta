@@ -19,8 +19,7 @@ export default function MyFeedHeader(props) {
     axios
       .get(`https://www.markin-app.site/app/users/instagram`, {
         headers: {
-          'x-access-token':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImluc3RhZ3JhbUlkIjoiNDIzNDQwMzAxMzMyODU5MiIsImlhdCI6MTY0MzQ4MDg1MCwiZXhwIjoxNjc1MDE2ODUwLCJzdWIiOiJ1c2VySW5mbyJ9.MlsJ3tZcye9WdqRwz-AKY5KNZf46B1gFQ8nqgrJxGMg',
+          'x-access-token': props.JWT,
         },
       })
       .then(response => {
@@ -28,7 +27,7 @@ export default function MyFeedHeader(props) {
         console.log(response.data.result);
         setfirst(response.data.result[0].username);
       });
-  }, []);
+  }, [props.JWT]);
   return (
     <View style={{flexDirection: 'row'}}>
       <TouchableOpacity

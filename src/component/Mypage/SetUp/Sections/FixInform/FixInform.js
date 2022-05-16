@@ -10,7 +10,7 @@ import styles from '../../../../Styles';
 import Icons from '../../../../Icons/Icons';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function FixInform() {
   const navigation = useNavigation();
   const [PhonNum, setPhonNum] = useState('');
@@ -21,12 +21,23 @@ export default function FixInform() {
   const [Name, setName] = useState('');
   const [SF, setSF] = useState('0');
   const [Birth, setBirth] = useState('');
+  const [JWT, setJWT] = useState('');
+  useEffect(() => {
+    AsyncStorage.getItem('JWT').then(value => {
+      setJWT(value);
+    });
+  }, []);
+  const [asd, setasd] = useState(0);
+  useEffect(() => {
+    setTimeout(() => {
+      setasd(1);
+    }, 100);
+  }, []);
   useEffect(() => {
     axios
       .get('https://www.markin-app.site/app/users', {
         headers: {
-          'x-access-token':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImluc3RhZ3JhbUlkIjoiNDIzNDQwMzAxMzMyODU5MiIsImlhdCI6MTY0MzQ4MDg1MCwiZXhwIjoxNjc1MDE2ODUwLCJzdWIiOiJ1c2VySW5mbyJ9.MlsJ3tZcye9WdqRwz-AKY5KNZf46B1gFQ8nqgrJxGMg',
+          'x-access-token': JWT,
         },
       })
       .then(response => {
@@ -34,8 +45,9 @@ export default function FixInform() {
         setName(response.data.result.name);
         setPhonNum(response.data.result.phone);
         setBirth(response.data.result.birth);
+        setasd(1);
       });
-  }, []);
+  }, [JWT]);
 
   const Send = () => {
     axios({
@@ -45,8 +57,7 @@ export default function FixInform() {
         phone: PhonNum,
       },
       headers: {
-        'x-access-token':
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImluc3RhZ3JhbUlkIjoiNDIzNDQwMzAxMzMyODU5MiIsImlhdCI6MTY0MzQ4MDg1MCwiZXhwIjoxNjc1MDE2ODUwLCJzdWIiOiJ1c2VySW5mbyJ9.MlsJ3tZcye9WdqRwz-AKY5KNZf46B1gFQ8nqgrJxGMg',
+        'x-access-token': JWT,
       },
       url: 'https://www.markin-app.site/app/users',
     }).then(response => {
@@ -102,29 +113,37 @@ export default function FixInform() {
       <View style={{padding: '5%'}}>
         <Text style={instyles.inputTitle}>이름</Text>
         <View style={instyles.squareView}>
-          <Text style={[styles.NotoReg16, {color: '#9C9C9C'}]}>{Name}</Text>
+          {asd === 1 && (
+            <Text style={[styles.NotoReg16, {color: '#9C9C9C'}]}>{Name}</Text>
+          )}
         </View>
         <Text style={instyles.inputTitle}>생년월일</Text>
         <View style={instyles.squareView}>
-          <Text style={[styles.NotoReg16, {color: '#9C9C9C'}]}>{Birth}</Text>
+          {asd === 1 && (
+            <Text style={[styles.NotoReg16, {color: '#9C9C9C'}]}>{Birth}</Text>
+          )}
         </View>
         <Text style={instyles.inputTitle}>이메일</Text>
-        <TextInput
-          style={styles.W100input}
-          value={Email}
-          autoCapitalize={'none'}
-          autoCorrect={false}
-          onChangeText={event => setEmail(event)}
-        />
-        <Text style={instyles.inputTitle}>휴대폰 번호</Text>
-        <View style={{flexDirection: 'row'}}>
+        {asd === 1 && (
           <TextInput
-            style={[styles.input, {width: 220}]}
-            value={PhonNum}
+            style={styles.W100input}
+            value={Email}
             autoCapitalize={'none'}
             autoCorrect={false}
-            onChangeText={event => setPhonNum(event)}
+            onChangeText={event => setEmail(event)}
           />
+        )}
+        <Text style={instyles.inputTitle}>휴대폰 번호</Text>
+        <View style={{flexDirection: 'row'}}>
+          {asd === 1 && (
+            <TextInput
+              style={[styles.input, {width: 220}]}
+              value={PhonNum}
+              autoCapitalize={'none'}
+              autoCorrect={false}
+              onChangeText={event => setPhonNum(event)}
+            />
+          )}
           <TouchableOpacity onPress={() => SendVri()}>
             <View style={instyles.requestBtun}>
               <Text style={[styles.NotoMe14, {color: 'white'}]}>

@@ -1,13 +1,23 @@
 /* eslint-disable react-native/no-inline-styles */
 import {useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Linking} from 'react-native';
 import Icons from '../../Icons/Icons';
 import MyCarousel from './MyCarosel';
 import {LoginManager, AccessToken, LoginButton} from 'react-native-fbsdk-next';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 const loginWithFacebook = () => {
-  LoginManager.logInWithPermissions(['public_profile']).then(
+  LoginManager.logInWithPermissions([
+    'public_profile',
+    'openid',
+    'pages_show_list',
+    'business_management',
+    'instagram_basic',
+    'instagram_manage_insights',
+    'pages_read_engagement',
+  ]).then(
     function (result) {
       if (result.isCancelled) {
         console.log('==> Login cancelled');
@@ -32,6 +42,39 @@ const loginWithFacebook = () => {
 export default function LinkMarkin() {
   const navigation = useNavigation();
   const [Page, setPage] = useState(0);
+  const [JWT, setJWT] = useState('');
+  const [AccessTokenFb, setAccessTokenFb] = useState('');
+  useEffect(() => {
+    AsyncStorage.getItem('JWT').then(value => {
+      setJWT(value);
+      console.log(value + 'jWT토큰');
+    });
+  }, []);
+  useEffect(() => {
+    const checkSignin = async () => {
+      try {
+        await axios({
+          method: 'post',
+          url: 'https://www.markin-app.site/app/oauth/facebook',
+          headers: {
+            'x-access-token': JWT,
+          },
+          data: {
+            access_token: AccessTokenFb,
+          },
+        }).then(response => {
+          if (response.data.isSuccess === true) {
+            console.log(response.data.message);
+          } else {
+            console.log(response.data.message + 'asd');
+          }
+        });
+      } catch (response: any) {
+        console.log(response.data.message);
+      }
+    };
+    checkSignin();
+  }, [AccessTokenFb]);
 
   return (
     <View style={styles.allView}>
@@ -151,6 +194,7 @@ export default function LinkMarkin() {
                 } else {
                   AccessToken.getCurrentAccessToken().then(data => {
                     console.log(data.accessToken.toString());
+                    setAccessTokenFb(data.accessToken);
                   });
                 }
               }}

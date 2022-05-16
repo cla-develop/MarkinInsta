@@ -41,17 +41,18 @@ export default function MyRank(props: any) {
               </View>
             </View>
             <View
-              style={{flexDirection: 'row', marginTop: 40, marginLeft: '55%'}}>
-              <View style={styles.UpHighlightView}>
+              style={{flexDirection: 'row', marginTop: 40, marginLeft: '65%'}}>
+              {/* <View style={styles.UpHighlightView}>
                 <View style={{flexDirection: 'row', paddingLeft: 6}}>
                   <Icons.AntDesign name="arrowup" size={15} color="#57C971" />
                   <Text style={styles.UpHiText}>21</Text>
                 </View>
+              </View> */}
+              <View style={{width: 100}}>
+                <Text style={styles.numText}>
+                  {ranking.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}등
+                </Text>
               </View>
-              <Text style={styles.numText}>
-                {props.ranking.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                등
-              </Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -105,5 +106,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 20,
     fontFamily: 'SpoqaHanSansNeo-Medium',
+    textAlign: 'right',
   },
 });

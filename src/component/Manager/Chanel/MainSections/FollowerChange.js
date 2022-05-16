@@ -21,10 +21,10 @@ export default function FollowerChange(props) {
       })
       .then(response => {
         if (response.data.code === 3008) {
-          isFb(false);
+          setisFb(false);
         } else {
           setData(response.data.result);
-          isFb(true);
+          setisFb(true);
         }
       });
   }, [props.JWT]);
@@ -49,13 +49,29 @@ export default function FollowerChange(props) {
                   <Text style={styles.numText}>{Data.follower}</Text>
                   <Text style={styles.Textlet}> 명</Text>
                   <View style={{flexDirection: 'row', marginTop: 3}}>
-                    <Icons.AntDesign
-                      name="arrowup"
-                      color="#57C971"
-                      size={15}
-                      style={{marginTop: 1, marginLeft: 10}}
-                    />
-                    <Text style={styles.UpText}>{Data.followerTrend}</Text>
+                    {Data.followerTrend >= 0 ? (
+                      <Icons.AntDesign
+                        name="arrowup"
+                        color="#57C971"
+                        size={15}
+                        style={{marginTop: 1, marginLeft: 10}}
+                      />
+                    ) : (
+                      <Icons.AntDesign
+                        name="arrowdown"
+                        color="#FF5959"
+                        size={15}
+                        style={{marginTop: 1, marginLeft: 10}}
+                      />
+                    )}
+                    <Text
+                      style={
+                        Data.followerTrend >= 0
+                          ? styles.UpText
+                          : styles.DownText
+                      }>
+                      {Data.followerTrend}
+                    </Text>
                   </View>
                 </View>
               </View>
@@ -68,13 +84,29 @@ export default function FollowerChange(props) {
                   <Text style={styles.numText}>{Data.profileview}</Text>
                   <Text style={styles.Textlet}> 명</Text>
                   <View style={{flexDirection: 'row', marginTop: 3}}>
-                    <Icons.AntDesign
-                      name="arrowup"
-                      color="#57C971"
-                      size={15}
-                      style={{marginTop: 1, marginLeft: 10}}
-                    />
-                    <Text style={styles.UpText}>{Data.profileviewTrend}</Text>
+                    {Data.profileviewTrend >= 0 ? (
+                      <Icons.AntDesign
+                        name="arrowup"
+                        color="#57C971"
+                        size={15}
+                        style={{marginTop: 1, marginLeft: 10}}
+                      />
+                    ) : (
+                      <Icons.AntDesign
+                        name="arrowdown"
+                        color="#FF5959"
+                        size={15}
+                        style={{marginTop: 1, marginLeft: 10}}
+                      />
+                    )}
+                    <Text
+                      style={
+                        Data.profileviewTrend >= 0
+                          ? styles.UpText
+                          : styles.DownText
+                      }>
+                      {Data.profileviewTrend}
+                    </Text>
                   </View>
                 </View>
               </View>
@@ -87,7 +119,7 @@ export default function FollowerChange(props) {
                   <Text style={styles.numText}>{Data.clickMessage}</Text>
                   <Text style={styles.Textlet}> 명</Text>
                   <View style={{flexDirection: 'row', marginTop: 3}}>
-                    {Data.clickMessageTrend > 0 ? (
+                    {Data.clickMessageTrend >= 0 ? (
                       <Icons.AntDesign
                         name="arrowup"
                         color="#57C971"
@@ -103,7 +135,12 @@ export default function FollowerChange(props) {
                       />
                     )}
 
-                    <Text style={styles.DownText}>
+                    <Text
+                      style={
+                        Data.clickMessageTrend >= 0
+                          ? styles.UpText
+                          : styles.DownText
+                      }>
                       {Data.clickMessageTrend}
                     </Text>
                   </View>

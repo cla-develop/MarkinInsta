@@ -11,7 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import noprofile from '../../../../images/noprofile.png';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
-export default function ForMe() {
+export default function ForMe(props) {
   const navigation = useNavigation();
   const [Result, setResult] = useState([]);
   const [JWT, setJWT] = useState('');
@@ -24,7 +24,7 @@ export default function ForMe() {
     axios
       .get(`https://www.markin-app.site/app/activity/popular`, {
         headers: {
-          'x-access-token': JWT,
+          'x-access-token': props.JWT,
         },
       })
       .then(response => {
@@ -32,7 +32,7 @@ export default function ForMe() {
         console.log(Result);
       })
       .catch(err => console.log(err));
-  }, [JWT]);
+  }, [props.JWT]);
   return (
     <View>
       {/* <View style={{flexDirection: 'row'}}> */}

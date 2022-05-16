@@ -27,7 +27,7 @@ export default function Profile(props) {
                 </Text>
               ) : (
                 <Text style={styles.followerText}>
-                  {(props.realFollower / 1000).toFixed(1)} k
+                  {(props.realFollower / 1000).toFixed(1)} K
                 </Text>
               )}
               <Text style={[styles.normalText, {marginLeft: 25}]}>팔로워</Text>
@@ -37,7 +37,7 @@ export default function Profile(props) {
                 </Text>
               ) : (
                 <Text style={styles.followerText}>
-                  {(props.followers_count / 1000).toFixed(1)} k
+                  {(props.followers_count / 1000).toFixed(1)} K
                 </Text>
               )}
             </View>
@@ -128,5 +128,10 @@ const styles = StyleSheet.create({
     borderRadius: 70 / 2,
     borderColor: '#DEDEDE',
     borderWidth: 1,
+  },
+  followerText: {
+    fontFamily: 'Roboto-Medium',
+    fontSize: 18,
+    marginLeft: 5,
   },
 });

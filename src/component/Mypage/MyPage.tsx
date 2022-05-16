@@ -5,7 +5,7 @@ import {useIsFocused} from '@react-navigation/native';
 import Profile from './InstaSections/Profile';
 import Pictures from './InstaSections/Pictures';
 import axios from 'axios';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function MyPage() {
   const [Data, setData] = useState([
     {
@@ -20,14 +20,25 @@ export default function MyPage() {
   const [realFollower, setrealFollower] = useState(0);
   const [Point, setPoint] = useState(0);
   const [CampaginCount, setCampaginCount] = useState(0);
+  const [JWT, setJWT] = useState('');
 
+  useEffect(() => {
+    AsyncStorage.getItem('JWT').then(value => {
+      setJWT(value);
+    });
+  }, []);
+  const [asd, setasd] = useState(0);
+  useEffect(() => {
+    setTimeout(() => {
+      setasd(1);
+    }, 100);
+  }, []);
   useEffect(() => {
     // tslint:disable-next-line: no-floating-promises
     axios
       .get('https://www.markin-app.site/app/users/feed', {
         headers: {
-          'x-access-token':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImluc3RhZ3JhbUlkIjoxNzg0MTQwMDIyOTcwMTgyOCwiaWF0IjoxNjUxNDc1NjY5LCJleHAiOjE2ODMwMTE2NjksInN1YiI6InVzZXJJbmZvIn0.j4u8erTV0-NPxnCELratkdGsQe4AXDFM4tE1iQC-zaw',
+          'x-access-token': JWT,
         },
       })
       .then(response => {
@@ -46,7 +57,7 @@ export default function MyPage() {
         setCampaginCount(response.data.result.campaignCount);
         setPoint(response.data.result.point);
       });
-  }, []);
+  }, [JWT]);
 
   const isFocused = useIsFocused();
 
@@ -56,8 +67,7 @@ export default function MyPage() {
       axios
         .get(`https://www.markin-app.site/app/users/categories`, {
           headers: {
-            'x-access-token':
-              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImluc3RhZ3JhbUlkIjoxNzg0MTQwMDIyOTcwMTgyOCwiaWF0IjoxNjUxNDc1NjY5LCJleHAiOjE2ODMwMTE2NjksInN1YiI6InVzZXJJbmZvIn0.j4u8erTV0-NPxnCELratkdGsQe4AXDFM4tE1iQC-zaw',
+            'x-access-token': JWT,
           },
         })
         .then(response => {
@@ -66,27 +76,31 @@ export default function MyPage() {
         });
     };
     call();
-  }, [isFocused]);
+  }, [JWT]);
 
   return (
     <View style={{height: '100%', backgroundColor: 'white'}}>
-      <View style={styles.HeaderStyle}>
-        <MyFeedHeader />
-      </View>
-      <View style={styles.profileView}>
-        <Profile
-          profileImg={profileImg}
-          Point={Point}
-          Category={Category}
-          followers_count={followers_count}
-          realFollower={realFollower}
-          CampaginCount={CampaginCount}
-        />
-      </View>
+      {asd === 1 && (
+        <>
+          <View style={styles.HeaderStyle}>
+            <MyFeedHeader JWT={JWT} />
+          </View>
+          <View style={styles.profileView}>
+            <Profile
+              profileImg={profileImg}
+              Point={Point}
+              Category={Category}
+              followers_count={followers_count}
+              realFollower={realFollower}
+              CampaginCount={CampaginCount}
+            />
+          </View>
 
-      <View style={{width: '100%'}}>
-        <Pictures Data={Data} profileImg={profileImg} username={username} />
-      </View>
+          <View style={{width: '100%'}}>
+            <Pictures Data={Data} profileImg={profileImg} username={username} />
+          </View>
+        </>
+      )}
     </View>
   );
 }

@@ -61,14 +61,14 @@ export default function PopularPost(props: any) {
                         </Text>
                       </View>
                     </View>
-                    <View style={{height: 30, marginLeft: 20}}>
+                    {/* <View style={{height: 30, marginLeft: 20}}>
                       <Text style={styles.subText}>
                         자기가 사람인 줄 아는 댕댕이{' '}
                       </Text>
                       <Text style={styles.hashText}>
                         #나리 #비숑 #댕댕이 #멍멍이
                       </Text>
-                    </View>
+                    </View> */}
                   </View>
                 </TouchableOpacity>
               </View>
@@ -112,14 +112,14 @@ export default function PopularPost(props: any) {
                         </Text>
                       </View>
                     </View>
-                    <View style={{height: 30, marginLeft: 20}}>
+                    {/* <View style={{height: 30, marginLeft: 20}}>
                       <Text style={styles.subText}>
                         자기가 사람인 줄 아는 댕댕이{' '}
                       </Text>
                       <Text style={styles.hashText}>
                         #나리 #비숑 #댕댕이 #멍멍이
                       </Text>
-                    </View>
+                    </View> */}
                   </View>
                 </TouchableOpacity>
               </View>

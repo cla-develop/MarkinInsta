@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import styles from '../../Styles';
 import Icons from '../../Icons/Icons';
@@ -24,6 +24,7 @@ export default function SetUp() {
       console.log('qwwqqqqqq');
     }
   };
+
   const navigation = useNavigation();
   return (
     <View style={styles.allView}>
@@ -73,6 +74,7 @@ export default function SetUp() {
       </View>
       <View style={{padding: '5%'}}>
         {/* 회원정보 수정 */}
+
         <TouchableOpacity onPress={() => navigation.navigate('FixInform')}>
           <View style={{flexDirection: 'row', height: 50}}>
             <View style={{justifyContent: 'center'}}>
@@ -83,6 +85,7 @@ export default function SetUp() {
             </View>
           </View>
         </TouchableOpacity>
+
         {/* 채널연결관리 */}
         <TouchableOpacity onPress={() => navigation.navigate('ManageLink')}>
           <View style={{flexDirection: 'row', height: 50}}>

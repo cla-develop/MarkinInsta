@@ -19,8 +19,7 @@ export default function FollowRegion(props: any) {
     axios
       .get('https://www.markin-app.site/app/channel', {
         headers: {
-          'x-access-token':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImluc3RhZ3JhbUlkIjoxNzg0MTQwMDIyOTcwMTgyOCwiaWF0IjoxNjUxNDc1NjY5LCJleHAiOjE2ODMwMTE2NjksInN1YiI6InVzZXJJbmZvIn0.j4u8erTV0-NPxnCELratkdGsQe4AXDFM4tE1iQC-zaw',
+          'x-access-token': props.JWT,
         },
       })
       .then(response => {
@@ -34,9 +33,9 @@ export default function FollowRegion(props: any) {
           ),
         );
         setfollowerTopCity(
-          response.data.result.followerTopCountry.map(
+          response.data.result.followerTopCity.map(
             (node: {city: any; population: any; ratio: any}) => ({
-              city: node.city,
+              city: node.city.split(','),
               population: node.population,
               ratio: node.ratio,
             }),
@@ -44,7 +43,7 @@ export default function FollowRegion(props: any) {
         );
         console.log(followerTopCity);
       });
-  }, []);
+  }, [props.JWT]);
 
   useEffect(() => {
     followerTopCountry.map(itme =>
@@ -158,7 +157,7 @@ export default function FollowRegion(props: any) {
                         style={[styles.Dot, {backgroundColor: '#FF5959'}]}
                       />
                       <Text style={[styles.regionText, {marginLeft: 6}]}>
-                        {item.city}
+                        {item.city[0]}
                       </Text>
                     </View>
                     <View style={{width: 60}}>
@@ -183,7 +182,7 @@ export default function FollowRegion(props: any) {
             </View>
             <View style={styles.GraphcenterView}>
               <Text style={{fontFamily: 'NotoSansKR-Medium'}}>
-                {followerTopCity[0].city} {followerTopCity[0].ratio}%
+                {followerTopCity[0].city[0]} {followerTopCity[0].ratio}%
               </Text>
             </View>
           </View>

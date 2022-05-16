@@ -66,7 +66,10 @@ export default function Category({navigation, route}: any) {
           },
         }).then(response => {
           if (response.data.isSuccess === true) {
-            navigation.navigate('Body');
+            navigation.reset({
+              index: 0,
+              routes: [{name: 'Body'}],
+            });
           } else console.log(response.data.message);
         });
       } catch {}

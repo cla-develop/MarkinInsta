@@ -1,16 +1,30 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import Icons from '../../../Icons/Icons';
 import saveMoney from '../../../../images/saveMoney.png';
+import axios from 'axios';
+
 export default function Ability(props: any) {
+  const [LowerCost, setLowerCost] = useState(10);
+  const [upperCost, setupperCost] = useState(10);
+  useEffect(() => {
+    // tslint:disable-next-line: no-floating-promises
+    axios
+      .get(`https://www.markin-app.site/app/media/cost`, {
+        headers: {
+          'x-access-token': props.JWT,
+        },
+      })
+      .then(response => {
+        setLowerCost(response.data.result.lower_cost);
+        setupperCost(response.data.result.upper_cost);
+      });
+  }, [props.JWT]);
   return (
     <View style={{marginTop: 15}}>
       <View style={styles.mainView}>
         <View style={{flexDirection: 'row', marginTop: 15, marginLeft: 15}}>
           <Text style={styles.TopText}>계정 광고 역량</Text>
-          <View style={{position: 'absolute', right: 15}}>
-            <Icons.AntDesign name="right" color="#DEDEDE" size={20} />
-          </View>
         </View>
         <View style={{flexDirection: 'row', width: '100%', padding: '5%'}}>
           <View style={styles.ImageView}>
@@ -21,10 +35,8 @@ export default function Ability(props: any) {
               나의 적정 협찬 비용은
             </Text>
             <Text style={styles.purpleText}>
-              {props.lowerCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
-              원 ~{' '}
-              {props.upperCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
-              원
+              {LowerCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 원 ~{' '}
+              {upperCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 원
             </Text>
           </View>
         </View>

@@ -49,7 +49,7 @@ export default function MainHeader(props) {
         </View>
       </View>
 
-      <View style={{flexDirection: 'row', width: '100%', paddingTop: 30}}>
+      <View style={{flexDirection: 'row', width: '100%', paddingTop: 0}}>
         <TouchableOpacity onPress={handlefocusHome}>
           {props.stateChange === 1 ? (
             <View style={styles.focusView}>
@@ -92,7 +92,9 @@ const styles = StyleSheet.create({
   Logo: {
     textAlign: 'center',
     top: 0,
+    fontFamily: 'Quantico-Bold',
     transform: [{translateX: 0}, {translateY: 0}],
+    fontSize: 22,
   },
   greyText: {
     opacity: 0.5,

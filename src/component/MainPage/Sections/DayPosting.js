@@ -69,7 +69,8 @@ export default function DayPosting(props) {
             <View style={{width: '50%'}}>
               <Text
                 style={{textAlign: 'right', marginRight: '10%', fontSize: 16}}>
-                {todayLike.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 명
+                {todayComment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
+                명
               </Text>
             </View>
           </View>
@@ -80,8 +81,7 @@ export default function DayPosting(props) {
             <View style={{width: '50%'}}>
               <Text
                 style={{textAlign: 'right', marginRight: '10%', fontSize: 16}}>
-                {todayComment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
-                개
+                {todayLike.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 개
               </Text>
             </View>
           </View>

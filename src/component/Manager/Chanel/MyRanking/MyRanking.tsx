@@ -15,6 +15,7 @@ import RankingList from './Sections/RankingList';
 import MyInfo from './Sections/MyInfo';
 import Icons from '../../../Icons/Icons';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function MyRanking(props: any) {
   const [IsModalVisble, setIsModalVisble] = useState<boolean>(false);
   const [FnumLet, setFnumLet] = useState('팔로워순');
@@ -36,6 +37,18 @@ export default function MyRanking(props: any) {
       realFollowerCount: 1,
     },
   ]);
+  const [JWT, setJWT] = useState('');
+  useEffect(() => {
+    AsyncStorage.getItem('JWT').then(value => {
+      setJWT(value);
+    });
+  }, []);
+  const [asd, setasd] = useState(0);
+  useEffect(() => {
+    setTimeout(() => {
+      setasd(1);
+    }, 100);
+  }, []);
   useEffect(() => {
     setCat('전체');
   }, []);
@@ -43,14 +56,13 @@ export default function MyRanking(props: any) {
     axios
       .get(`https://www.markin-app.site/app/users/categories`, {
         headers: {
-          'x-access-token':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImluc3RhZ3JhbUlkIjoiNDIzNDQwMzAxMzMyODU5MiIsImlhdCI6MTY0MzQ4MDg1MCwiZXhwIjoxNjc1MDE2ODUwLCJzdWIiOiJ1c2VySW5mbyJ9.MlsJ3tZcye9WdqRwz-AKY5KNZf46B1gFQ8nqgrJxGMg',
+          'x-access-token': JWT,
         },
       })
       .then(response => {
         setCategory(response.data.result);
       });
-  }, []);
+  }, [JWT]);
   useEffect(() => {
     // tslint:disable-next-line: no-floating-promises
     axios
@@ -58,8 +70,7 @@ export default function MyRanking(props: any) {
         `https://www.markin-app.site/app/channel/ranking?type=${FnumLet}&category=${Cat}`,
         {
           headers: {
-            'x-access-token':
-              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImluc3RhZ3JhbUlkIjoiNDIzNDQwMzAxMzMyODU5MiIsImlhdCI6MTY0MzQ4MDg1MCwiZXhwIjoxNjc1MDE2ODUwLCJzdWIiOiJ1c2VySW5mbyJ9.MlsJ3tZcye9WdqRwz-AKY5KNZf46B1gFQ8nqgrJxGMg',
+            'x-access-token': JWT,
           },
         },
       )
@@ -69,6 +80,7 @@ export default function MyRanking(props: any) {
         setUserName(response.data.result.myRanking.username);
         setFollowerCount(response.data.result.myRanking.followersCount);
         setRealFollowerCnt(response.data.result.myRanking.realFollowerCount);
+        setasd(1);
         setOthers(
           response.data.result.rankingList.map(
             (node: {
@@ -183,49 +195,52 @@ export default function MyRanking(props: any) {
 
   return (
     <>
-      <View style={styles.allView}>
-        <TouchableOpacity
-          onPress={() => props.navigation.goBack()}
-          style={{paddingLeft: '5%'}}>
-          <Icons.Entypo name="chevron-thin-left" size={20} color="black" />
-        </TouchableOpacity>
-        <View style={{marginTop: 20, flexDirection: 'row', paddingLeft: '5%'}}>
-          <View style={{width: '70%'}}>
-            <Text style={styles.TopText}>나의 랭킹</Text>
-          </View>
+      {asd === 1 && (
+        <View style={styles.allView}>
           <TouchableOpacity
-            onPress={() => handleModal()}
-            style={{marginTop: 14}}>
-            <View style={{width: 100, flexDirection: 'row'}}>
-              <Text style={styles.filterText}>{FnumLet}</Text>
-              <Image source={filter} style={styles.filter} />
-            </View>
+            onPress={() => props.navigation.goBack()}
+            style={{paddingLeft: '5%'}}>
+            <Icons.Entypo name="chevron-thin-left" size={20} color="black" />
           </TouchableOpacity>
+          <View
+            style={{marginTop: 20, flexDirection: 'row', paddingLeft: '5%'}}>
+            <View style={{width: '70%'}}>
+              <Text style={styles.TopText}>나의 랭킹</Text>
+            </View>
+            <TouchableOpacity
+              onPress={() => handleModal()}
+              style={{marginTop: 14}}>
+              <View style={{width: 100, flexDirection: 'row'}}>
+                <Text style={styles.filterText}>{FnumLet}</Text>
+                <Image source={filter} style={styles.filter} />
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          <CatBtn Category={Category} Cat={Cat} setCat={setCat} />
+
+          {/* 가운데 내 정보 section */}
+          <MyInfo
+            MyRank={MyRank}
+            MyProfileImg={MyProfileImg}
+            UserName={UserName}
+            FNum={FNum}
+            RFNum={RFNum}
+          />
+
+          <Text style={styles.similarText}>나와 비슷한 랭킹</Text>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <RankingList Others={Others} />
+            <View style={{height: 50}} />
+          </ScrollView>
+          <MyRankModal
+            IsModalVisble={IsModalVisble}
+            setIsModalVisble={setIsModalVisble}
+            setFnumLet={setFnumLet}
+            FnumLet={FnumLet}
+          />
         </View>
-
-        <CatBtn Category={Category} Cat={Cat} setCat={setCat} />
-
-        {/* 가운데 내 정보 section */}
-        <MyInfo
-          MyRank={MyRank}
-          MyProfileImg={MyProfileImg}
-          UserName={UserName}
-          FNum={FNum}
-          RFNum={RFNum}
-        />
-
-        <Text style={styles.similarText}>나와 비슷한 랭킹</Text>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <RankingList Others={Others} />
-          <View style={{height: 50}} />
-        </ScrollView>
-        <MyRankModal
-          IsModalVisble={IsModalVisble}
-          setIsModalVisble={setIsModalVisble}
-          setFnumLet={setFnumLet}
-          FnumLet={FnumLet}
-        />
-      </View>
+      )}
     </>
   );
 }

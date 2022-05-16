@@ -44,6 +44,7 @@ import Detail from './src/component/Activity/Detail/Detail';
 import Activity from './src/component/Activity/Activity';
 import EmailSignup from './src/component/SignIn/Email/EmailSignup';
 import SplashPage from './src/component/SplashPage';
+import Loading from './src/component/SignIn/Loading';
 import {Settings} from 'react-native-fbsdk-next';
 import SplashScreen from 'react-native-splash-screen';
 const Stack = createStackNavigator();
@@ -120,6 +121,7 @@ function App() {
         <Stack.Screen name="AgeChoose" component={AgeChoose} />
         <Stack.Screen name="Category" component={Category} />
         <Stack.Screen name="EmailSignup" component={EmailSignup} />
+        <Stack.Screen name="Loading" component={Loading} />
         {/* 홈 */}
         <Stack.Screen name="Main" component={Main} />
         <Stack.Screen name="Alarm" component={Alarm} />

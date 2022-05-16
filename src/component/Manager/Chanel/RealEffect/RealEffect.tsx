@@ -11,6 +11,7 @@ import NumSection from './Sections/NumSection';
 import GraphSection from './Sections/GraphSection';
 import SliderSections from './Sections/SliderSections';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function RealEffect(props: any) {
   const [Follower, setFollower] = useState<number>(0);
   const [realFollower, setRealFollower] = useState<number>(0);
@@ -23,13 +24,25 @@ export default function RealEffect(props: any) {
   const [UserName, setUserName] = useState<string>('');
   const [MyPercent, setMyPercent] = useState<number>(0);
   const [Quality, setQuality] = useState<number>(0);
+
+  const [JWT, setJWT] = useState('');
+  useEffect(() => {
+    AsyncStorage.getItem('JWT').then(value => {
+      setJWT(value);
+    });
+  }, []);
+  const [asd, setasd] = useState(0);
+  useEffect(() => {
+    setTimeout(() => {
+      setasd(1);
+    }, 1000);
+  }, []);
   useEffect(() => {
     // tslint:disable-next-line: no-floating-promises
     axios
       .get('https://www.markin-app.site/app/channel/influence', {
         headers: {
-          'x-access-token':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImluc3RhZ3JhbUlkIjoiNDIzNDQwMzAxMzMyODU5MiIsImlhdCI6MTY0MzQ4MDg1MCwiZXhwIjoxNjc1MDE2ODUwLCJzdWIiOiJ1c2VySW5mbyJ9.MlsJ3tZcye9WdqRwz-AKY5KNZf46B1gFQ8nqgrJxGMg',
+          'x-access-token': JWT,
         },
       })
       .then(response => {
@@ -41,7 +54,7 @@ export default function RealEffect(props: any) {
         setMyPercent(Math.floor(response.data.result.my_persent));
         setQuality(Math.floor(response.data.result.quality));
       });
-  }, []);
+  }, [JWT]);
 
   const underFK = (fff: string) => {
     const Onum =
@@ -94,31 +107,33 @@ export default function RealEffect(props: any) {
   }, [Follower, realFollower, TopAvg, rangeAvg]);
   return (
     <>
-      <ScrollView showsVerticalScrollIndicator={false} style={styles.allView}>
-        <TouchableOpacity onPress={() => props.navigation.goBack()}>
-          <Icons.Entypo name="chevron-thin-left" size={20} color="black" />
-        </TouchableOpacity>
-        <View style={{marginTop: 20}}>
-          <Text style={styles.TopText}>진짜 영향력</Text>
-          <Text style={styles.subText}>
-            진짜 영향력은 내 게시물에 반응을 보이는{'\n'}한국인 팔로워
-            예상수치입니다.
-          </Text>
-        </View>
-        <NumSection FNum={FNum} RFNum={RFNum} />
-        <GraphSection
-          RNum={RNum}
-          TNum={TNum}
-          RFNum={RFNum}
-          TopAvg={TopAvg}
-          rangeAvg={rangeAvg}
-          realFollower={realFollower}
-          UserName={UserName}
-          MyPercent={MyPercent}
-        />
-        <SliderSections Quality={Quality} UserName={UserName} />
-        <View style={{height: 100}}></View>
-      </ScrollView>
+      {asd === 1 && (
+        <ScrollView showsVerticalScrollIndicator={false} style={styles.allView}>
+          <TouchableOpacity onPress={() => props.navigation.goBack()}>
+            <Icons.Entypo name="chevron-thin-left" size={20} color="black" />
+          </TouchableOpacity>
+          <View style={{marginTop: 20}}>
+            <Text style={styles.TopText}>진짜 영향력</Text>
+            <Text style={styles.subText}>
+              진짜 영향력은 내 게시물에 반응을 보이는{'\n'}한국인 팔로워
+              예상수치입니다.
+            </Text>
+          </View>
+          <NumSection FNum={FNum} RFNum={RFNum} />
+          <GraphSection
+            RNum={RNum}
+            TNum={TNum}
+            RFNum={RFNum}
+            TopAvg={TopAvg}
+            rangeAvg={rangeAvg}
+            realFollower={realFollower}
+            UserName={UserName}
+            MyPercent={MyPercent}
+          />
+          <SliderSections Quality={Quality} UserName={UserName} />
+          <View style={{height: 100}}></View>
+        </ScrollView>
+      )}
     </>
   );
 }

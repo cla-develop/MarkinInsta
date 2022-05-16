@@ -52,7 +52,7 @@ export default function Chanel() {
         <UnOAuth />
       </View> */}
 
-      <FollowAgeGender />
+      {asd === 1 && <FollowAgeGender JWT={JWT} />}
 
       {/* 팔로워 지역 Top 5 */}
       {/* <View style={styles.UnOAuthView}>
@@ -64,7 +64,7 @@ export default function Chanel() {
         </View>
         <UnOAuth />
       </View> */}
-      <FollowRegion />
+      {asd === 1 && <FollowRegion JWT={JWT} />}
       <View style={{height: 200}}></View>
     </>
   );

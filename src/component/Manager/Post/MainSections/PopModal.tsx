@@ -52,7 +52,7 @@ export default function PopModal(props: any) {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={handlejoin}>
+          {/* <TouchableOpacity onPress={handlejoin}>
             <View style={styles.RFTouchWrap}>
               <Text
                 style={[
@@ -73,7 +73,7 @@ export default function PopModal(props: any) {
                 저장순
               </Text>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </Modal>
     </GestureRecognizer>
