@@ -19,10 +19,10 @@ export default function PostMain() {
   const [totalEngagement, settotalEngagement] = useState(0);
   const [totalSaved, settotalSaved] = useState(0);
   const [topMediaByLike, settopMediaByLike] = useState([
-    {comments_count: 0, like_count: 0, media_url: '', id: ''},
+    {comments_count: 0, like_count: 0, media_url: '', id: '', caption: ''},
   ]);
   const [topMediaByComments, settopMediaByComments] = useState([
-    {comments_count: 0, like_count: 0, media_url: '', id: ''},
+    {comments_count: 0, like_count: 0, media_url: '', id: '', caption: ''},
   ]);
   const [JWT, setJWT] = useState('');
   useEffect(() => {
@@ -69,11 +69,13 @@ export default function PostMain() {
               like_count: any;
               media_url: any;
               id: any;
+              caption: any;
             }) => ({
               comments_count: node.comments_count,
               like_count: node.like_count,
               media_url: node.media_url,
               id: node.id,
+              caption: node.caption,
             }),
           ),
         );
@@ -84,16 +86,18 @@ export default function PostMain() {
               like_count: any;
               media_url: any;
               id: any;
+              caption: any;
             }) => ({
               comments_count: node.comments_count,
               like_count: node.like_count,
               media_url: node.media_url,
               id: node.id,
+              caption: node.caption,
             }),
           ),
         );
       });
-  }, []);
+  }, [JWT]);
   useEffect(() => {
     setStand('좋아요순');
   }, []);
