@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
-
+import noprofile from '../../../../../images/noprofile.png';
 export default function MyInfo(props: any) {
   // const fNum = props.followerCount.toString();
   // var fNlen = fNum.length;
@@ -21,9 +21,14 @@ export default function MyInfo(props: any) {
             {props.MyRank}
           </Text>
         </View>
-        <View style={{justifyContent: 'center', marginLeft: 10}}>
+        <View
+          style={{justifyContent: 'center', marginRight: 15, marginLeft: 5}}>
           <Image
-            source={{uri: props.MyProfileImg}}
+            source={
+              props.MyProfileImg === '' || props.MyProfileImg === null
+                ? noprofile
+                : {uri: props.MyProfileImg}
+            }
             style={{
               height: 35,
               width: 35,
@@ -36,13 +41,29 @@ export default function MyInfo(props: any) {
           </Text>
           <View style={{flexDirection: 'row', marginTop: 3}}>
             <Text style={styles.blackText}>진짜 영향력</Text>
+            {props.realFollowerCnt >= 1000000 ? (
+              <Text style={styles.purpleText}>
+                {(props.realFollowerCnt / 1000000).toFixed(1)} M
+              </Text>
+            ) : (
+              <Text style={styles.purpleText}>
+                {(props.realFollowerCnt / 1000).toFixed(1)} k
+              </Text>
+            )}
 
-            <Text style={styles.purpleText}> {props.RFNum}K</Text>
             <Text style={styles.blackText}>
               {'     '}
               팔로워 수
             </Text>
-            <Text style={styles.bNText}> {props.FNum} K</Text>
+            {props.followerCount >= 1000000 ? (
+              <Text style={styles.bNText}>
+                {(props.followerCount / 1000000).toFixed(1)} M
+              </Text>
+            ) : (
+              <Text style={styles.bNText}>
+                {(props.followerCount / 1000).toFixed(1)} k
+              </Text>
+            )}
           </View>
         </View>
       </View>
@@ -71,13 +92,15 @@ const styles = StyleSheet.create({
   purpleText: {
     fontFamily: 'SpoqaHanSansNeo-Medium',
     fontSize: 13,
-    marginTop: 2,
+    marginTop: 1.8,
+    marginLeft: 5,
     color: '#7553FF',
   },
   bNText: {
     fontFamily: 'SpoqaHanSansNeo-Medium',
     fontSize: 13,
-    marginTop: 2,
+    marginTop: 1.8,
+    marginLeft: 5,
   },
   blackText: {fontFamily: 'NotoSansKR-Regular', fontSize: 12},
 });

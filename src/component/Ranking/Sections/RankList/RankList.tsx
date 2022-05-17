@@ -20,7 +20,7 @@ export default function RankList() {
   const [lowerFollower, setlowerFollower] = useState(0);
   const [upperFollower, setupperFollower] = useState(210000000);
   const [cursor, setcursor] = useState(0);
-  const [orderby, setorederby] = useState('팔로워순');
+  const [orderby, setorederby] = useState('진짜 영향력순');
   const [FnumLet, setFnumLet] = useState('진짜 영향력순');
   const [CatModalVis, setCatModalVis] = useState(false);
   const [FNumModalVis, setFNumModalVis] = useState(false);

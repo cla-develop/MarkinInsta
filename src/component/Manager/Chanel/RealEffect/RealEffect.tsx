@@ -19,13 +19,12 @@ export default function RealEffect(props: any) {
   const [RFNum, setRFNum] = useState('');
   const [rangeAvg, setRangeAvg] = useState(0);
   const [TopAvg, setTopAvg] = useState(0);
-  const [RNum, setRNum] = useState('');
-  const [TNum, setTNum] = useState('');
   const [UserName, setUserName] = useState<string>('');
   const [MyPercent, setMyPercent] = useState<number>(0);
   const [Quality, setQuality] = useState<number>(0);
-
+  const [profileImg, setprofileImg] = useState('');
   const [JWT, setJWT] = useState('');
+  const [range, setrange] = useState([]);
   useEffect(() => {
     AsyncStorage.getItem('JWT').then(value => {
       setJWT(value);
@@ -46,65 +45,19 @@ export default function RealEffect(props: any) {
         },
       })
       .then(response => {
+        console.log(response.data.result.follower);
         setFollower(response.data.result.follower);
         setRealFollower(response.data.result.realFollower);
-        setRangeAvg(Math.floor(response.data.result.range_average));
-        setTopAvg(Math.floor(response.data.result.top_average));
+        setRangeAvg(response.data.result.range_average);
+        setTopAvg(response.data.result.top_average);
         setUserName(response.data.result.username);
         setMyPercent(Math.floor(response.data.result.my_persent));
         setQuality(Math.floor(response.data.result.quality));
+        setprofileImg(response.data.result.profileImg);
+        setrange(response.data.result.range);
       });
   }, [JWT]);
 
-  const underFK = (fff: string) => {
-    const Onum =
-      // tslint:disable-next-line: prefer-template
-      '0' +
-      fff.slice(fff.length - 2, fff.length - 1) +
-      '.' +
-      fff.slice(fff.length - 1);
-    return Onum;
-  };
-  const overFK = (fff: string) => {
-    const Onum =
-      // tslint:disable-next-line: prefer-template
-      fff.slice(fff.length - 2, fff.length - 1) +
-      '.' +
-      fff.slice(fff.length - 1);
-    return Onum;
-  };
-
-  useEffect(() => {
-    if (Follower < 1000) {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      const temp = Follower.toString();
-      setFNum(underFK(temp.slice(0, Follower.toString().length - 2)));
-    } else {
-      const temp2 = Follower.toString();
-      setFNum(overFK(temp2.slice(0, Follower.toString().length - 2)));
-    }
-    if (realFollower < 1000) {
-      const temp3 = realFollower.toString();
-      setRFNum(underFK(temp3.slice(0, realFollower.toString().length - 2)));
-    } else {
-      const temp4 = realFollower.toString();
-      setRFNum(overFK(temp4.slice(0, realFollower.toString().length - 2)));
-    }
-    if (rangeAvg < 1000) {
-      const temp3 = rangeAvg.toString();
-      setRNum(underFK(temp3.slice(0, rangeAvg.toString().length - 2)));
-    } else {
-      const temp4 = rangeAvg.toString();
-      setRNum(overFK(temp4.slice(0, rangeAvg.toString().length - 2)));
-    }
-    if (TopAvg < 1000) {
-      const temp3 = TopAvg.toString();
-      setTNum(underFK(temp3.slice(0, TopAvg.toString().length - 2)));
-    } else {
-      const temp4 = TopAvg.toString();
-      setTNum(overFK(temp4.slice(0, TopAvg.toString().length - 2)));
-    }
-  }, [Follower, realFollower, TopAvg, rangeAvg]);
   return (
     <>
       {asd === 1 && (
@@ -119,16 +72,16 @@ export default function RealEffect(props: any) {
               예상수치입니다.
             </Text>
           </View>
-          <NumSection FNum={FNum} RFNum={RFNum} />
+          <NumSection Follower={Follower} realFollower={realFollower} />
           <GraphSection
-            RNum={RNum}
-            TNum={TNum}
-            RFNum={RFNum}
+            Follower={Follower}
             TopAvg={TopAvg}
             rangeAvg={rangeAvg}
             realFollower={realFollower}
             UserName={UserName}
             MyPercent={MyPercent}
+            profileImg={profileImg}
+            range={range}
           />
           <SliderSections Quality={Quality} UserName={UserName} />
           <View style={{height: 100}}></View>

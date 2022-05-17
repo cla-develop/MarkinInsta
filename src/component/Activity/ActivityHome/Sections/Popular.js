@@ -38,7 +38,9 @@ export default function Popular() {
               <View style={styles.ImageView}>
                 <Image
                   source={
-                    item.thumnail === '' ? noprofile : {uri: item.thumnail}
+                    item.thumnail === '' || item.thumnail === null
+                      ? noprofile
+                      : {uri: item.thumnail}
                   }
                   style={styles.Imagestyle}
                 />

@@ -38,7 +38,9 @@ export default function SoonEnd() {
               <View style={{width: 300, marginRight: -30}}>
                 <Image
                   source={
-                    item.thumnail === '' ? noprofile : {uri: item.thumnail}
+                    item.thumnail === '' || item.thumnail === null
+                      ? noprofile
+                      : {uri: item.thumnail}
                   }
                   style={styles.ImgStyle}
                 />

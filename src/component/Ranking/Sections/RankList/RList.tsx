@@ -56,7 +56,9 @@ export default function RList(props: any) {
               <View style={styles.idSpace}>
                 <Image
                   source={
-                    item.profileImg === '' ? noprofile : {uri: item.profileImg}
+                    item.profileImg === '' || item.profileImg === null
+                      ? noprofile
+                      : {uri: item.profileImg}
                   }
                   style={styles.pImagest}
                 />

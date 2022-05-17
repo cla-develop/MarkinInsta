@@ -18,7 +18,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function MyRanking(props: any) {
   const [IsModalVisble, setIsModalVisble] = useState<boolean>(false);
-  const [FnumLet, setFnumLet] = useState('팔로워순');
+  const [FnumLet, setFnumLet] = useState('진짜 영향력순');
   const [MyRank, setMyRank] = useState<number>(0);
   const [MyProfileImg, setMyProfileImg] = useState<string>('');
   const [followerCount, setFollowerCount] = useState<number>(0);
@@ -224,8 +224,8 @@ export default function MyRanking(props: any) {
             MyRank={MyRank}
             MyProfileImg={MyProfileImg}
             UserName={UserName}
-            FNum={FNum}
-            RFNum={RFNum}
+            followerCount={followerCount}
+            realFollowerCnt={realFollowerCnt}
           />
 
           <Text style={styles.similarText}>나와 비슷한 랭킹</Text>

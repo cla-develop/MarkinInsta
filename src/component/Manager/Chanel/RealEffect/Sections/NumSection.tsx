@@ -6,16 +6,31 @@ export default function NumSection(props: any) {
     <View style={styles.MainView}>
       <View style={styles.innerView}>
         <Text style={styles.TopText}>진짜 영향력</Text>
-        <Text style={[styles.SubText, {color: '#7553FF'}]}>
-          {props.RFNum} K
-        </Text>
+
+        {props.realFollower >= 1000000 ? (
+          <Text style={[styles.SubText, {color: '#7553FF'}]}>
+            {(props.realFollower / 1000000).toFixed(1)} M
+          </Text>
+        ) : (
+          <Text style={[styles.SubText, {color: '#7553FF'}]}>
+            {(props.realFollower / 1000).toFixed(1)} k
+          </Text>
+        )}
       </View>
       <View style={{height: '100%', width: '0.1%', justifyContent: 'center'}}>
         <View style={{backgroundColor: '#DEDEDE', height: '60%'}}></View>
       </View>
       <View style={styles.innerView}>
         <Text style={styles.TopText}>팔로워 수</Text>
-        <Text style={[styles.SubText, {color: '#181818'}]}>{props.FNum} K</Text>
+        {props.Follower >= 1000000 ? (
+          <Text style={[styles.SubText]}>
+            {(props.Follower / 1000000).toFixed(1)} M
+          </Text>
+        ) : (
+          <Text style={[styles.SubText]}>
+            {(props.Follower / 1000).toFixed(1)} k
+          </Text>
+        )}
       </View>
     </View>
   );

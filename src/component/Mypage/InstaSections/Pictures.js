@@ -61,7 +61,9 @@ export default function Pictures(props) {
                   }}>
                   <Image
                     source={
-                      item.media_url === '' ? noprofile : {uri: item.media_url}
+                      item.media_url === '' || item.media_url === null
+                        ? noprofile
+                        : {uri: item.media_url}
                     }
                     style={{
                       width: '100%',

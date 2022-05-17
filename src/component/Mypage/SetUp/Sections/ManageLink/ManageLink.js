@@ -55,7 +55,7 @@ export default function ManageLink() {
               <View style={{justifyContent: 'center', height: '100%'}}>
                 <Image
                   source={
-                    item.profileImg === null
+                    item.profileImg === null || item.profileImg === ''
                       ? noProfile
                       : {uri: item.profileImg}
                   }

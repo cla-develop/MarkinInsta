@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Text, Image} from 'react-native';
-import issue1 from '../../../../../images/issue1.png';
+import issue1 from '../../../../../images/noprofile.png';
 export default function RankingList(props: any) {
   return (
     <View>
@@ -27,7 +27,7 @@ export default function RankingList(props: any) {
               </Text>
             </View>
             <View style={styles.idSpace}>
-              {item.profileImg === '' ? (
+              {item.profileImg === null || item.profileImg === '' ? (
                 <Image source={issue1} style={styles.pImagest} />
               ) : (
                 <Image

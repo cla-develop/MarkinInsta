@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import medal1 from '../../../../../images/medal1.png';
-import profile from '../../../../../images/Profile.png';
+import noprofile from '../../../../../images/noprofile.png';
 export default function GraphSection(props: any) {
   const [Top, setTop] = useState(0);
   const [My, setMy] = useState(0);
@@ -27,33 +27,72 @@ export default function GraphSection(props: any) {
           <Text style={styles.TopText}>채널 영향력</Text>
         </View>
         <View style={{width: '50%'}}>
-          <Text style={{textAlign: 'right', color: '#747474', paddingTop: 7}}>
-            *팔로워 1K-5K 기준
-          </Text>
+          {props.range['lower'] >= 1000000 ? (
+            <Text style={{textAlign: 'right', color: '#747474', paddingTop: 7}}>
+              *팔로워 {(props.range['lower'] / 1000000).toFixed(0)}M-
+              {(props.range['upper'] / 1000000).toFixed(0)}M 기준
+            </Text>
+          ) : (
+            <Text style={{textAlign: 'right', color: '#747474', paddingTop: 7}}>
+              *팔로워 {(props.range['lower'] / 1000).toFixed(0)}K-
+              {(props.range['upper'] / 1000).toFixed(0)}K 기준
+            </Text>
+          )}
         </View>
       </View>
       {/* 그래프 뷰 */}
-      {Top !== 0 && Avg !== 0 && My !== 0 && props.TopAvg !== 0 ? (
+      {Top !== 0 && Avg !== 0 && props.TopAvg !== 0 ? (
         <View style={styles.allGraphView}>
           <View style={styles.GraphView}>
             <View style={styles.ProfileView}>
-              <Image source={profile} style={{width: 50, height: 50}} />
+              <Image
+                source={
+                  props.profileImg === null || props.profileImg === ''
+                    ? noprofile
+                    : {uri: props.profileImg}
+                }
+                style={{width: 50, height: 50}}
+              />
             </View>
-            <Text style={styles.graphMyNum}>{props.RFNum}K</Text>
+            {props.realFollower >= 1000000 ? (
+              <Text style={styles.graphMyNum}>
+                {(props.realFollower / 1000000).toFixed(1)} M
+              </Text>
+            ) : (
+              <Text style={styles.graphMyNum}>
+                {(props.realFollower / 1000).toFixed(1)} k
+              </Text>
+            )}
             <View style={[styles.purpleGraph, {height: My}]}></View>
             <View style={{height: 20}}>
               <Text style={{fontFamily: 'NotoSansKR-Bold'}}>나</Text>
             </View>
           </View>
           <View style={styles.GraphView}>
-            <Text style={styles.grapthOtherText}>{props.RNum}K</Text>
+            {props.rangeAvg >= 1000000 ? (
+              <Text style={styles.grapthOtherText}>
+                {(props.rangeAvg / 1000000).toFixed(1)} M
+              </Text>
+            ) : (
+              <Text style={styles.grapthOtherText}>
+                {(props.rangeAvg / 1000).toFixed(1)} k
+              </Text>
+            )}
             <View style={[styles.greyGraph, {height: Avg}]}></View>
             <View style={{height: 20}}>
               <Text style={styles.underGreyText}>평균</Text>
             </View>
           </View>
           <View style={styles.GraphView}>
-            <Text style={styles.grapthOtherText}>{props.TNum}K</Text>
+            {props.TopAvg >= 1000000 ? (
+              <Text style={styles.grapthOtherText}>
+                {(props.TopAvg / 1000000).toFixed(1)} M
+              </Text>
+            ) : (
+              <Text style={styles.grapthOtherText}>
+                {(props.TopAvg / 1000).toFixed(1)} k
+              </Text>
+            )}
             <View style={[styles.greyGraph, {height: Top}]}></View>
             <View style={{height: 20}}>
               <Text style={styles.underGreyText}>상위 10%</Text>
@@ -64,23 +103,54 @@ export default function GraphSection(props: any) {
         <View style={styles.allGraphView}>
           <View style={styles.GraphView}>
             <View style={styles.ProfileView}>
-              <Image source={profile} style={{width: 50, height: 50}} />
+              <Image
+                source={
+                  props.profileImg === null || props.profileImg === ''
+                    ? noprofile
+                    : {uri: props.profileImg}
+                }
+                style={{width: 50, height: 50}}
+              />
             </View>
-            <Text style={styles.graphMyNum}>{props.RFNum}K</Text>
+            {props.realFollower >= 1000000 ? (
+              <Text style={styles.graphMyNum}>
+                {(props.realFollower / 1000000).toFixed(1)} M
+              </Text>
+            ) : (
+              <Text style={styles.graphMyNum}>
+                {(props.realFollower / 1000).toFixed(1)} k
+              </Text>
+            )}
             <View style={[styles.purpleGraph, {height: tt}]}></View>
             <View style={{height: 20}}>
               <Text style={{fontFamily: 'NotoSansKR-Bold'}}>나</Text>
             </View>
           </View>
           <View style={styles.GraphView}>
-            <Text style={styles.grapthOtherText}>{props.RNum}K</Text>
+            {props.rangeAvg >= 1000000 ? (
+              <Text style={styles.grapthOtherText}>
+                {(props.rangeAvg / 1000000).toFixed(1)} M
+              </Text>
+            ) : (
+              <Text style={styles.grapthOtherText}>
+                {(props.rangeAvg / 1000).toFixed(1)} k
+              </Text>
+            )}
             <View style={[styles.greyGraph, {height: 10}]}></View>
             <View style={{height: 20}}>
               <Text style={styles.underGreyText}>평균</Text>
             </View>
           </View>
           <View style={styles.GraphView}>
-            <Text style={styles.grapthOtherText}>{props.TNum}K</Text>
+            {props.TopAvg >= 1000000 ? (
+              <Text style={styles.grapthOtherText}>
+                {(props.TopAvg / 1000000).toFixed(1)} M
+              </Text>
+            ) : (
+              <Text style={styles.grapthOtherText}>
+                {(props.TopAvg / 1000).toFixed(1)} k
+              </Text>
+            )}
             <View style={[styles.greyGraph, {height: 10}]}></View>
             <View style={{height: 20}}>
               <Text style={styles.underGreyText}>상위 10%</Text>
