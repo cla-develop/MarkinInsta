@@ -3,19 +3,49 @@ import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import LoadingImage from '../../images/Loading.png';
 import styles from '../Styles';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Loading() {
   const navigation = useNavigation();
   const [value, setvalue] = useState(0);
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     if (value === 1) {
-  //       navigation.reset({
-  //         index: 0,
-  //         routes: [{name: 'Body'}],
-  //       });
-  //     }
-  //   }, 100000);
-  // }, []);
+  const [JWT, setJWT] = useState('');
+  const [isSuccess, setisSuccess] = useState(false);
+  useEffect(() => {
+    AsyncStorage.getItem('JWT').then(value => {
+      setJWT(value);
+    });
+  }, []);
+  useEffect(() => {
+    axios
+      .get('https://www.markin-app.site/app/users/instagram/crawl', {
+        headers: {
+          'x-access-token': JWT,
+        },
+      })
+      .then(response => {
+        console.log(response.data.isSuccess + 'asdsasdsd');
+        setisSuccess(response.data.isSuccess);
+      });
+  }, [JWT]);
+  useEffect(() => {
+    if (isSuccess === true) {
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'Body'}],
+      });
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (value === 1) {
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'Body'}],
+        });
+      }
+    }, 100000);
+  }, []);
   return (
     <View style={styles.allView}>
       <View

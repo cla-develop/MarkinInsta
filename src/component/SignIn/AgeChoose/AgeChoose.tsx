@@ -59,7 +59,7 @@ export default function AgeChoose({navigation, route}: any) {
     setBirth(moment(date).format('yyyy-MM-DD'));
   };
   const goCategory = () => {
-    navigation.navigate('Category', {JWT});
+    navigation.navigate('Loading', {JWT});
   };
   useEffect(() => {
     if (JWT !== '') {

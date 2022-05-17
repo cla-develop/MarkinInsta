@@ -22,6 +22,7 @@ export default function FixInform() {
   const [SF, setSF] = useState('0');
   const [Birth, setBirth] = useState('');
   const [JWT, setJWT] = useState('');
+  const [EVali, setEVali] = useState(true);
   useEffect(() => {
     AsyncStorage.getItem('JWT').then(value => {
       setJWT(value);
@@ -33,6 +34,24 @@ export default function FixInform() {
       setasd(1);
     }, 100);
   }, []);
+  const onChangeEmailInput = event => {
+    setEmail(event);
+    checkEmail(Email);
+  };
+  const checkEmail = e => {
+    var regExp =
+      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{1,3}$/i;
+    if (regExp.test(e) === true) {
+      setEVali(true);
+      return true;
+    } else if (Email === '') {
+      setEVali(true);
+      return true;
+    } else {
+      setEVali(false);
+      return false;
+    }
+  };
   useEffect(() => {
     axios
       .get('https://www.markin-app.site/app/users', {
@@ -130,7 +149,7 @@ export default function FixInform() {
             value={Email}
             autoCapitalize={'none'}
             autoCorrect={false}
-            onChangeText={event => setEmail(event)}
+            onChangeText={event => onChangeEmailInput(event)}
           />
         )}
         <Text style={instyles.inputTitle}>휴대폰 번호</Text>

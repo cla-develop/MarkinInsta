@@ -11,6 +11,7 @@ import {useNavigation} from '@react-navigation/native';
 import Point from './Sections/Point';
 import History from './Sections/History';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function MyPoint() {
   const navigation = useNavigation();
   const [myPoint, setmyPoint] = useState(0);
@@ -27,13 +28,25 @@ export default function MyPoint() {
       createdTime: '',
     },
   ]);
+  const [JWT, setJWT] = useState('');
+
+  useEffect(() => {
+    AsyncStorage.getItem('JWT').then(value => {
+      setJWT(value);
+    });
+  }, []);
+  const [asd, setasd] = useState(0);
+  useEffect(() => {
+    setTimeout(() => {
+      setasd(1);
+    }, 100);
+  }, []);
   useEffect(() => {
     // tslint:disable-next-line: no-floating-promises
     axios
       .get('https://www.markin-app.site/app/users/point', {
         headers: {
-          'x-access-token':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImluc3RhZ3JhbUlkIjoiNDIzNDQwMzAxMzMyODU5MiIsImlhdCI6MTY0MzQ4MDg1MCwiZXhwIjoxNjc1MDE2ODUwLCJzdWIiOiJ1c2VySW5mbyJ9.MlsJ3tZcye9WdqRwz-AKY5KNZf46B1gFQ8nqgrJxGMg',
+          'x-access-token': JWT,
         },
       })
       .then(response => {
@@ -65,37 +78,61 @@ export default function MyPoint() {
         console.log(PointList);
       })
       .catch(err => console.log(err));
-  }, []);
+  }, [JWT]);
+
   return (
     <View style={styles.allView}>
-      <ScrollView>
-        <View style={{alignItems: 'center', height: 40}}>
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={{position: 'absolute', left: '5%'}}>
-            <Icons.Entypo name="chevron-thin-left" size={20} color="black" />
-          </TouchableOpacity>
-        </View>
-        <Text style={styles.TitleText}>나의 포인트</Text>
-        <View style={styles.sectionView}>
-          <Point myPoint={myPoint} accumulatedPoint={accumulatedPoint} />
-        </View>
-        <View style={styles.sectionView}>
-          <Text style={styles.TitleText}>포인트 내역</Text>
-          <History PointList={PointList} />
-        </View>
-        <View style={{padding: '5%'}}>
-          <Text style={{fontFamily: 'NotoSansKR-Regular', color: '#424242'}}>
-            - 최소 환급 포인트는 10,000원 입니다.{'\n'} - 포인트는 매달 15일,
-            말일에 환급됩니다.{'\n'} (지급일이 공휴일인 경우, 다음 영업일에
-            지급됩니다.)
-            {'\n'} - 입금액이 5만원이 초과될 경우, 세금 3.3%를 원천 징수 후
-            지급됩니다. {'\n'}- 예금주는 실명과 동일해야 지급됩니다. {'\n'}
-            {'\n'}환급 시 문제가 생길 경우 1:1 문의하기로 문의를 남겨주세요.
-          </Text>
-        </View>
-        <View style={{height: 50}}></View>
-      </ScrollView>
+      {asd === 1 && (
+        <ScrollView>
+          <View style={{alignItems: 'center', height: 40}}>
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={{position: 'absolute', left: '5%'}}>
+              <Icons.Entypo name="chevron-thin-left" size={20} color="black" />
+            </TouchableOpacity>
+          </View>
+
+          <Text style={styles.TitleText}>나의 포인트</Text>
+          <View style={styles.sectionView}>
+            <Point myPoint={myPoint} accumulatedPoint={accumulatedPoint} />
+          </View>
+          <View style={styles.sectionView}>
+            <Text style={styles.TitleText}>포인트 내역</Text>
+            {PointList.length === 0 ? (
+              <View
+                style={{
+                  width: '100%',
+                  height: 200,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    fontFamily: 'NotoSansKR-Regular',
+                    fontSize: 16,
+                    color: '#747474',
+                    marginTop: -30,
+                  }}>
+                  포인트 내역이 없습니다.
+                </Text>
+              </View>
+            ) : (
+              <History PointList={PointList} />
+            )}
+          </View>
+          <View style={{padding: '5%'}}>
+            <Text style={{fontFamily: 'NotoSansKR-Regular', color: '#424242'}}>
+              - 최소 환급 포인트는 10,000원 입니다.{'\n'} - 포인트는 매달 15일,
+              말일에 환급됩니다.{'\n'} (지급일이 공휴일인 경우, 다음 영업일에
+              지급됩니다.)
+              {'\n'} - 입금액이 5만원이 초과될 경우, 세금 3.3%를 원천 징수 후
+              지급됩니다. {'\n'}- 예금주는 실명과 동일해야 지급됩니다. {'\n'}
+              {'\n'}환급 시 문제가 생길 경우 1:1 문의하기로 문의를 남겨주세요.
+            </Text>
+          </View>
+          <View style={{height: 50}}></View>
+        </ScrollView>
+      )}
     </View>
   );
 }
