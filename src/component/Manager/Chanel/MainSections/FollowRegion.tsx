@@ -195,7 +195,7 @@ export default function FollowRegion(props: any) {
 const styles = StyleSheet.create({
   mainView: {
     width: '95%',
-    height: 260,
+    height: 240,
     borderRadius: 18,
     backgroundColor: 'white',
   },

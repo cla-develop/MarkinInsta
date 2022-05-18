@@ -5,12 +5,17 @@ import Modal from 'react-native-modal';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import instaLogo from '../../../images/instaLogo.png';
 import axios from 'axios';
+import {useNavigation} from '@react-navigation/native';
 export default function IdModal(props) {
   const handleId = e => {
     props.setfirst(e);
     props.setisModal(false);
   };
-
+  const go = () => {
+    props.setisModal(false);
+    navigation.navigate('ManageLink');
+  };
+  const navigation = useNavigation();
   return (
     <GestureRecognizer
       style={{flex: 1}}
@@ -59,9 +64,7 @@ export default function IdModal(props) {
               />
               <Text style={styles.Textstyle}>Jangjaeko45</Text>
             </TouchableOpacity> */}
-            <TouchableOpacity
-              //   onPress={handleCurrent}
-              style={[styles.RFTouchWrap]}>
+            <TouchableOpacity onPress={() => go()} style={[styles.RFTouchWrap]}>
               <Text style={styles.Textstyle}>
                 + &nbsp;&nbsp;&nbsp; 인스타그램 계정 추가하기
               </Text>

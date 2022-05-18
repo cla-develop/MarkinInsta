@@ -49,9 +49,9 @@ export default function MyRanking(props: any) {
       setasd(1);
     }, 100);
   }, []);
-  useEffect(() => {
-    setCat('전체');
-  }, []);
+  // useEffect(() => {
+  //   setCat('전체');
+  // }, []);
   useEffect(() => {
     axios
       .get(`https://www.markin-app.site/app/users/categories`, {
@@ -103,7 +103,7 @@ export default function MyRanking(props: any) {
       .catch(err => {
         console.log(err);
       });
-  }, [Cat, FnumLet]);
+  }, [Cat, FnumLet, JWT]);
   const handleModal = () => {
     setIsModalVisble(true);
   };
@@ -230,7 +230,7 @@ export default function MyRanking(props: any) {
 
           <Text style={styles.similarText}>나와 비슷한 랭킹</Text>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <RankingList Others={Others} />
+            <RankingList Others={Others} UserName={UserName} />
             <View style={{height: 50}} />
           </ScrollView>
           <MyRankModal

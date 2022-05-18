@@ -82,7 +82,7 @@ export default function PopModal(props: any) {
 
 const styles = StyleSheet.create({
   ModalWrap: {
-    height: 350,
+    height: 200,
     backgroundColor: 'white',
     borderRadius: 35,
     paddingLeft: '5%',

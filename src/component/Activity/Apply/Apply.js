@@ -14,10 +14,12 @@ import Icons from '../../Icons/Icons';
 import {useNavigation} from '@react-navigation/native';
 import AddressModal from './Modal/AddressModal';
 import instaLogo from '../../../images/instaLogo.png';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import noprofile from '../../../images/noprofile.png';
 export default function Apply({route}) {
   const {Id} = route.params;
   const navigation = useNavigation();
-  const [basicAd, setbasicAd] = useState(false);
+  const [basicAd, setbasicAd] = useState(true);
   const [isModalVis, setIsModalVis] = useState(false);
   const [Address, setAddress] = useState('');
   const [PostCode, setPostCode] = useState('');
@@ -31,6 +33,19 @@ export default function Apply({route}) {
   const [Send, setSend] = useState(false);
   const [instaIDs, setinstaIDs] = useState([]);
   const [instagramId, setinstagramId] = useState('');
+  const [JWT, setJWT] = useState('');
+
+  useEffect(() => {
+    AsyncStorage.getItem('JWT').then(value => {
+      setJWT(value);
+    });
+  }, []);
+  const [asd, setasd] = useState(0);
+  useEffect(() => {
+    setTimeout(() => {
+      setasd(1);
+    }, 100);
+  }, []);
   const onChangeNamelInput = event => {
     setName(event);
   };
@@ -41,14 +56,13 @@ export default function Apply({route}) {
     axios
       .get('https://www.markin-app.site/app/users/instagram', {
         headers: {
-          'x-access-token':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImluc3RhZ3JhbUlkIjoiNDIzNDQwMzAxMzMyODU5MiIsImlhdCI6MTY0MzQ4MDg1MCwiZXhwIjoxNjc1MDE2ODUwLCJzdWIiOiJ1c2VySW5mbyJ9.MlsJ3tZcye9WdqRwz-AKY5KNZf46B1gFQ8nqgrJxGMg',
+          'x-access-token': JWT,
         },
       })
       .then(response => {
         setinstaIDs(response.data.result);
       });
-  }, []);
+  }, [JWT]);
 
   const ApplyActivity = async () => {
     try {
@@ -62,10 +76,10 @@ export default function Apply({route}) {
           recipientPhone: recipPN,
           recipientAddress: Address.replace(/\"/gi, '') + ', ' + DetailAd,
           recipientPostcode: PostCode.replace(/\"/gi, ''),
+          saveAddress: basicAd,
         },
         headers: {
-          'x-access-token':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImluc3RhZ3JhbUlkIjoiNDIzNDQwMzAxMzMyODU5MiIsImlhdCI6MTY0MzQ4MDg1MCwiZXhwIjoxNjc1MDE2ODUwLCJzdWIiOiJ1c2VySW5mbyJ9.MlsJ3tZcye9WdqRwz-AKY5KNZf46B1gFQ8nqgrJxGMg',
+          'x-access-token': JWT,
         },
         url: `https://www.markin-app.site/app/activity/${Id}`,
       });
@@ -76,7 +90,21 @@ export default function Apply({route}) {
       console.log(e);
     }
   };
-
+  useEffect(() => {
+    // tslint:disable-next-line: no-floating-promises
+    axios
+      .get('https://www.markin-app.site/app/activity/applicant', {
+        headers: {
+          'x-access-token': JWT,
+        },
+      })
+      .then(response => {
+        setRecipName(response.data.result.name);
+        setRecipPN(response.data.result.phone);
+        setPostCode(response.data.result.postcode);
+        setAddress(response.data.result.address);
+      });
+  }, [JWT]);
   return (
     <View style={styles.allView}>
       <View style={{alignItems: 'center', height: 40}}>
@@ -92,133 +120,153 @@ export default function Apply({route}) {
           <Text style={styles.subTitle}>신청 채널 정보</Text>
           <Text style={styles.subsubText}>활동 신청할 채널을 선택해주세요</Text>
           {/* 인스타 계정 목록 */}
-          <View style={{flexDirection: 'row', marginTop: 20}}>
-            {instaIDs.map(item => (
-              <TouchableOpacity
-                onPress={() => setinstagramId(item.instagramId)}>
-                <View
-                  style={[
-                    styles.CardView,
-                    {
-                      borderColor:
-                        item.instagramId === instagramId
-                          ? '#181818'
-                          : '#DEDEDE',
-                    },
-                  ]}>
-                  <Image
-                    source={{uri: item.profileImg}}
-                    style={styles.profileImgV}
-                  />
-                  <View style={{flexDirection: 'row', marginTop: 10}}>
+          {asd === 1 && (
+            <View style={{flexDirection: 'row', marginTop: 20}}>
+              {instaIDs.map(item => (
+                <TouchableOpacity
+                  onPress={() => setinstagramId(item.instagramId)}>
+                  <View
+                    style={[
+                      styles.CardView,
+                      {
+                        borderColor:
+                          item.instagramId === instagramId
+                            ? '#181818'
+                            : '#DEDEDE',
+                      },
+                    ]}>
                     <Image
-                      source={instaLogo}
-                      style={{height: 17, width: 17, marginTop: 3}}
+                      source={
+                        item.profileImg === '' || item.profileImg === null
+                          ? noprofile
+                          : {uri: item.profileImg}
+                      }
+                      style={styles.profileImgV}
                     />
-                    <Text
-                      style={{
-                        fontFamily: 'Roboto-Bold',
-                        fontSize: 16,
-                        marginLeft: 3,
-                      }}>
-                      {item.username}
-                    </Text>
+                    <View style={{flexDirection: 'row', marginTop: 10}}>
+                      <Image
+                        source={instaLogo}
+                        style={{height: 17, width: 17, marginTop: 3}}
+                      />
+                      <Text
+                        style={{
+                          fontFamily: 'Roboto-Bold',
+                          fontSize: 16,
+                          marginLeft: 3,
+                        }}>
+                        {item.username}
+                      </Text>
+                    </View>
+                    {item.instagramId === instagramId && (
+                      <Icons.AntDesign
+                        name="checkcircle"
+                        size={30}
+                        color="black"
+                        style={{
+                          position: 'absolute',
+                          zIndex: 10,
+                          bottom: -5,
+                          right: -5,
+                        }}
+                      />
+                    )}
                   </View>
-                  {item.instagramId === instagramId && (
-                    <Icons.AntDesign
-                      name="checkcircle"
-                      size={30}
-                      color="black"
-                      style={{
-                        position: 'absolute',
-                        zIndex: 10,
-                        bottom: -5,
-                        right: -5,
-                      }}
-                    />
+                </TouchableOpacity>
+              ))}
+            </View>
+          )}
+        </View>
+        {asd === 1 && (
+          <>
+            <View style={styles.BlockView}>
+              <Text style={styles.subTitle}>신청인 정보</Text>
+              <Text style={styles.inputTitle}>이름</Text>
+              <TextInput
+                style={styles.input}
+                value={Name}
+                autoCapitalize={'none'}
+                autoCorrect={false}
+                onChangeText={onChangeNamelInput}
+              />
+              <Text style={styles.inputTitle}>휴대폰 번호</Text>
+              <TextInput
+                style={styles.input}
+                value={PhonNum}
+                autoCapitalize={'none'}
+                autoCorrect={false}
+                onChangeText={event => setPhonNum(event)}
+              />
+            </View>
+            <View style={styles.BlockView}>
+              <Text style={styles.subTitle}>배송지 정보</Text>
+              {/* 수령인 이름 입력 */}
+              <Text style={styles.inputTitle}>수령인</Text>
+              <TextInput
+                style={styles.input}
+                value={recipName}
+                autoCapitalize={'none'}
+                autoCorrect={false}
+                onChangeText={event => setRecipName(event)}
+              />
+              {/* 수령인 전화 번호 입력 */}
+              <Text style={styles.inputTitle}>휴대폰 번호</Text>
+              <TextInput
+                style={styles.input}
+                value={recipPN}
+                autoCapitalize={'none'}
+                autoCorrect={false}
+                onChangeText={event => setRecipPN(event)}
+              />
+              <Text style={styles.inputTitle}>배송지 주소</Text>
+              <View style={{flexDirection: 'row'}}>
+                <View style={[styles.adView, {width: '80%'}]}>
+                  {Address !== null && (
+                    <Text>{Address.replace(/\"/gi, '')}</Text>
                   )}
                 </View>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </View>
-        <View style={styles.BlockView}>
-          <Text style={styles.subTitle}>신청인 정보</Text>
-          <Text style={styles.inputTitle}>이름</Text>
-          <TextInput
-            style={styles.input}
-            value={Name}
-            autoCapitalize={'none'}
-            autoCorrect={false}
-            onChangeText={onChangeNamelInput}
-          />
-          <Text style={styles.inputTitle}>휴대폰 번호</Text>
-          <TextInput
-            style={styles.input}
-            value={PhonNum}
-            autoCapitalize={'none'}
-            autoCorrect={false}
-            onChangeText={event => setPhonNum(event)}
-          />
-        </View>
-        <View style={styles.BlockView}>
-          <Text style={styles.subTitle}>배송지 정보</Text>
-          {/* 수령인 이름 입력 */}
-          <Text style={styles.inputTitle}>수령인</Text>
-          <TextInput
-            style={styles.input}
-            value={recipName}
-            autoCapitalize={'none'}
-            autoCorrect={false}
-            onChangeText={event => setRecipName(event)}
-          />
-          {/* 수령인 전화 번호 입력 */}
-          <Text style={styles.inputTitle}>휴대폰 번호</Text>
-          <TextInput
-            style={styles.input}
-            value={recipPN}
-            autoCapitalize={'none'}
-            autoCorrect={false}
-            onChangeText={event => setRecipPN(event)}
-          />
-          <Text style={styles.inputTitle}>배송지 주소</Text>
-          <View style={{flexDirection: 'row'}}>
-            <View style={[styles.adView, {width: '80%'}]}>
-              <Text>{Address.replace(/\"/gi, '')}</Text>
+                <TouchableOpacity onPress={() => setIsModalVis(true)}>
+                  <View style={styles.btnStyle}>
+                    <Text>주소찾기</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+              <View style={[styles.adView, {width: '100%'}]}>
+                {PostCode !== null && (
+                  <Text>{PostCode.replace(/\"/gi, '')}</Text>
+                )}
+              </View>
+
+              {/* 상세주소 입력 */}
+              <TextInput
+                style={styles.input}
+                value={DetailAd}
+                autoCapitalize={'none'}
+                autoCorrect={false}
+                onChangeText={event => setDetailAd(event)}
+              />
+
+              <View
+                style={{
+                  width: '100%',
+                  flexDirection: 'row',
+                  paddingLeft: '60%',
+                }}>
+                <TouchableOpacity onPress={() => setbasicAd(!basicAd)}>
+                  <View>
+                    <Icons.AntDesign
+                      name="check"
+                      style={{
+                        color: basicAd === true ? '#7553FF' : '#DEDEDE',
+                      }}
+                      size={20}
+                    />
+                  </View>
+                </TouchableOpacity>
+                <Text style={styles.baesong}>기본 배송지로 설정</Text>
+              </View>
             </View>
-            <TouchableOpacity onPress={() => setIsModalVis(true)}>
-              <View style={styles.btnStyle}>
-                <Text>주소찾기</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={[styles.adView, {width: '100%'}]}>
-            <Text>{PostCode.replace(/\"/gi, '')}</Text>
-          </View>
-          {/* 상세주소 입력 */}
-          <TextInput
-            style={styles.input}
-            value={DetailAd}
-            autoCapitalize={'none'}
-            autoCorrect={false}
-            onChangeText={event => setDetailAd(event)}
-          />
-          <View
-            style={{width: '100%', flexDirection: 'row', paddingLeft: '60%'}}>
-            <TouchableOpacity onPress={() => setbasicAd(!basicAd)}>
-              <View>
-                <Icons.AntDesign
-                  name="check"
-                  style={{
-                    color: basicAd === true ? '#7553FF' : '#DEDEDE',
-                  }}
-                  size={20}
-                />
-              </View>
-            </TouchableOpacity>
-            <Text style={styles.baesong}>기본 배송지로 설정</Text>
-          </View>
-        </View>
+          </>
+        )}
         {Name !== '' &&
         PhonNum !== '' &&
         instagramId !== '' &&

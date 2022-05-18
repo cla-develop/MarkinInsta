@@ -20,7 +20,7 @@ export default function ChatBot() {
 
 const styles = StyleSheet.create({
   mainView: {
-    width: 350,
+    width: '95.5%',
     height: 92,
     backgroundColor: '#E1EDF8',
     borderRadius: 7,

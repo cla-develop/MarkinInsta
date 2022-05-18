@@ -30,11 +30,11 @@ export default function ActivityHeader(props) {
           <Text style={styles.Logo}>MARKIN</Text>
         </View>
         <View style={{flex: 1, flexDirection: 'row'}}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => props.navigateToAlarm()}
             style={{paddingLeft: 80}}>
             <Icons.Feather name="bell" size={20} color="#111" />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           {/* <TouchableOpacity
             onPress={() => props.navigateToMessage()}
             style={{marginLeft: 15}}>
@@ -47,7 +47,7 @@ export default function ActivityHeader(props) {
         </View>
       </View>
 
-      <View style={{flexDirection: 'row', width: '100%', paddingTop: 10}}>
+      <View style={{flexDirection: 'row', width: '100%', paddingTop: 0}}>
         <TouchableOpacity onPress={handlefocusHome}>
           {props.StateChange === 1 ? (
             <View style={styles.focusView}>
@@ -79,7 +79,9 @@ const styles = StyleSheet.create({
   Logo: {
     textAlign: 'center',
     top: 0,
+    fontFamily: 'Quantico-Bold',
     transform: [{translateX: 0}, {translateY: 0}],
+    fontSize: 22,
   },
   greyText: {
     opacity: 0.5,

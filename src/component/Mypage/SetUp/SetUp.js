@@ -10,6 +10,7 @@ import question from './images/question.png';
 import user from './images/user.png';
 import Exit from './images/exit.png';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 export default function SetUp() {
   const nDAta = null;
   const storeData = async value => {
@@ -24,7 +25,30 @@ export default function SetUp() {
       console.log('qwwqqqqqq');
     }
   };
-
+  const [JWT, setJWT] = useState('');
+  useEffect(() => {
+    AsyncStorage.getItem('JWT').then(value => {
+      setJWT(value);
+    });
+  }, []);
+  const [asd, setasd] = useState(0);
+  useEffect(() => {
+    setTimeout(() => {
+      setasd(1);
+    }, 100);
+  }, []);
+  const Logout = () => {
+    axios({
+      method: 'patch',
+      headers: {
+        'x-access-token': JWT,
+      },
+      url: 'https://www.markin-app.site/app/users/sign-out',
+    }).then(response => {
+      console.log(response.data.message);
+      storeData(nDAta);
+    });
+  };
   const navigation = useNavigation();
   return (
     <View style={styles.allView}>
@@ -98,7 +122,7 @@ export default function SetUp() {
           </View>
         </TouchableOpacity>
         {/* 채널연결관리 */}
-        <TouchableOpacity onPress={() => storeData(nDAta)}>
+        <TouchableOpacity onPress={() => Logout()}>
           <View style={{flexDirection: 'row', height: 50}}>
             <View style={{justifyContent: 'center'}}>
               <Image

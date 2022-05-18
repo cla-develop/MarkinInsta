@@ -45,6 +45,7 @@ import Activity from './src/component/Activity/Activity';
 import EmailSignup from './src/component/SignIn/Email/EmailSignup';
 import SplashPage from './src/component/SplashPage';
 import Loading from './src/component/SignIn/Loading';
+import LinkChanel from './src/component/SignIn/LinkChannel/LinkChanel';
 import {Settings} from 'react-native-fbsdk-next';
 import SplashScreen from 'react-native-splash-screen';
 const Stack = createStackNavigator();
@@ -105,6 +106,7 @@ function App() {
         <Stack.Screen name="RefundFinish" component={RefundFinish} />
         <Stack.Screen name="FixFinish" component={FixFinish} />
         <Stack.Screen name="Ask" component={Ask} />
+        <Stack.Screen name="LinkChanel" component={LinkChanel} />
         {/* 매니저  */}
         <Stack.Screen name="Manager" component={Manger} />
         <Stack.Screen name="MyRanking" component={MyRanking} />

@@ -23,6 +23,8 @@ export default function FollowAgeGender(props: any) {
   const [fifSum, setfifSum] = useState(0);
   const [sixSum, setsixSum] = useState(0);
   const [Max, setMax] = useState(100);
+  const [MaleRate, setMaleRate] = useState('');
+  const [FemaleRate, setFemaleRate] = useState('');
   useEffect(() => {
     const getchannel = async () => {
       try {
@@ -71,6 +73,8 @@ export default function FollowAgeGender(props: any) {
                 response.data.result.followerGenderAge['55-64'].M +
                 response.data.result.followerGenderAge['55-64'].U,
             );
+            setMaleRate(response.data.result.followerGenderAge['maleRate']);
+            setFemaleRate(response.data.result.followerGenderAge['femaleRate']);
           });
       } catch {
         err => {
@@ -103,20 +107,21 @@ export default function FollowAgeGender(props: any) {
                 source={man}
                 style={{height: 20, width: 12, marginRight: 10}}
               />
-              <Text style={styles.percentText}>68%</Text>
+              <Text style={styles.percentText}>{MaleRate.slice(2)}%</Text>
             </View>
             <View style={{flexDirection: 'row', marginLeft: 10}}>
               <Image
                 source={girl}
                 style={{height: 20, width: 12, marginRight: 10}}
               />
-              <Text style={styles.percentText}>68%</Text>
+              <Text style={styles.percentText}>{FemaleRate.slice(2)}%</Text>
             </View>
           </View>
         </View>
         {asd === 1 && (
           <View style={{flexDirection: 'row', paddingLeft: 13, height: 250}}>
             <View style={styles.GraphView}>
+              <Text style={styles.noto}>{firSum}명</Text>
               <View
                 style={[
                   styles.greyGraph,
@@ -128,6 +133,7 @@ export default function FollowAgeGender(props: any) {
               <Text style={styles.ageText}>13-17</Text>
             </View>
             <View style={styles.GraphView}>
+              <Text style={styles.noto}>{secSum}명</Text>
               <View
                 style={[
                   styles.greyGraph,
@@ -139,8 +145,7 @@ export default function FollowAgeGender(props: any) {
               <Text>18-24</Text>
             </View>
             <View style={styles.GraphView}>
-              <Text
-                style={{marginBottom: 5, fontFamily: 'NotoSansKR-Bold'}}></Text>
+              <Text style={styles.noto}>{thirSum}명</Text>
               <View
                 style={[
                   styles.greyGraph,
@@ -152,17 +157,19 @@ export default function FollowAgeGender(props: any) {
               <Text style={styles.ageText}>25-34</Text>
             </View>
             <View style={styles.GraphView}>
+              <Text style={styles.noto}>{fourSum}명</Text>
               <View
                 style={[
                   styles.greyGraph,
                   {
-                    backgroundColor: fifSum === Max ? '#7603FF' : '#EDEDED',
-                    height: 180 / (Max / fifSum),
+                    backgroundColor: fourSum === Max ? '#7603FF' : '#EDEDED',
+                    height: 180 / (Max / fourSum),
                   },
                 ]}></View>
               <Text style={styles.ageText}>35-44</Text>
             </View>
             <View style={styles.GraphView}>
+              <Text style={styles.noto}>{fifSum}명</Text>
               <View
                 style={[
                   styles.greyGraph,
@@ -174,6 +181,7 @@ export default function FollowAgeGender(props: any) {
               <Text style={styles.ageText}>45-54</Text>
             </View>
             <View style={styles.GraphView}>
+              <Text style={styles.noto}>{sixSum}명</Text>
               <View
                 style={[
                   styles.greyGraph,
@@ -235,4 +243,9 @@ const styles = StyleSheet.create({
   },
   ageText: {fontFamily: 'SpoqaHanSansNeo-Medium', fontSize: 12},
   percentText: {marginTop: 2, fontFamily: 'SpoqaHanSansNeo-Medium'},
+  noto: {
+    fontFamily: 'NotoSansKR-Bold',
+    fontSize: 13,
+    marginBottom: 5,
+  },
 });

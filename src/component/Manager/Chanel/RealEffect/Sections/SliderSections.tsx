@@ -54,7 +54,21 @@ export default function SliderSections(props: any) {
             <Text style={styles.blackText}>님 계정품질은</Text>
           </View>
           <View style={{flexDirection: 'row'}}>
-            <Text style={styles.purpleText}>매우 좋은편</Text>
+            {props.Quality <= 10 && (
+              <Text style={styles.purpleText}>매우 나쁨</Text>
+            )}
+            {props.Quality <= 40 && props.Quality > 10 && (
+              <Text style={styles.purpleText}>나쁨</Text>
+            )}
+            {props.Quality <= 70 && props.Quality > 40 && (
+              <Text style={styles.purpleText}>적정</Text>
+            )}
+            {props.Quality < 100 && props.Quality > 70 && (
+              <Text style={styles.purpleText}>좋음</Text>
+            )}
+            {props.Quality >= 10 && (
+              <Text style={styles.purpleText}>매우 좋음</Text>
+            )}
             <Text style={styles.blackText}>이에요.</Text>
           </View>
         </View>

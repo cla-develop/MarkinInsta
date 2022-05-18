@@ -177,6 +177,7 @@ export default function GraphSection(props: any) {
           <View style={{flexDirection: 'row', marginTop: 5}}>
             <Text style={styles.purpleText}>상위 {props.MyPercent}%</Text>
             <Text style={styles.blackText}>로,</Text>
+            {/*  */}
             <Text style={styles.purpleText}>아주 높은편</Text>
             <Text style={styles.blackText}>이에요.</Text>
           </View>

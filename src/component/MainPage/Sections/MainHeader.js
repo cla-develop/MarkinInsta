@@ -32,11 +32,11 @@ export default function MainHeader(props) {
           <Text style={styles.Logo}>MARKIN</Text>
         </View>
         <View style={{flex: 1, flexDirection: 'row'}}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => navigation.navigate('Alarm')}
             style={{paddingLeft: 80}}>
             <Icons.Feather name="bell" size={20} color="#111" />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           {/* <TouchableOpacity
             onPress={() => props.navigateToMessage()}
             style={{marginLeft: 15}}>

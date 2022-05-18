@@ -4,6 +4,7 @@ import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import noprofile from '../../../images/noprofile.png';
 import Icons from '../../Icons/Icons';
 import {useNavigation} from '@react-navigation/native';
+
 export default function Profile(props) {
   const navigation = useNavigation();
   // {(item.followersCount / 1000).toFixed(1)} k
@@ -14,7 +15,9 @@ export default function Profile(props) {
         <View style={{flexDirection: 'row'}}>
           <Image
             source={
-              props.profileImg === '' ? noprofile : {uri: props.profileImg}
+              props.profileImg === '' || props.profileImg == null
+                ? noprofile
+                : {uri: props.profileImg}
             }
             style={styles.profileImgV}
           />

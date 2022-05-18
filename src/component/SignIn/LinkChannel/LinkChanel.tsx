@@ -10,7 +10,6 @@ export default function LinkChanel({navigation, route}: any) {
   const [code, setcode] = useState<string>('');
   const [AccessToken, setAccessToken] = useState<string>('');
   const [Pass, setPass] = useState<boolean>(false);
-  const {userID} = route.params;
 
   useEffect(() => {
     const getToken = async () => {
@@ -78,9 +77,8 @@ export default function LinkChanel({navigation, route}: any) {
       </TouchableOpacity>
       <View style={{marginTop: 50}}>
         <Text style={styles.mainText}>
-          인스타그램 채널을 {'\n'}연결해주세요 ^.^
+          인스타그램 채널을 {'\n'}연결해주세요 :{')'}
         </Text>
-        <Text>인스타그램 데이터는 마킨 인증 후 폐기됩니다.</Text>
       </View>
       <TouchableOpacity onPress={() => setHandleModal(true)}>
         <View style={{width: '100%', marginLeft: '-2.5%', marginTop: 50}}>
@@ -94,7 +92,7 @@ export default function LinkChanel({navigation, route}: any) {
         code={code}
         setcode={setcode}
       />
-      {Pass === true ? (
+      {/* {Pass === true ? (
         <TouchableOpacity
           style={[styles.btnDesign, {backgroundColor: 'black'}]}
           onPress={() => GoCategory()}>
@@ -104,7 +102,7 @@ export default function LinkChanel({navigation, route}: any) {
         <View style={[styles.btnDesign, {backgroundColor: '#DEDEDE'}]}>
           <Text style={styles.btnText}>다음</Text>
         </View>
-      )}
+      )} */}
     </View>
   );
 }

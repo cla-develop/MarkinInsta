@@ -41,9 +41,8 @@ export default function DayChange(props) {
               <Text style={styles.LightText}>팔로워 증가 수</Text>
             </View>
             <View style={{width: '50%'}}>
-              <Text style={styles.numberText}>
+              <Text style={styles.NumText}>
                 {todayFollower.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
-                명
               </Text>
             </View>
           </View>
@@ -52,11 +51,10 @@ export default function DayChange(props) {
               <Text style={styles.LightText}>계정 방문자 수</Text>
             </View>
             <View style={{width: '50%'}}>
-              <Text style={styles.numberText}>
+              <Text style={styles.NumText}>
                 {todayProfileView
                   .toString()
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
-                명
               </Text>
             </View>
           </View>
@@ -65,11 +63,10 @@ export default function DayChange(props) {
               <Text style={styles.LightText}>DM 클릭 수</Text>
             </View>
             <View style={{width: '50%'}}>
-              <Text style={styles.numberText}>
+              <Text style={styles.NumText}>
                 {todayClickMessage
                   .toString()
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
-                명
               </Text>
             </View>
           </View>
@@ -150,8 +147,8 @@ const styles = StyleSheet.create({
   },
   NumText: {
     textAlign: 'right',
-    marginRight: '5%',
-    fontFamily: 'NotoSansKR-Bold',
+    marginRight: '10%',
+    fontFamily: 'Roboto-Medium',
     fontSize: 16,
   },
   TopText: {

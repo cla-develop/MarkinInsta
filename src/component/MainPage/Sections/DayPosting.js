@@ -43,8 +43,8 @@ export default function DayPosting(props) {
               <Text style={styles.LightText}>도달 수</Text>
             </View>
             <View style={{width: '50%'}}>
-              <Text style={styles.numberText}>
-                {todayReach.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 회
+              <Text style={styles.NumText}>
+                {todayReach.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
               </Text>
             </View>
           </View>
@@ -53,12 +53,10 @@ export default function DayPosting(props) {
               <Text style={styles.LightText}>노출 수</Text>
             </View>
             <View style={{width: '50%'}}>
-              <Text
-                style={{textAlign: 'right', marginRight: '10%', fontSize: 16}}>
+              <Text style={styles.NumText}>
                 {todayImpressions
                   .toString()
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
-                회
               </Text>
             </View>
           </View>
@@ -67,10 +65,8 @@ export default function DayPosting(props) {
               <Text style={styles.LightText}>댓글</Text>
             </View>
             <View style={{width: '50%'}}>
-              <Text
-                style={{textAlign: 'right', marginRight: '10%', fontSize: 16}}>
+              <Text style={styles.NumText}>
                 {todayComment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
-                명
               </Text>
             </View>
           </View>
@@ -79,9 +75,8 @@ export default function DayPosting(props) {
               <Text style={styles.LightText}>좋아요</Text>
             </View>
             <View style={{width: '50%'}}>
-              <Text
-                style={{textAlign: 'right', marginRight: '10%', fontSize: 16}}>
-                {todayLike.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 개
+              <Text style={styles.NumText}>
+                {todayLike.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
               </Text>
             </View>
           </View>
@@ -148,9 +143,9 @@ const styles = StyleSheet.create({
   },
   NumText: {
     textAlign: 'right',
-    marginRight: '5%',
-    fontFamily: 'NotoSansKR-Bold',
+    marginRight: '10%',
     fontSize: 16,
+    fontFamily: 'Roboto-Medium',
   },
   TopText: {
     marginLeft: 20,

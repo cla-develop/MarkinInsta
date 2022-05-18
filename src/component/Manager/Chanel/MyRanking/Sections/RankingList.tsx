@@ -8,7 +8,10 @@ export default function RankingList(props: any) {
         <View
           style={[
             styles.outView,
-            {backgroundColor: item.username == 'yeonns2' ? '#7553FF' : 'white'},
+            {
+              backgroundColor:
+                item.username == props.UserName ? '#7553FF' : 'white',
+            },
           ]}
           key={item.username}>
           <View
@@ -20,7 +23,7 @@ export default function RankingList(props: any) {
                 style={[
                   styles.rankText,
                   {
-                    color: item.username == 'yeonns2' ? 'white' : 'black',
+                    color: item.username == props.UserName ? 'white' : 'black',
                   },
                 ]}>
                 {item.ranking}
@@ -40,7 +43,7 @@ export default function RankingList(props: any) {
                 style={[
                   styles.idText,
                   {
-                    color: item.username == 'yeonns2' ? 'white' : 'black',
+                    color: item.username == props.UserName ? 'white' : 'black',
                   },
                 ]}>
                 {item.username}{' '}
@@ -50,7 +53,10 @@ export default function RankingList(props: any) {
               <Text
                 style={[
                   styles.realFollowerText,
-                  {color: item.username == 'yeonns2' ? 'white' : '#7553FF'},
+                  {
+                    color:
+                      item.username == props.UserName ? 'white' : '#7553FF',
+                  },
                 ]}>
                 {(item.realFollowerCount / 100).toFixed(1)} k
               </Text>
@@ -60,7 +66,7 @@ export default function RankingList(props: any) {
                 style={[
                   styles.followerText,
                   {
-                    color: item.username == 'yeonns2' ? 'white' : 'black',
+                    color: item.username == props.UserName ? 'white' : 'black',
                   },
                 ]}>
                 {(item.followersCount / 1000).toFixed(1)} k
