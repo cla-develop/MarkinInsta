@@ -119,6 +119,12 @@ export default function PopularPost(props: any) {
                         #나리 #비숑 #댕댕이 #멍멍이
                       </Text>
                     </View> */}
+                    <View style={{height: 30, marginLeft: 20}}>
+                      <Text style={styles.subText}>{item.caption}</Text>
+                      {/* <Text style={styles.hashText}>
+                        #나리 #비숑 #댕댕이 #멍멍이
+                      </Text> */}
+                    </View>
                   </View>
                 </TouchableOpacity>
               </View>

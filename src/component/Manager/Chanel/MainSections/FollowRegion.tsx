@@ -5,7 +5,7 @@ import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, Alert} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import PieChart from 'react-native-pie-chart';
-
+import UnOAuth from '../../../../Utils/UnOAuth/UnOAuth';
 export default function FollowRegion(props: any) {
   const [series, setseries] = useState([]);
   const [cityseries, setcityseries] = useState([]);
@@ -15,6 +15,7 @@ export default function FollowRegion(props: any) {
   const [followerTopCity, setfollowerTopCity] = useState([
     {city: '', population: 0, ratio: ''},
   ]);
+  const [isFb, setisFb] = useState(false);
   useEffect(() => {
     axios
       .get('https://www.markin-app.site/app/channel', {
@@ -23,26 +24,32 @@ export default function FollowRegion(props: any) {
         },
       })
       .then(response => {
-        setfollowerTopCountry(
-          response.data.result.followerTopCountry.map(
-            (node: {country: any; population: any; ratio: any}) => ({
-              country: node.country,
-              population: node.population,
-              ratio: node.ratio,
-            }),
-          ),
-        );
-        setfollowerTopCity(
-          response.data.result.followerTopCity.map(
-            (node: {city: any; population: any; ratio: any}) => ({
-              city: node.city.split(','),
-              population: node.population,
-              ratio: node.ratio,
-            }),
-          ),
-        );
-        console.log(followerTopCity);
-      });
+        if (response.data.code === 3008) {
+          setisFb(false);
+        } else {
+          setisFb(true);
+          setfollowerTopCountry(
+            response.data.result.followerTopCountry.map(
+              (node: {country: any; population: any; ratio: any}) => ({
+                country: node.country,
+                population: node.population,
+                ratio: node.ratio,
+              }),
+            ),
+          );
+          setfollowerTopCity(
+            response.data.result.followerTopCity.map(
+              (node: {city: any; population: any; ratio: any}) => ({
+                city: node.city.split(','),
+                population: node.population,
+                ratio: node.ratio,
+              }),
+            ),
+          );
+          console.log(followerTopCity);
+        }
+      })
+      .catch(err => console.log(err));
   }, [props.JWT]);
 
   useEffect(() => {
@@ -69,123 +76,134 @@ export default function FollowRegion(props: any) {
   return (
     <View style={{marginTop: 10}}>
       <View style={styles.mainView}>
-        <View style={{flexDirection: 'row', marginTop: 15, marginLeft: 15}}>
-          <Text style={styles.TopText}>팔로워 지역 Top 5</Text>
-          <View
-            style={{
-              position: 'absolute',
-              right: 30,
-              flexDirection: 'row',
-              top: 5,
-            }}>
-            <TouchableOpacity onPress={() => setCat('국가')}>
-              <View style={{flexDirection: 'row'}}>
-                <Text
-                  style={{
-                    fontFamily: 'NotoSansKR-Bold',
-                    fontSize: 16,
-                    color: Cat === '국가' ? '#7553FF' : '#747474',
-                  }}>
-                  국가
-                </Text>
+        {isFb === true && followerTopCity.length >= 0 ? (
+          <>
+            <View style={{flexDirection: 'row', marginTop: 15, marginLeft: 15}}>
+              <Text style={styles.TopText}>팔로워 지역 Top 5</Text>
+              <View
+                style={{
+                  position: 'absolute',
+                  right: 30,
+                  flexDirection: 'row',
+                  top: 5,
+                }}>
+                <TouchableOpacity onPress={() => setCat('국가')}>
+                  <View style={{flexDirection: 'row'}}>
+                    <Text
+                      style={{
+                        fontFamily: 'NotoSansKR-Bold',
+                        fontSize: 16,
+                        color: Cat === '국가' ? '#7553FF' : '#747474',
+                      }}>
+                      국가
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => setCat('도시')}>
+                  <View style={{flexDirection: 'row', marginLeft: 10}}>
+                    <Text
+                      style={{
+                        fontFamily: 'NotoSansKR-Bold',
+                        fontSize: 16,
+                        color: Cat === '도시' ? '#7553FF' : '#747474',
+                      }}>
+                      도시
+                    </Text>
+                  </View>
+                </TouchableOpacity>
               </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setCat('도시')}>
-              <View style={{flexDirection: 'row', marginLeft: 10}}>
-                <Text
-                  style={{
-                    fontFamily: 'NotoSansKR-Bold',
-                    fontSize: 16,
-                    color: Cat === '도시' ? '#7553FF' : '#747474',
-                  }}>
-                  도시
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-        {Cat === '국가' ? (
-          <View>
-            <View style={{marginTop: 20}}>
-              {followerTopCountry.map(item => (
-                // tslint:disable-next-line: jsx-key
-                <View style={{marginRight: 40, width: 140}} key={item.country}>
-                  <View style={{flexDirection: 'row', marginTop: 6}}>
-                    <View style={{flexDirection: 'row', width: 90}}>
-                      <View
-                        style={[styles.Dot, {backgroundColor: '#FF5959'}]}
-                      />
-                      <Text style={[styles.regionText, {marginLeft: 6}]}>
-                        {item.country}
-                      </Text>
+            </View>
+            {Cat === '국가' ? (
+              <View>
+                <View style={{marginTop: 20}}>
+                  {followerTopCountry.map(item => (
+                    // tslint:disable-next-line: jsx-key
+                    <View
+                      style={{marginRight: 40, width: 140}}
+                      key={item.country}>
+                      <View style={{flexDirection: 'row', marginTop: 6}}>
+                        <View style={{flexDirection: 'row', width: 90}}>
+                          <View
+                            style={[styles.Dot, {backgroundColor: '#FF5959'}]}
+                          />
+                          <Text style={[styles.regionText, {marginLeft: 6}]}>
+                            {item.country}
+                          </Text>
+                        </View>
+                        <View style={{width: 60}}>
+                          <Text
+                            style={[styles.regionText, {textAlign: 'right'}]}>
+                            {item.ratio}%
+                          </Text>
+                        </View>
+                      </View>
                     </View>
-                    <View style={{width: 60}}>
-                      <Text style={[styles.regionText, {textAlign: 'right'}]}>
-                        {item.ratio}%
-                      </Text>
-                    </View>
+                  ))}
+
+                  <View style={{position: 'absolute', right: 16}}>
+                    <PieChart
+                      widthAndHeight={widthAndHeight}
+                      series={series}
+                      sliceColor={sliceColor}
+                      doughnut={true}
+                      coverRadius={0.45}
+                      coverFill={'#FFF'}
+                    />
                   </View>
                 </View>
-              ))}
-
-              <View style={{position: 'absolute', right: 16}}>
-                <PieChart
-                  widthAndHeight={widthAndHeight}
-                  series={series}
-                  sliceColor={sliceColor}
-                  doughnut={true}
-                  coverRadius={0.45}
-                  coverFill={'#FFF'}
-                />
+                <View style={styles.GraphcenterView}>
+                  <Text style={{fontFamily: 'NotoSansKR-Medium'}}>
+                    {followerTopCountry[0].country}{' '}
+                    {followerTopCountry[0].ratio}%
+                  </Text>
+                </View>
               </View>
-            </View>
-            <View style={styles.GraphcenterView}>
-              <Text style={{fontFamily: 'NotoSansKR-Medium'}}>
-                {followerTopCountry[0].country} {followerTopCountry[0].ratio}%
-              </Text>
-            </View>
-          </View>
+            ) : (
+              <View>
+                <View style={{marginTop: 20}}>
+                  {followerTopCity.map(item => (
+                    // tslint:disable-next-line: jsx-key
+                    <View style={{marginRight: 40, width: 140}} key={item.city}>
+                      <View style={{flexDirection: 'row', marginTop: 6}}>
+                        <View style={{flexDirection: 'row', width: 90}}>
+                          <View
+                            style={[styles.Dot, {backgroundColor: '#FF5959'}]}
+                          />
+                          <Text style={[styles.regionText, {marginLeft: 6}]}>
+                            {item.city[0]}
+                          </Text>
+                        </View>
+                        <View style={{width: 60}}>
+                          <Text
+                            style={[styles.regionText, {textAlign: 'right'}]}>
+                            {item.ratio}%
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                  ))}
+
+                  <View style={{position: 'absolute', right: 16}}>
+                    <PieChart
+                      widthAndHeight={widthAndHeight}
+                      series={cityseries}
+                      sliceColor={sliceColor}
+                      doughnut={true}
+                      coverRadius={0.45}
+                      coverFill={'#FFF'}
+                    />
+                  </View>
+                </View>
+                <View style={styles.GraphcenterView}>
+                  <Text style={{fontFamily: 'NotoSansKR-Medium'}}>
+                    {followerTopCity[0].city[0]} {followerTopCity[0].ratio}%
+                  </Text>
+                </View>
+              </View>
+            )}
+          </>
         ) : (
-          <View>
-            <View style={{marginTop: 20}}>
-              {followerTopCity.map(item => (
-                // tslint:disable-next-line: jsx-key
-                <View style={{marginRight: 40, width: 140}} key={item.city}>
-                  <View style={{flexDirection: 'row', marginTop: 6}}>
-                    <View style={{flexDirection: 'row', width: 90}}>
-                      <View
-                        style={[styles.Dot, {backgroundColor: '#FF5959'}]}
-                      />
-                      <Text style={[styles.regionText, {marginLeft: 6}]}>
-                        {item.city[0]}
-                      </Text>
-                    </View>
-                    <View style={{width: 60}}>
-                      <Text style={[styles.regionText, {textAlign: 'right'}]}>
-                        {item.ratio}%
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              ))}
-
-              <View style={{position: 'absolute', right: 16}}>
-                <PieChart
-                  widthAndHeight={widthAndHeight}
-                  series={cityseries}
-                  sliceColor={sliceColor}
-                  doughnut={true}
-                  coverRadius={0.45}
-                  coverFill={'#FFF'}
-                />
-              </View>
-            </View>
-            <View style={styles.GraphcenterView}>
-              <Text style={{fontFamily: 'NotoSansKR-Medium'}}>
-                {followerTopCity[0].city[0]} {followerTopCity[0].ratio}%
-              </Text>
-            </View>
-          </View>
+          <UnOAuth />
         )}
       </View>
     </View>
@@ -195,9 +213,10 @@ export default function FollowRegion(props: any) {
 const styles = StyleSheet.create({
   mainView: {
     width: '95%',
-    height: 240,
+
     borderRadius: 18,
     backgroundColor: 'white',
+    paddingBottom: 40,
   },
   TopText: {
     fontSize: 20,

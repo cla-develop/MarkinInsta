@@ -25,7 +25,8 @@ export default function RealEffect(props: any) {
           setisFb(true);
           setrealFollower(response.data.result.realFollower);
         }
-      });
+      })
+      .catch(err => console.log(err));
   }, [props.JWT]);
 
   return (

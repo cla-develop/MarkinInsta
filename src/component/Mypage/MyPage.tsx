@@ -31,7 +31,7 @@ export default function MyPage() {
   useEffect(() => {
     setTimeout(() => {
       setasd(1);
-    }, 100);
+    }, 500);
   }, []);
   useEffect(() => {
     // tslint:disable-next-line: no-floating-promises
@@ -56,7 +56,8 @@ export default function MyPage() {
         setrealFollower(response.data.result.info.realFollower);
         setCampaginCount(response.data.result.campaignCount);
         setPoint(response.data.result.point);
-      });
+      })
+      .catch(err => console.log(err));
   }, [JWT]);
 
   const isFocused = useIsFocused();
@@ -73,7 +74,8 @@ export default function MyPage() {
         .then(response => {
           setCategory(response.data.result);
           console.log(response.data.result);
-        });
+        })
+        .catch(err => console.log(err));
     };
     call();
   }, [JWT]);

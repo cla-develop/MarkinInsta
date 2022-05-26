@@ -25,7 +25,8 @@ export default function Loading() {
       .then(response => {
         console.log(response.data.isSuccess + 'asdsasdsd');
         setisSuccess(response.data.isSuccess);
-      });
+      })
+      .catch(err => console.log(err));
   }, [JWT]);
   useEffect(() => {
     if (isSuccess === true) {

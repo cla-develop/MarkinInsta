@@ -28,7 +28,8 @@ export default function DayPosting(props) {
           settodayLike(response.data.result.todayLike);
           settodayComment(response.data.result.todayComment);
         }
-      });
+      })
+      .catch(err => console.log(err));
   }, [props.JWT]);
   return (
     <View style={styles.PostView}>

@@ -29,8 +29,9 @@ export default function MyPic({route}) {
   useEffect(() => {
     setTimeout(() => {
       setasd(1);
-    }, 100);
+    }, 1000);
   }, []);
+
   useEffect(() => {
     axios
       .get(`https://www.markin-app.site/app/users/feed/${id}`, {
@@ -40,10 +41,14 @@ export default function MyPic({route}) {
       })
       .then(response => {
         setData(response.data.result.mediaData);
-        setmediaInsight(response.data.result.mediaInsight);
-      });
-  }, []);
-
+        if (response.data.result.mediaInsight !== null) {
+          setmediaInsight(response.data.result.mediaInsight);
+        }
+      })
+      .catch(err => console.log(err));
+  }, [JWT]);
+  console.log(JWT);
+  console.log(id);
   return (
     <View style={styles.allView}>
       <View style={{height: 35}}>
@@ -86,6 +91,7 @@ export default function MyPic({route}) {
             <Text style={styles.SpoqaMe14}>{comments_count}</Text>
           </View>
         </View> */}
+
           <PostReaction mediaInsight={mediaInsight} JWT={JWT} />
         </>
       )}

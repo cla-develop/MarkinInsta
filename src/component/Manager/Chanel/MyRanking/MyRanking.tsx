@@ -61,7 +61,8 @@ export default function MyRanking(props: any) {
       })
       .then(response => {
         setCategory(response.data.result);
-      });
+      })
+      .catch(err => console.log(err));
   }, [JWT]);
   useEffect(() => {
     // tslint:disable-next-line: no-floating-promises

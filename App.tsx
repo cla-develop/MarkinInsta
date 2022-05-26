@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import AddId from './src/component/Mypage/SetUp/Sections/ManageLink/AddId';
 import Home from './src/component/Home/Home';
 import Walkthrough from './src/component/Walkthrough/Walkthrough';
 import FacebookLogin from './src/component/FacebookLogin/FacebookLogin';
@@ -107,6 +108,7 @@ function App() {
         <Stack.Screen name="FixFinish" component={FixFinish} />
         <Stack.Screen name="Ask" component={Ask} />
         <Stack.Screen name="LinkChanel" component={LinkChanel} />
+        <Stack.Screen name="AddId" component={AddId} />
         {/* 매니저  */}
         <Stack.Screen name="Manager" component={Manger} />
         <Stack.Screen name="MyRanking" component={MyRanking} />

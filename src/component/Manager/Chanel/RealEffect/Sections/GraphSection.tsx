@@ -51,7 +51,7 @@ export default function GraphSection(props: any) {
                     ? noprofile
                     : {uri: props.profileImg}
                 }
-                style={{width: 50, height: 50}}
+                style={{width: 50, height: 50, borderRadius: 50 / 2}}
               />
             </View>
             {props.realFollower >= 1000000 ? (
@@ -109,7 +109,7 @@ export default function GraphSection(props: any) {
                     ? noprofile
                     : {uri: props.profileImg}
                 }
-                style={{width: 50, height: 50}}
+                style={{width: 50, height: 50, borderRadius: 50 / 2}}
               />
             </View>
             {props.realFollower >= 1000000 ? (

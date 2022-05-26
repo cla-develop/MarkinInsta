@@ -61,7 +61,7 @@ export default function Refund({route}) {
           keyboardType="number-pad"
           onChangeText={i => setPoint(i)}
         />
-        {parseInt(Point) < 10000 && (
+        {parseInt(Point) < 10000 && myPoint > 10000 && (
           <View style={{borderTopColor: '#FF5959', borderTopWidth: 1}}>
             <Text style={[styles.NotoMe12]}>
               환급 최소 금액은 10,000원입니다.

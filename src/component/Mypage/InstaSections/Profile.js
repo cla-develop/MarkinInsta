@@ -45,17 +45,21 @@ export default function Profile(props) {
               )}
             </View>
             <TouchableOpacity onPress={() => navigation.navigate('Category')}>
-              <View style={{flexDirection: 'row', marginTop: 13}}>
-                {props.Category.map(item => (
-                  <Text style={styles.greyText}>{item} </Text>
-                ))}
-                <Icons.SimpleLineIcons
-                  name="pencil"
-                  size={14}
-                  color="#747474"
-                  style={{marginLeft: 6, marginTop: 3}}
-                />
-              </View>
+              {props.Category !== undefined && (
+                <View style={{flexDirection: 'row', marginTop: 13}}>
+                  {props.Category.map(item => (
+                    <Text style={styles.greyText} key={item}>
+                      {item}{' '}
+                    </Text>
+                  ))}
+                  <Icons.SimpleLineIcons
+                    name="pencil"
+                    size={14}
+                    color="#747474"
+                    style={{marginLeft: 6, marginTop: 3}}
+                  />
+                </View>
+              )}
             </TouchableOpacity>
           </View>
         </View>

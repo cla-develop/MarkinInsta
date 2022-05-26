@@ -61,7 +61,8 @@ export default function Apply({route}) {
       })
       .then(response => {
         setinstaIDs(response.data.result);
-      });
+      })
+      .catch(err => console.log(err));
   }, [JWT]);
 
   const ApplyActivity = async () => {
@@ -102,8 +103,10 @@ export default function Apply({route}) {
         setRecipName(response.data.result.name);
         setRecipPN(response.data.result.phone);
         setPostCode(response.data.result.postcode);
-        setAddress(response.data.result.address);
-      });
+        setAddress(response.data.result.address1);
+        setDetailAd(response.data.result.address2);
+      })
+      .catch(err => console.log(err));
   }, [JWT]);
   return (
     <View style={styles.allView}>
@@ -220,8 +223,8 @@ export default function Apply({route}) {
               <Text style={styles.inputTitle}>배송지 주소</Text>
               <View style={{flexDirection: 'row'}}>
                 <View style={[styles.adView, {width: '80%'}]}>
-                  {Address !== null && (
-                    <Text>{Address.replace(/\"/gi, '')}</Text>
+                  {PostCode !== null && (
+                    <Text>{PostCode.replace(/\"/gi, '')}</Text>
                   )}
                 </View>
                 <TouchableOpacity onPress={() => setIsModalVis(true)}>
@@ -231,9 +234,7 @@ export default function Apply({route}) {
                 </TouchableOpacity>
               </View>
               <View style={[styles.adView, {width: '100%'}]}>
-                {PostCode !== null && (
-                  <Text>{PostCode.replace(/\"/gi, '')}</Text>
-                )}
+                {Address !== null && <Text>{Address.replace(/\"/gi, '')}</Text>}
               </View>
 
               {/* 상세주소 입력 */}

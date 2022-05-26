@@ -2,6 +2,4 @@
     <string name="app_name">MarkinInsta</string>
     <string name="facebook_app_id">284307153817125</string>
 <string name="facebook_client_token">a0c40d17f9ce91bb1b56e8ff2240c4d8</string>
-<string name="fb_login_protocol_scheme">fb284307153817125</string>
-
 </resources>

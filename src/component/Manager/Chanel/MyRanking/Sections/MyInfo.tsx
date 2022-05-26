@@ -32,6 +32,7 @@ export default function MyInfo(props: any) {
             style={{
               height: 35,
               width: 35,
+              borderRadius: 35 / 2,
             }}
           />
         </View>

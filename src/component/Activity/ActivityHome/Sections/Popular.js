@@ -5,17 +5,39 @@ import {Div} from 'reactnative-ui-bootstrap';
 import noprofile from '../../../../images/noprofile.png';
 import axios from 'axios';
 import {useNavigation} from '@react-navigation/native';
+import moment from 'moment';
 export default function Popular() {
   const navigation = useNavigation();
   const [Result, setResult] = useState([]);
+  const [endDay, setendDay] = useState('');
+  const [leftDate, setleftDate] = useState(0);
+  const [DateOrEnd, setDateOrEnd] = useState('');
+  const today = new Date();
   useEffect(() => {
     axios
       .get(`https://www.markin-app.site/app/activity/popular`)
       .then(response => {
         setResult(response.data.result);
+        setendDay(
+          new Date(
+            moment(response.data.result.campaignApplyEnd, 'YYYY.MM.DD').format(
+              'YYYY-MM-DD',
+            ),
+          ),
+        );
       })
       .catch(err => console.log(err));
   }, []);
+  useEffect(() => {
+    console.log(endDay);
+    if (endDay > today) {
+      setDateOrEnd('Date');
+      setleftDate(Math.abs((endDay - today) / (1000 * 60 * 60 * 24)));
+    } else {
+      setDateOrEnd('End');
+      setleftDate('모집종료');
+    }
+  }, [endDay]);
   return (
     <View>
       {/* <View style={{flexDirection: 'row'}}> */}
@@ -60,7 +82,13 @@ export default function Popular() {
                   </Text>
                 </View>
                 <View style={styles.greyView}>
-                  <Text style={{fontSize: 10}}>0일 남음</Text>
+                  {DateOrEnd === 'Date' ? (
+                    <Text style={{fontSize: 12}}>
+                      {Math.floor(leftDate).toString()}일 남음
+                    </Text>
+                  ) : (
+                    <Text style={{fontSize: 12}}>모집종료</Text>
+                  )}
                 </View>
               </View>
               <Text
@@ -74,9 +102,9 @@ export default function Popular() {
               </Text>
               <View
                 style={{flexDirection: 'row', marginTop: 5, paddingLeft: '1%'}}>
-                <Text style={styles.redText}>{item.influencerNumber}</Text>
+                <Text style={styles.redText}>{item.ApplicantCount}</Text>
                 <Text style={styles.greyText}>
-                  /{item.ApplicantCount}명 모집
+                  /{item.influencerNumber}명 모집
                 </Text>
                 <Text style={styles.moneyText}>
                   {' '}

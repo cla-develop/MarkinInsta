@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Icons from '../../Icons/Icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import PersonalInfo from './PersonalInfo';
+import SeviceTerm from './SeviceTerm';
 export default function Terms({navigation, route}: any) {
   const [Must, setMust] = useState(false);
   const [Choose, setChoose] = useState(false);
@@ -42,20 +44,20 @@ export default function Terms({navigation, route}: any) {
   const ChooseWay = () => {
     navigation.navigate('PhonNum', {AccessToken, Agreesns, AgreeEmail, Id});
   };
-  // React.useEffect(() => {
-  //   getData();
-  // }, []);
+  React.useEffect(() => {
+    getData();
+  }, []);
 
-  // const getData = async () => {
-  //   try {
-  //     const value = await AsyncStorage.getItem('accessToken');
-  //     if (value !== null) {
-  //       console.log(value);
-  //     } else console.log(value);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('accessToken');
+      if (value !== null) {
+        console.log(value);
+      } else console.log(value);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <View style={{flex: 1, backgroundColor: 'white', paddingTop: '15%'}}>
@@ -95,9 +97,11 @@ export default function Terms({navigation, route}: any) {
             onPress={() => setMust(!Must)}>
             <Icons.Entypo name="check" size={18} style={{color: '#DEDEDE'}} />
           </TouchableOpacity>
-          <Text style={styles.innerText}>(필수)서비스 이용약관</Text>
+          <Text style={styles.innerText}>(필수)개인정보처리방침</Text>
         </View>
-        <View style={styles.TermsLet}></View>
+        <View style={styles.TermsLet}>
+          <PersonalInfo />
+        </View>
         <View style={styles.checkView}>
           <TouchableOpacity
             style={[
@@ -108,7 +112,9 @@ export default function Terms({navigation, route}: any) {
           </TouchableOpacity>
           <Text style={styles.innerText}>(선택)서비스 이용약관</Text>
         </View>
-        <View style={styles.TermsLet}></View>
+        <View style={styles.TermsLet}>
+          <SeviceTerm />
+        </View>
         <View style={{flexDirection: 'row', paddingLeft: 10, marginTop: 20}}>
           <TouchableOpacity
             style={[
@@ -173,11 +179,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     flexDirection: 'row',
     paddingTop: 10,
-    paddingLeft: 30,
     shadowColor: '#000000',
     shadowOffset: {width: 0, height: 0},
     shadowOpacity: 0.4,
     shadowRadius: 1,
+    width: '100%',
   },
   innerText: {
     marginLeft: 15,

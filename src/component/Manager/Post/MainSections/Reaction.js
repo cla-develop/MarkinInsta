@@ -24,7 +24,8 @@ export default function Reaction(props) {
           setisFb(true);
           setData(response.data.result);
         }
-      });
+      })
+      .catch(err => console.log(err));
   }, [props.JWT]);
   const [asd, setasd] = useState(0);
 

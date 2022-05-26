@@ -26,7 +26,8 @@ export default function FollowerChange(props) {
           setData(response.data.result);
           setisFb(true);
         }
-      });
+      })
+      .catch(err => console.log(err));
   }, [props.JWT]);
 
   return (

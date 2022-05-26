@@ -86,7 +86,6 @@ export default function Detail({route}) {
         // console.log('1000');
         // console.log(
       })
-
       .catch(err => console.log(err));
   }, []);
   useEffect(() => {

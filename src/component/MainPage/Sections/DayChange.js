@@ -27,7 +27,8 @@ export default function DayChange(props) {
           settodayProfileView(response.data.result.todayProfileView);
           settodayClickMessage(response.data.result.todayClickMessage);
         }
-      });
+      })
+      .catch(err => console.log(err));
   }, [props.JWT]);
   return (
     <View style={styles.FollowView}>

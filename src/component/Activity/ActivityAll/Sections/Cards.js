@@ -27,7 +27,13 @@ export default function Cards(props) {
                 </Text>
               </View>
               <View style={styles.dayView}>
-                <Text style={{fontSize: 10}}>0일 남음</Text>
+                {props.DateOrEnd === 'Date' ? (
+                  <Text style={{fontSize: 12}}>
+                    {Math.floor(props.leftDate).toString()}일 남음
+                  </Text>
+                ) : (
+                  <Text style={{fontSize: 12}}>모집종료</Text>
+                )}
               </View>
             </View>
             <Text
@@ -38,9 +44,9 @@ export default function Cards(props) {
             </Text>
             <View
               style={{flexDirection: 'row', marginTop: 5, paddingLeft: '6%'}}>
-              <Text style={{color: 'red'}}>{item.influencerNumber}명</Text>
+              <Text style={{color: 'red'}}>{item.ApplicantCount}명</Text>
               <Text style={{color: '#B2B2B2'}}>
-                /{item.ApplicantCount}명 모집
+                /{item.influencerNumber}명 모집
               </Text>
               <Text style={{position: 'absolute', right: '6%'}}>
                 {' '}

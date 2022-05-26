@@ -51,7 +51,8 @@ export default function PostMain() {
         settotalReach(response.data.result.totalReach);
         settotalEngagement(response.data.result.totalEngagement);
         settotalSaved(response.data.result.totalSaved);
-      });
+      })
+      .catch(err => console.log(err));
   }, []);
   useEffect(() => {
     // tslint:disable-next-line: no-floating-promises
@@ -96,7 +97,8 @@ export default function PostMain() {
             }),
           ),
         );
-      });
+      })
+      .catch(err => console.log(err));
   }, [JWT]);
   useEffect(() => {
     setStand('좋아요순');

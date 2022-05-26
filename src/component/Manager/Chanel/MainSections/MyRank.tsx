@@ -26,7 +26,8 @@ export default function MyRank(props: any) {
           setisFb(true);
           setranking(response.data.result.myRanking.ranking);
         }
-      });
+      })
+      .catch(err => console.log(err));
   }, [props.JWT]);
 
   return (

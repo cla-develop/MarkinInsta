@@ -21,7 +21,7 @@ export default function ManageLink() {
   useEffect(() => {
     setTimeout(() => {
       setasd(1);
-    }, 100);
+    }, 1000);
   }, []);
   useEffect(() => {
     axios
@@ -32,7 +32,9 @@ export default function ManageLink() {
       })
       .then(response => {
         setResult(response.data.result);
-      });
+        console.log(response.data.result);
+      })
+      .catch(err => console.log(err));
   }, [JWT]);
 
   return (
@@ -94,8 +96,7 @@ export default function ManageLink() {
               </View>
             ))}
             <View style={{marginTop: 20}}>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('LinkChanel')}>
+              <TouchableOpacity onPress={() => navigation.navigate('AddId')}>
                 <View style={[styles.btnView, {backgroundColor: '#EDEDED'}]}>
                   <Text style={{fontSize: 25, color: '#747474'}}>+</Text>
                 </View>

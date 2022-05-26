@@ -26,7 +26,8 @@ export default function MyFeedHeader(props) {
         setData(response.data.result);
         console.log(response.data.result);
         setfirst(response.data.result[0].username);
-      });
+      })
+      .catch(err => console.log(err));
   }, [props.JWT]);
   return (
     <View style={{flexDirection: 'row'}}>

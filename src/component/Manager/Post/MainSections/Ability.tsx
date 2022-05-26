@@ -18,7 +18,8 @@ export default function Ability(props: any) {
       .then(response => {
         setLowerCost(response.data.result.lower_cost);
         setupperCost(response.data.result.upper_cost);
-      });
+      })
+      .catch(err => console.log(err));
   }, [props.JWT]);
   return (
     <View style={{marginTop: 15}}>

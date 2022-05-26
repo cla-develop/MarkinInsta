@@ -1,5 +1,5 @@
 package com.markininsta;
-
+import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
@@ -48,7 +48,14 @@ public class MainApplication extends Application implements ReactApplication {
       return mReactNativeHost;
     }
   }
-
+  ///
+//   @Override
+//   protected List<ReactPackage> getPackages() {
+//     return Arrays.asList(
+//             new MainReactPackage(),
+//             new FBSDKPackage()
+//     );
+// }
   @Override
   public void onCreate() {
     super.onCreate();

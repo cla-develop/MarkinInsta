@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   TextInput,
+  Alert,
 } from 'react-native';
 import styles from '../../../../Styles';
 import Icons from '../../../../Icons/Icons';
@@ -17,12 +18,13 @@ export default function FixInform() {
   const [Email, setEmail] = useState('');
   const [showV, setShowV] = useState(false);
   const [VerNum, setVerNum] = useState('');
-  const [showB, setShowB] = useState(false);
+  const [showB, setShowB] = useState(true);
   const [Name, setName] = useState('');
   const [SF, setSF] = useState('0');
   const [Birth, setBirth] = useState('');
   const [JWT, setJWT] = useState('');
   const [EVali, setEVali] = useState(true);
+  const [checkPN, setCheckPN] = useState('');
   useEffect(() => {
     AsyncStorage.getItem('JWT').then(value => {
       setJWT(value);
@@ -65,38 +67,60 @@ export default function FixInform() {
         setPhonNum(response.data.result.phone);
         setBirth(response.data.result.birth);
         setasd(1);
-      });
+      })
+      .catch(err => console.log(err));
   }, [JWT]);
 
   const Send = () => {
-    axios({
-      method: 'patch',
-      data: {
-        email: Email,
-        phone: PhonNum,
-      },
-      headers: {
-        'x-access-token': JWT,
-      },
-      url: 'https://www.markin-app.site/app/users',
-    }).then(response => {
-      console.log(response.data.message);
-      if (response.data.isSuccess === true) {
-        navigation.navigate('FixFinish');
-      }
-    });
+    if (EVali === false) {
+      Alert.alert('올바른 이메일 형식이 아닙니다.');
+    } else if (showB === false) {
+      Alert.alert('인증번호를 확인하세요.');
+    } else {
+      axios({
+        method: 'patch',
+        data: {
+          email: Email,
+          phone: PhonNum,
+        },
+        headers: {
+          'x-access-token': JWT,
+        },
+        url: 'https://www.markin-app.site/app/users',
+      }).then(response => {
+        console.log(response.data.message);
+        if (response.data.isSuccess === true) {
+          navigation.navigate('FixFinish');
+        }
+      });
+    }
   };
+  const [samepN, setsamepN] = useState(true);
   const SendVri = () => {
     axios
-      .post('https://www.markin-app.site/app/sms', {
+      .post('https://www.markin-app.site/app/phone/check', {
         phone: PhonNum,
       })
       .then(response => {
         if (response.data.isSuccess === true) {
-          setShowV(true);
+          send();
+        } else {
+          Alert.alert('이미 등록된 번호 입니다.');
         }
-        console.log(response.data.message);
       });
+    const send = () => {
+      axios
+        .post('https://www.markin-app.site/app/sms', {
+          phone: PhonNum,
+        })
+        .then(response => {
+          if (response.data.isSuccess === true) {
+            setShowV(true);
+            setShowB(false);
+          }
+          console.log(response.data.message);
+        });
+    };
   };
 
   const CheckVer = () => {
@@ -115,10 +139,12 @@ export default function FixInform() {
           setSF('0');
         } else {
           setSF('1');
+          setShowB(false);
         }
       })
       .catch(err => console.log(err));
   };
+  const [anotherNum, setanotherNum] = useState(false);
   return (
     <View style={styles.allView}>
       <View style={styles.CenterTiileView}>
@@ -144,17 +170,32 @@ export default function FixInform() {
         </View>
         <Text style={instyles.inputTitle}>이메일</Text>
         {asd === 1 && (
-          <TextInput
-            style={styles.W100input}
-            value={Email}
-            autoCapitalize={'none'}
-            autoCorrect={false}
-            onChangeText={event => onChangeEmailInput(event)}
-          />
+          <>
+            <TextInput
+              style={styles.W100input}
+              value={Email}
+              autoCapitalize={'none'}
+              autoCorrect={false}
+              onChangeText={event => onChangeEmailInput(event)}
+            />
+            {EVali === false && (
+              <View style={{position: 'absolute', top: 232, left: 22}}>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    color: '#FF5959',
+                    fontFamily: 'NotoSansKR-Medium',
+                  }}>
+                  올바른 이메일 형식이 아닙니다.
+                </Text>
+              </View>
+            )}
+          </>
         )}
+
         <Text style={instyles.inputTitle}>휴대폰 번호</Text>
         <View style={{flexDirection: 'row'}}>
-          {asd === 1 && (
+          {asd === 1 && anotherNum === true ? (
             <TextInput
               style={[styles.input, {width: 220}]}
               value={PhonNum}
@@ -162,14 +203,30 @@ export default function FixInform() {
               autoCorrect={false}
               onChangeText={event => setPhonNum(event)}
             />
-          )}
-          <TouchableOpacity onPress={() => SendVri()}>
-            <View style={instyles.requestBtun}>
-              <Text style={[styles.NotoMe14, {color: 'white'}]}>
-                다른 번호 인증
+          ) : (
+            <View style={[instyles.squareView, {width: 220}]}>
+              <Text style={[styles.NotoReg16, {color: '#9C9C9C'}]}>
+                {PhonNum}
               </Text>
             </View>
-          </TouchableOpacity>
+          )}
+          {anotherNum === false ? (
+            <TouchableOpacity onPress={() => setanotherNum(true)}>
+              <View style={instyles.requestBtun}>
+                <Text style={[styles.NotoMe14, {color: 'white'}]}>
+                  다른 번호 인증
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity onPress={() => SendVri()}>
+              <View style={instyles.requestBtun}>
+                <Text style={[styles.NotoMe14, {color: 'white'}]}>
+                  인증번호 전송
+                </Text>
+              </View>
+            </TouchableOpacity>
+          )}
         </View>
         {showV === true && (
           <>
@@ -213,27 +270,14 @@ export default function FixInform() {
             </View>
           </>
         )}
-        {showB === true ? (
-          <View style={{marginTop: 205}}>
-            <TouchableOpacity onPress={() => Send()}>
-              <View style={[styles.btnView, {backgroundColor: '#181818'}]}>
-                <Text style={[styles.NotoMe18, {color: 'white'}]}>
-                  수정완료
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <View style={{marginTop: showV === true ? 205 : 294}}>
-            <TouchableOpacity>
-              <View style={[styles.btnView, {backgroundColor: '#EDEDED'}]}>
-                <Text style={[styles.NotoMe18, {color: 'white'}]}>
-                  수정완료
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        )}
+
+        <View style={{marginTop: showV === true ? 205 : 294}}>
+          <TouchableOpacity onPress={() => Send()}>
+            <View style={[styles.btnView, {backgroundColor: '#181818'}]}>
+              <Text style={[styles.NotoMe18, {color: 'white'}]}>수정완료</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );

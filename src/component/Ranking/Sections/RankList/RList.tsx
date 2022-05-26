@@ -36,7 +36,8 @@ export default function RList(props: any) {
             }),
           ),
         );
-      });
+      })
+      .catch(err => console.log(err));
   }, [props.orderby, props.category, props.upperFollower, props.lowerFollower]);
 
   return (

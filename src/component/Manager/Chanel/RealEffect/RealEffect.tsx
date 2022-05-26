@@ -55,7 +55,8 @@ export default function RealEffect(props: any) {
         setQuality(Math.floor(response.data.result.quality));
         setprofileImg(response.data.result.profileImg);
         setrange(response.data.result.range);
-      });
+      })
+      .catch(err => console.log(err));
   }, [JWT]);
 
   return (

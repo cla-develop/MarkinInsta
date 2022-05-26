@@ -21,7 +21,8 @@ export default function Manger() {
       .then(response => {
         setRealEffect(response.data.result.channelResult.realFollowerCount);
         setMyRanking(response.data.result.channelResult.ranking);
-      });
+      })
+      .catch(err => console.log(err));
   }, []);
 
   return (
