@@ -8,13 +8,18 @@ export default function DayChange(props) {
   const [todayFollower, settodayFollower] = useState(0);
   const [todayProfileView, settodayProfileView] = useState(0);
   const [todayClickMessage, settodayClickMessage] = useState(0);
-  const [isFb, setisFb] = useState(false);
-
+  const [isFb, setisFb] = useState(true);
   useEffect(() => {
+    AsyncStorage.getItem('JWT').then(value => {
+      call(value);
+    });
+  }, []);
+
+  const call = value => {
     axios
       .get('https://www.markin-app.site/app/home/channel', {
         headers: {
-          'x-access-token': props.JWT,
+          'x-access-token': value,
         },
       })
       .then(response => {
@@ -29,7 +34,7 @@ export default function DayChange(props) {
         }
       })
       .catch(err => console.log(err));
-  }, [props.JWT]);
+  };
   return (
     <View style={styles.FollowView}>
       <View style={{flexDirection: 'row', marginBottom: 10}}>

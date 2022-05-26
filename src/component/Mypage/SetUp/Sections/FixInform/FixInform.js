@@ -25,6 +25,8 @@ export default function FixInform() {
   const [JWT, setJWT] = useState('');
   const [EVali, setEVali] = useState(true);
   const [checkPN, setCheckPN] = useState('');
+  const [Original, setOriginal] = useState('');
+  const [OriginalPN, setOriginalPN] = useState('');
   useEffect(() => {
     AsyncStorage.getItem('JWT').then(value => {
       setJWT(value);
@@ -62,8 +64,10 @@ export default function FixInform() {
         },
       })
       .then(response => {
+        setOriginal(response.data.result.email);
         setEmail(response.data.result.email);
         setName(response.data.result.name);
+        setOriginalPN(response.data.result.phone);
         setPhonNum(response.data.result.phone);
         setBirth(response.data.result.birth);
         setasd(1);
@@ -76,6 +80,8 @@ export default function FixInform() {
       Alert.alert('올바른 이메일 형식이 아닙니다.');
     } else if (showB === false) {
       Alert.alert('인증번호를 확인하세요.');
+    } else if (Original === Email && OriginalPN === PhonNum) {
+      Alert.alert('변경사항이 없습니다.');
     } else {
       axios({
         method: 'patch',

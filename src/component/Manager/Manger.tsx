@@ -1,29 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import {View, ScrollView, StyleSheet} from 'react-native';
 import TopBtn from './Chanel/MainSections/TopBtn';
-import axios from 'axios';
 import Chanel from './Chanel/Chanel';
 import PostMain from './Post/PostMain';
 export default function Manger() {
   const [chanelAndPost, setchanelAndPost] = useState<boolean>(true);
-  const [RealEffect, setRealEffect] = useState<number>(0);
-  const [MyRanking, setMyRanking] = useState<number>(0);
-
-  useEffect(() => {
-    // tslint:disable-next-line: no-floating-promises
-    axios
-      .get('https://www.markin-app.site/app/channel', {
-        headers: {
-          'x-access-token':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImluc3RhZ3JhbUlkIjoiNDIzNDQwMzAxMzMyODU5MiIsImlhdCI6MTY0MzQ4MDg1MCwiZXhwIjoxNjc1MDE2ODUwLCJzdWIiOiJ1c2VySW5mbyJ9.MlsJ3tZcye9WdqRwz-AKY5KNZf46B1gFQ8nqgrJxGMg',
-        },
-      })
-      .then(response => {
-        setRealEffect(response.data.result.channelResult.realFollowerCount);
-        setMyRanking(response.data.result.channelResult.ranking);
-      })
-      .catch(err => console.log(err));
-  }, []);
 
   return (
     <>
@@ -34,7 +15,7 @@ export default function Manger() {
         />
         {chanelAndPost === true ? (
           <View>
-            <Chanel RealEffect={RealEffect} MyRanking={MyRanking} />
+            <Chanel />
           </View>
         ) : (
           <View>

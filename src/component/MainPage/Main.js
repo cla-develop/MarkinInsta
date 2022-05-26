@@ -86,11 +86,11 @@ export default function Main(props) {
             <DayChange JWT={JWT} />
           </View>
           {/* <DayPosting /> */}
-          {asd === 1 && (
-            <View style={{width: '100%', marginTop: 10}}>
-              <DayPosting JWT={JWT} />
-            </View>
-          )}
+
+          <View style={{width: '100%', marginTop: 10}}>
+            <DayPosting JWT={JWT} />
+          </View>
+
           {asd === 1 && (
             <View style={{marginTop: 10, marginBottom: 150, width: '100%'}}>
               <DoingActivity JWT={JWT} />

@@ -6,6 +6,7 @@ import {View, Text, StyleSheet, Alert} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import PieChart from 'react-native-pie-chart';
 import UnOAuth from '../../../../Utils/UnOAuth/UnOAuth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function FollowRegion(props: any) {
   const [series, setseries] = useState([]);
   const [cityseries, setcityseries] = useState([]);
@@ -15,7 +16,15 @@ export default function FollowRegion(props: any) {
   const [followerTopCity, setfollowerTopCity] = useState([
     {city: '', population: 0, ratio: ''},
   ]);
-  const [isFb, setisFb] = useState(false);
+  const [isFb, setisFb] = useState(0);
+  useEffect(() => {
+    AsyncStorage.getItem('JWT')
+      .then(value => {
+        setJWT(value);
+      })
+      .then(() => getData());
+  });
+
   useEffect(() => {
     axios
       .get('https://www.markin-app.site/app/channel', {
@@ -25,9 +34,9 @@ export default function FollowRegion(props: any) {
       })
       .then(response => {
         if (response.data.code === 3008) {
-          setisFb(false);
+          setisFb(1);
         } else {
-          setisFb(true);
+          setisFb(2);
           setfollowerTopCountry(
             response.data.result.followerTopCountry.map(
               (node: {country: any; population: any; ratio: any}) => ({
@@ -76,7 +85,7 @@ export default function FollowRegion(props: any) {
   return (
     <View style={{marginTop: 10}}>
       <View style={styles.mainView}>
-        {isFb === true && followerTopCity.length >= 0 ? (
+        {isFb === 2 && followerTopCity.length >= 0 && (
           <>
             <View style={{flexDirection: 'row', marginTop: 15, marginLeft: 15}}>
               <Text style={styles.TopText}>팔로워 지역 Top 5</Text>
@@ -202,9 +211,9 @@ export default function FollowRegion(props: any) {
               </View>
             )}
           </>
-        ) : (
-          <UnOAuth />
         )}
+        {isFb === 1 && <UnOAuth />}
+        {isFb === 0 && <View></View>}
       </View>
     </View>
   );

@@ -8,13 +8,18 @@ export default function DayPosting(props) {
   const [todayReach, settodayReach] = useState(0);
   const [todayLike, settodayLike] = useState(0);
   const [todayComment, settodayComment] = useState(0);
-  const [isFb, setisFb] = useState(false);
-
+  const [isFb, setisFb] = useState(true);
   useEffect(() => {
+    AsyncStorage.getItem('JWT').then(value => {
+      call(value);
+    });
+  }, []);
+
+  const call = value => {
     axios
       .get('https://www.markin-app.site/app/home/post', {
         headers: {
-          'x-access-token': props.JWT,
+          'x-access-token': value,
         },
       })
       .then(response => {
@@ -30,7 +35,7 @@ export default function DayPosting(props) {
         }
       })
       .catch(err => console.log(err));
-  }, [props.JWT]);
+  };
   return (
     <View style={styles.PostView}>
       <View style={{flexDirection: 'row'}}>

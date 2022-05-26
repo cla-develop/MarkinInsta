@@ -38,6 +38,7 @@ export default function Apply({route}) {
   useEffect(() => {
     AsyncStorage.getItem('JWT').then(value => {
       setJWT(value);
+      IDcall(value);
     });
   }, []);
   const [asd, setasd] = useState(0);
@@ -52,18 +53,34 @@ export default function Apply({route}) {
   const navigateToBack = () => {
     navigation.navigate('Body');
   };
-  useEffect(() => {
+  const IDcall = value => {
     axios
       .get('https://www.markin-app.site/app/users/instagram', {
         headers: {
-          'x-access-token': JWT,
+          'x-access-token': value,
         },
       })
       .then(response => {
-        setinstaIDs(response.data.result);
+        if (response.data.code !== 3008) {
+          setinstaIDs(response.data.result);
+        }
       })
       .catch(err => console.log(err));
-  }, [JWT]);
+  };
+  // useEffect(() => {
+  //   axios
+  //     .get('https://www.markin-app.site/app/users/instagram', {
+  //       headers: {
+  //         'x-access-token': JWT,
+  //       },
+  //     })
+  //     .then(response => {
+  //       if (response.data.code !== 3008) {
+  //         setinstaIDs(response.data.result);
+  //       }
+  //     })
+  //     .catch(err => console.log(err));
+  // }, [JWT]);
 
   const ApplyActivity = async () => {
     try {
@@ -123,61 +140,60 @@ export default function Apply({route}) {
           <Text style={styles.subTitle}>신청 채널 정보</Text>
           <Text style={styles.subsubText}>활동 신청할 채널을 선택해주세요</Text>
           {/* 인스타 계정 목록 */}
-          {asd === 1 && (
-            <View style={{flexDirection: 'row', marginTop: 20}}>
-              {instaIDs.map(item => (
-                <TouchableOpacity
-                  onPress={() => setinstagramId(item.instagramId)}>
-                  <View
-                    style={[
-                      styles.CardView,
-                      {
-                        borderColor:
-                          item.instagramId === instagramId
-                            ? '#181818'
-                            : '#DEDEDE',
-                      },
-                    ]}>
+
+          <View style={{flexDirection: 'row', marginTop: 20}}>
+            {instaIDs.map(item => (
+              <TouchableOpacity
+                onPress={() => setinstagramId(item.instagramId)}>
+                <View
+                  style={[
+                    styles.CardView,
+                    {
+                      borderColor:
+                        item.instagramId === instagramId
+                          ? '#181818'
+                          : '#DEDEDE',
+                    },
+                  ]}>
+                  <Image
+                    source={
+                      item.profileImg === '' || item.profileImg === null
+                        ? noprofile
+                        : {uri: item.profileImg}
+                    }
+                    style={styles.profileImgV}
+                  />
+                  <View style={{flexDirection: 'row', marginTop: 10}}>
                     <Image
-                      source={
-                        item.profileImg === '' || item.profileImg === null
-                          ? noprofile
-                          : {uri: item.profileImg}
-                      }
-                      style={styles.profileImgV}
+                      source={instaLogo}
+                      style={{height: 17, width: 17, marginTop: 3}}
                     />
-                    <View style={{flexDirection: 'row', marginTop: 10}}>
-                      <Image
-                        source={instaLogo}
-                        style={{height: 17, width: 17, marginTop: 3}}
-                      />
-                      <Text
-                        style={{
-                          fontFamily: 'Roboto-Bold',
-                          fontSize: 16,
-                          marginLeft: 3,
-                        }}>
-                        {item.username}
-                      </Text>
-                    </View>
-                    {item.instagramId === instagramId && (
-                      <Icons.AntDesign
-                        name="checkcircle"
-                        size={30}
-                        color="black"
-                        style={{
-                          position: 'absolute',
-                          zIndex: 10,
-                          bottom: -5,
-                          right: -5,
-                        }}
-                      />
-                    )}
+                    <Text
+                      style={{
+                        fontFamily: 'Roboto-Bold',
+                        fontSize: 16,
+                        marginLeft: 3,
+                      }}>
+                      {item.username}
+                    </Text>
                   </View>
-                </TouchableOpacity>
-              ))}
-            </View>
-          )}
+                  {item.instagramId === instagramId && (
+                    <Icons.AntDesign
+                      name="checkcircle"
+                      size={30}
+                      color="black"
+                      style={{
+                        position: 'absolute',
+                        zIndex: 10,
+                        bottom: -5,
+                        right: -5,
+                      }}
+                    />
+                  )}
+                </View>
+              </TouchableOpacity>
+            ))}
+          </View>
         </View>
         {asd === 1 && (
           <>
