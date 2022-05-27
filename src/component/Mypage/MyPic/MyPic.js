@@ -47,7 +47,7 @@ export default function MyPic({route}) {
       })
       .catch(err => console.log(err));
   }, [JWT]);
-  console.log(JWT);
+  console.log(mediaInsight);
   console.log(id);
   return (
     <View style={styles.allView}>
@@ -93,19 +93,22 @@ export default function MyPic({route}) {
         </View> */}
 
           <PostReaction mediaInsight={mediaInsight} JWT={JWT} />
+          {mediaInsight.length === 0 && (
+            <View
+              style={{
+                position: 'absolute',
+                bottom: 0,
+                backgroundColor: '#FFFFFFEE',
+                width: '100%',
+                height: 260,
+              }}>
+              <UnOAuth />
+            </View>
+          )}
         </>
       )}
       {/* un oAuth */}
-      {/* <View
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          backgroundColor: '#FFFFFFEE',
-          width: '100%',
-          height: 260,
-        }}>
-        <UnOAuth />
-      </View> */}
+
       {/* <View style={{width: '100%', padding: '5%'}}>
         <TouchableOpacity onPress={() => navigation.navigate('PostReaction')}>
           <View style={inStyle.btn}>

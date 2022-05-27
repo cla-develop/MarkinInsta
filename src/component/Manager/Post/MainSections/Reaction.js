@@ -7,9 +7,10 @@ import views from './images/views.png';
 import Icons from '../../../Icons/Icons';
 import axios from 'axios';
 import UnOAuth from '../../../../Utils/UnOAuth/UnOAuth';
+import Loading from '../../../../Utils/Loading';
 export default function Reaction(props) {
   const [Data, setData] = useState([]);
-  const [isFb, setisFb] = useState(false);
+  const [isFb, setisFb] = useState(0);
   useEffect(() => {
     axios
       .get('https://www.markin-app.site/app/media/reaction', {
@@ -19,9 +20,9 @@ export default function Reaction(props) {
       })
       .then(response => {
         if (response.data.code === 3008) {
-          setisFb(false);
+          setisFb(1);
         } else {
-          setisFb(true);
+          setisFb(2);
           setData(response.data.result);
         }
       })
@@ -38,7 +39,7 @@ export default function Reaction(props) {
             <Icons.AntDesign name="right" color="#DEDEDE" size={20} />
           </View> */}
         </View>
-        {isFb === true ? (
+        {isFb === 2 && (
           <>
             {Data !== [] && (
               <View style={styles.imagesViews}>
@@ -127,9 +128,15 @@ export default function Reaction(props) {
               </View>
             )}
           </>
-        ) : (
+        )}
+        {isFb === 1 && (
           <View style={{paddingBottom: 30}}>
             <UnOAuth />
+          </View>
+        )}
+        {isFb === 2 && (
+          <View style={{paddingBottom: 30}}>
+            <Loading />
           </View>
         )}
 

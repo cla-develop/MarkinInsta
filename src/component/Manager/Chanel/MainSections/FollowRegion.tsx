@@ -2,11 +2,12 @@
 /* eslint-disable react-native/no-inline-styles */
 import axios from 'axios';
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, Alert} from 'react-native';
+import {View, Text, StyleSheet, Alert, Image} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import PieChart from 'react-native-pie-chart';
 import UnOAuth from '../../../../Utils/UnOAuth/UnOAuth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Spinner from '../../../../images/Spinner.gif';
 export default function FollowRegion(props: any) {
   const [series, setseries] = useState([]);
   const [cityseries, setcityseries] = useState([]);
@@ -17,23 +18,28 @@ export default function FollowRegion(props: any) {
     {city: '', population: 0, ratio: ''},
   ]);
   const [isFb, setisFb] = useState(0);
+  const [JWT, setJWT] = useState('');
   useEffect(() => {
-    AsyncStorage.getItem('JWT')
-      .then(value => {
-        setJWT(value);
-      })
-      .then(() => getData());
+    AsyncStorage.getItem('JWT').then(value => {
+      setJWT(value);
+      call(value);
+    });
   });
 
-  useEffect(() => {
+  const call = value => {
     axios
       .get('https://www.markin-app.site/app/channel', {
         headers: {
-          'x-access-token': props.JWT,
+          'x-access-token': value,
         },
       })
       .then(response => {
-        if (response.data.code === 3008) {
+        console.log(response.data.code + 'qwerqwerqwerqwer');
+
+        if (
+          response.data.code === 3008 ||
+          response.data.result.followerTopCountry === null
+        ) {
           setisFb(1);
         } else {
           setisFb(2);
@@ -46,6 +52,7 @@ export default function FollowRegion(props: any) {
               }),
             ),
           );
+          console.log(followerTopCountry);
           setfollowerTopCity(
             response.data.result.followerTopCity.map(
               (node: {city: any; population: any; ratio: any}) => ({
@@ -59,7 +66,7 @@ export default function FollowRegion(props: any) {
         }
       })
       .catch(err => console.log(err));
-  }, [props.JWT]);
+  };
 
   useEffect(() => {
     followerTopCountry.map(itme =>
@@ -85,7 +92,7 @@ export default function FollowRegion(props: any) {
   return (
     <View style={{marginTop: 10}}>
       <View style={styles.mainView}>
-        {isFb === 2 && followerTopCity.length >= 0 && (
+        {isFb === 2 && (
           <>
             <View style={{flexDirection: 'row', marginTop: 15, marginLeft: 15}}>
               <Text style={styles.TopText}>팔로워 지역 Top 5</Text>
@@ -213,7 +220,11 @@ export default function FollowRegion(props: any) {
           </>
         )}
         {isFb === 1 && <UnOAuth />}
-        {isFb === 0 && <View></View>}
+        {isFb === 0 && (
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <Image source={Spinner} style={{width: 150, height: 150}} />
+          </View>
+        )}
       </View>
     </View>
   );

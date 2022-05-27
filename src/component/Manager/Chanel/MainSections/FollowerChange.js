@@ -6,11 +6,12 @@ import visit from './images/visit.png';
 import click from './images/click.png';
 import Icons from '../../../Icons/Icons';
 import UnOAuth from '../../../../Utils/UnOAuth/UnOAuth';
+import Loading from '../../../../Utils/Loading';
 // import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 export default function FollowerChange(props) {
   // const navigation = useNavigation();
-  const [isFb, setisFb] = useState(false);
+  const [isFb, setisFb] = useState(0);
   const [Data, setData] = useState([]);
   useEffect(() => {
     axios
@@ -21,10 +22,10 @@ export default function FollowerChange(props) {
       })
       .then(response => {
         if (response.data.code === 3008) {
-          setisFb(false);
+          setisFb(1);
         } else {
           setData(response.data.result);
-          setisFb(true);
+          setisFb(2);
         }
       })
       .catch(err => console.log(err));
@@ -40,7 +41,7 @@ export default function FollowerChange(props) {
             <Icons.AntDesign name="right" color="#DEDEDE" size={20} />
           </View> */}
         </View>
-        {isFb === true ? (
+        {isFb === 2 && (
           <View style={styles.imagesViews}>
             <View style={{flexDirection: 'row'}}>
               <Image source={ChangeMan} style={{height: 56, width: 56}} />
@@ -149,11 +150,13 @@ export default function FollowerChange(props) {
               </View>
             </View>
           </View>
-        ) : (
-          <View style={{paddingBottom: 50}}>
+        )}
+        {isFb === 1 && (
+          <View style={{marginBottom: 30}}>
             <UnOAuth />
           </View>
         )}
+        {isFb === 0 && <Loading />}
       </View>
       {/* </TouchableOpacity> */}
     </View>

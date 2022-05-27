@@ -41,6 +41,7 @@ export default function MyRanking(props: any) {
   useEffect(() => {
     AsyncStorage.getItem('JWT').then(value => {
       setJWT(value);
+      getCategory(value);
     });
   }, []);
   const [asd, setasd] = useState(0);
@@ -52,18 +53,18 @@ export default function MyRanking(props: any) {
   // useEffect(() => {
   //   setCat('전체');
   // }, []);
-  useEffect(() => {
+  const getCategory = value => {
     axios
       .get(`https://www.markin-app.site/app/users/categories`, {
         headers: {
-          'x-access-token': JWT,
+          'x-access-token': value,
         },
       })
       .then(response => {
         setCategory(response.data.result);
       })
       .catch(err => console.log(err));
-  }, [JWT]);
+  };
   useEffect(() => {
     // tslint:disable-next-line: no-floating-promises
     axios
@@ -76,12 +77,13 @@ export default function MyRanking(props: any) {
         },
       )
       .then(response => {
+        console.log(Cat);
         setMyRank(response.data.result.myRanking.ranking);
         setMyProfileImg(response.data.result.myRanking.profileImg);
         setUserName(response.data.result.myRanking.username);
         setFollowerCount(response.data.result.myRanking.followersCount);
         setRealFollowerCnt(response.data.result.myRanking.realFollowerCount);
-        setasd(1);
+
         setOthers(
           response.data.result.rankingList.map(
             (node: {
@@ -99,7 +101,6 @@ export default function MyRanking(props: any) {
             }),
           ),
         );
-        console.log(response.data.code);
       })
       .catch(err => {
         console.log(err);

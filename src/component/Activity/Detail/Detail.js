@@ -140,7 +140,7 @@ export default function Detail({route}) {
                 color: '#FF5959',
                 marginTop: 1,
               }}>
-              {influencerNumber}명
+              {ApplicantCount}명
             </Text>
             <Text
               style={{
@@ -149,7 +149,7 @@ export default function Detail({route}) {
                 marginTop: 1,
               }}>
               {' '}
-              / {ApplicantCount}명 모집
+              / {influencerNumber}명 모집
             </Text>
             <View style={styles.blackBlock}>
               <Icons.AntDesign name="clockcircleo" size={13} color="white" />

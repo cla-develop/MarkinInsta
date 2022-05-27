@@ -4,6 +4,7 @@ import {View, Text, StyleSheet, Image, Alert} from 'react-native';
 import man from './images/man.png';
 import girl from './images/girl.png';
 import axios from 'axios';
+import Spinner from '../../../../images/Loading.png';
 import UnOAuth from '../../../../Utils/UnOAuth/UnOAuth';
 export default function FollowAgeGender(props: any) {
   const [first, setfirst] = useState([]);
@@ -25,7 +26,7 @@ export default function FollowAgeGender(props: any) {
   const [Max, setMax] = useState(100);
   const [MaleRate, setMaleRate] = useState('');
   const [FemaleRate, setFemaleRate] = useState('');
-  const [isFb, setisFb] = useState(false);
+  const [isFb, setisFb] = useState(0);
   useEffect(() => {
     const getchannel = async () => {
       try {
@@ -36,10 +37,13 @@ export default function FollowAgeGender(props: any) {
             },
           })
           .then(response => {
-            if (response.data.code === 3008) {
-              setisFb(false);
+            if (
+              response.data.code === 3008 ||
+              response.data.followerGenderAge === null
+            ) {
+              setisFb(1);
             } else {
-              setisFb(true);
+              setisFb(2);
               console.log(response.data.result.followerGenderAge['maxValue']);
               setMax(response.data.result.followerGenderAge['maxValue']);
               setfirst(response.data.result.followerGenderAge['13-17']);
@@ -100,7 +104,7 @@ export default function FollowAgeGender(props: any) {
   }, []);
   return (
     <View style={{marginTop: 10}}>
-      {isFb === true && thirSum !== -1 ? (
+      {isFb === 0 && thirSum !== -1 && (
         <View style={styles.mainView}>
           <View style={{flexDirection: 'row', marginTop: 15, marginLeft: 15}}>
             <Text style={styles.TopText}>팔로워 연령 및 성비</Text>
@@ -204,9 +208,16 @@ export default function FollowAgeGender(props: any) {
             </View>
           )}
         </View>
-      ) : (
+      )}
+      {isFb === 1 && (
         <View style={styles.mainView}>
           <UnOAuth />
+        </View>
+      )}
+
+      {isFb === 0 && (
+        <View style={{justifyContent: 'center', alignItems: 'center'}}>
+          <Image source={Spinner} style={{width: 150, height: 150}} />
         </View>
       )}
     </View>

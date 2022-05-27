@@ -1,14 +1,16 @@
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Image, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import UnOAuth from '../../../Utils/UnOAuth/UnOAuth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Spinner from '../../../images/Spinner.gif';
+import Loading from '../../../Utils/Loading';
 export default function DayPosting(props) {
   const [todayImpressions, settodayImpressions] = useState(0);
   const [todayReach, settodayReach] = useState(0);
   const [todayLike, settodayLike] = useState(0);
   const [todayComment, settodayComment] = useState(0);
-  const [isFb, setisFb] = useState(true);
+  const [isFb, setisFb] = useState(0);
   useEffect(() => {
     AsyncStorage.getItem('JWT').then(value => {
       call(value);
@@ -25,9 +27,9 @@ export default function DayPosting(props) {
       .then(response => {
         console.log(response.data.code);
         if (response.data.code === 3008) {
-          setisFb(false);
+          setisFb(1);
         } else {
-          setisFb(true);
+          setisFb(2);
           settodayImpressions(response.data.result.todayImpressions);
           settodayReach(response.data.result.todayReach);
           settodayLike(response.data.result.todayLike);
@@ -42,7 +44,7 @@ export default function DayPosting(props) {
         <Text style={styles.TopText}>일별 포스팅 분석</Text>
       </View>
 
-      {isFb === true ? (
+      {isFb === 2 && (
         <>
           <View style={{flexDirection: 'row', marginTop: 20}}>
             <View style={{width: '50%'}}>
@@ -87,11 +89,13 @@ export default function DayPosting(props) {
             </View>
           </View>
         </>
-      ) : (
+      )}
+      {isFb === 1 && (
         <View style={{marginBottom: 30}}>
           <UnOAuth />
         </View>
       )}
+      {isFb === 0 && <Loading />}
     </View>
   );
 }

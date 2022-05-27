@@ -4,11 +4,12 @@ import axios from 'axios';
 import UnOAuth from '../../../Utils/UnOAuth/UnOAuth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useIsFocused} from '@react-navigation/native';
+import Loading from '../../../Utils/Loading';
 export default function DayChange(props) {
   const [todayFollower, settodayFollower] = useState(0);
   const [todayProfileView, settodayProfileView] = useState(0);
   const [todayClickMessage, settodayClickMessage] = useState(0);
-  const [isFb, setisFb] = useState(true);
+  const [isFb, setisFb] = useState(0);
   useEffect(() => {
     AsyncStorage.getItem('JWT').then(value => {
       call(value);
@@ -25,9 +26,9 @@ export default function DayChange(props) {
       .then(response => {
         console.log(response.data.code);
         if (response.data.code === 3008) {
-          setisFb(false);
+          setisFb(1);
         } else {
-          setisFb(true);
+          setisFb(2);
           settodayFollower(response.data.result.todayFollower);
           settodayProfileView(response.data.result.todayProfileView);
           settodayClickMessage(response.data.result.todayClickMessage);
@@ -40,7 +41,7 @@ export default function DayChange(props) {
       <View style={{flexDirection: 'row', marginBottom: 10}}>
         <Text style={styles.TopText}>일별 팔로워 변화</Text>
       </View>
-      {isFb === true ? (
+      {isFb === 2 && (
         <>
           <View style={{flexDirection: 'row', marginTop: 10}}>
             <View style={{width: '50%'}}>
@@ -77,11 +78,13 @@ export default function DayChange(props) {
             </View>
           </View>
         </>
-      ) : (
+      )}
+      {isFb === 1 && (
         <View style={{marginBottom: 30}}>
           <UnOAuth />
         </View>
       )}
+      {isFb === 0 && <Loading />}
     </View>
   );
 }

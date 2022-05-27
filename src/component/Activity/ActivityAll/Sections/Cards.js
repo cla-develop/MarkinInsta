@@ -22,7 +22,10 @@ export default function Cards(props) {
             <View
               style={{flexDirection: 'row', paddingLeft: '5%', marginTop: 10}}>
               <View style={{width: 140}}>
-                <Text ellipsizeMode="tail" numberOfLines={1}>
+                <Text
+                  ellipsizeMode="tail"
+                  numberOfLines={1}
+                  style={{fontFamily: 'NotoSansKR-Medium'}}>
                   {item.campaignName}
                 </Text>
               </View>

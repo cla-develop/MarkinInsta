@@ -4,9 +4,10 @@ import Icons from '../../../Icons/Icons';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import UnOAuth from '../../../../Utils/UnOAuth/UnOAuth';
+import Loading from '../../../../Utils/Loading';
 export default function MyRank(props: any) {
   const navigation = useNavigation();
-  const [isFb, setisFb] = useState(false);
+  const [isFb, setisFb] = useState(0);
   const [ranking, setranking] = useState(0);
   useEffect(() => {
     axios
@@ -21,9 +22,9 @@ export default function MyRank(props: any) {
       .then(response => {
         console.log(response.data.code);
         if (response.data.code === 3008) {
-          setisFb(false);
+          setisFb(1);
         } else {
-          setisFb(true);
+          setisFb(2);
           setranking(response.data.result.myRanking.ranking);
         }
       })
@@ -32,7 +33,7 @@ export default function MyRank(props: any) {
 
   return (
     <View style={{marginTop: 10}}>
-      {isFb === true ? (
+      {isFb === 2 && (
         <TouchableOpacity onPress={() => navigation.navigate('MyRanking')}>
           <View style={styles.mainView}>
             <View style={{flexDirection: 'row', marginTop: 15, marginLeft: 15}}>
@@ -57,7 +58,8 @@ export default function MyRank(props: any) {
             </View>
           </View>
         </TouchableOpacity>
-      ) : (
+      )}
+      {isFb === 1 && (
         <View>
           <View style={styles.unView}>
             <View style={{flexDirection: 'row', marginTop: 15, marginLeft: 15}}>
@@ -69,6 +71,16 @@ export default function MyRank(props: any) {
             <View style={{marginTop: -15, paddingBottom: 30}}>
               <UnOAuth />
             </View>
+          </View>
+        </View>
+      )}
+      {isFb === 0 && (
+        <View>
+          <View style={styles.unView}>
+            <View style={{flexDirection: 'row', marginLeft: 15}}>
+              <Text style={styles.TopText}>나의 랭킹</Text>
+            </View>
+            <Loading />
           </View>
         </View>
       )}

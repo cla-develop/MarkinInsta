@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
 import Icons from '../../../Icons/Icons';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Refund({route}) {
   const {myPoint} = route.params;
   const navigation = useNavigation();
@@ -18,6 +19,14 @@ export default function Refund({route}) {
   const [bankAccountName, setbankAccountName] = useState('');
   const [bank, setbank] = useState('');
   const [backAccountNum, setbackAccountNum] = useState('');
+  const [IDnum, setIDnum] = useState('');
+  const [JWT, setJWT] = useState('');
+  useEffect(() => {
+    AsyncStorage.getItem('JWT').then(value => {
+      setJWT(value);
+    });
+  }, []);
+
   const Send = () => {
     axios({
       method: 'post',
@@ -26,10 +35,10 @@ export default function Refund({route}) {
         bankAccountName: bankAccountName,
         bank: bank,
         bankAccountNum: backAccountNum,
+        registrationNumber: IDnum,
       },
       headers: {
-        'x-access-token':
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImluc3RhZ3JhbUlkIjoiNDIzNDQwMzAxMzMyODU5MiIsImlhdCI6MTY0MzQ4MDg1MCwiZXhwIjoxNjc1MDE2ODUwLCJzdWIiOiJ1c2VySW5mbyJ9.MlsJ3tZcye9WdqRwz-AKY5KNZf46B1gFQ8nqgrJxGMg',
+        'x-access-token': JWT,
       },
       url: 'https://www.markin-app.site/app/users/point',
     }).then(response => {
@@ -90,8 +99,10 @@ export default function Refund({route}) {
             onChangeText={i => setbankAccountName(i)}
           />
           <TextInput
+            value={IDnum}
+            onChangeText={i => setIDnum(i)}
             style={styles.Inputstyle}
-            placeholder="주민등록번호 (-)를 제외한 숫자만 입력"
+            placeholder="주민등록번호 (000000-0000000)"
           />
         </View>
         <View style={{marginTop: 25}}>

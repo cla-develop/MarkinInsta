@@ -31,19 +31,19 @@ export default function MyFeedHeader(props) {
   }, [props.JWT]);
   return (
     <View style={{flexDirection: 'row'}}>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={{flexDirection: 'row', marginTop: 35}}
-        onPress={() => setisModal(true)}>
-        <View style={styles.LogoImg}>
-          <Image source={instaLogo} style={{width: 20, height: 20}} />
-        </View>
-        <Text style={styles.IdText}>{first}</Text>
-        <Icons.AntDesign
-          name="down"
-          size={13}
-          style={{marginTop: 23, marginLeft: 3}}
-        />
-      </TouchableOpacity>
+        onPress={() => setisModal(true)}> */}
+      <View style={styles.LogoImg}>
+        <Image source={instaLogo} style={{width: 20, height: 20}} />
+      </View>
+      <Text style={styles.IdText}>{first}</Text>
+      {/* <Icons.AntDesign
+        name="down"
+        size={13}
+        style={{marginTop: 23, marginLeft: 3}}
+      /> */}
+      {/* </TouchableOpacity> */}
       <View style={{width: 220}}></View>
       <TouchableOpacity onPress={() => navigation.navigate('SetUp')}>
         <View style={{marginTop: 50}}>
@@ -71,12 +71,12 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontFamily: 'Roboto-Medium',
     textAlign: 'center',
-    marginTop: 21,
+    marginTop: 40,
   },
   LogoImg: {
     width: 30,
     height: 30,
-    marginTop: 20,
+    marginTop: 40,
     marginLeft: 20,
   },
 });

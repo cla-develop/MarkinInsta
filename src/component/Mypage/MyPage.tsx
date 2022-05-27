@@ -25,6 +25,8 @@ export default function MyPage() {
   useEffect(() => {
     AsyncStorage.getItem('JWT').then(value => {
       setJWT(value);
+      call(value);
+      profilecall(value);
     });
   }, []);
   const [asd, setasd] = useState(0);
@@ -33,12 +35,12 @@ export default function MyPage() {
       setasd(1);
     }, 500);
   }, []);
-  useEffect(() => {
+  const profilecall = value => {
     // tslint:disable-next-line: no-floating-promises
     axios
       .get('https://www.markin-app.site/app/users/feed', {
         headers: {
-          'x-access-token': JWT,
+          'x-access-token': value,
         },
       })
       .then(response => {
@@ -58,27 +60,24 @@ export default function MyPage() {
         setPoint(response.data.result.point);
       })
       .catch(err => console.log(err));
-  }, [JWT]);
+  };
 
   const isFocused = useIsFocused();
 
-  useEffect(() => {
-    const call = () => {
-      // tslint:disable-next-line: no-floating-promises
-      axios
-        .get(`https://www.markin-app.site/app/users/categories`, {
-          headers: {
-            'x-access-token': JWT,
-          },
-        })
-        .then(response => {
-          setCategory(response.data.result);
-          console.log(response.data.result);
-        })
-        .catch(err => console.log(err));
-    };
-    call();
-  }, [JWT]);
+  const call = value => {
+    // tslint:disable-next-line: no-floating-promises
+    axios
+      .get(`https://www.markin-app.site/app/users/categories`, {
+        headers: {
+          'x-access-token': value,
+        },
+      })
+      .then(response => {
+        setCategory(response.data.result);
+        console.log(response.data.result);
+      })
+      .catch(err => console.log(err));
+  };
 
   return (
     <View style={{height: '100%', backgroundColor: 'white'}}>
@@ -87,6 +86,7 @@ export default function MyPage() {
           <View style={styles.HeaderStyle}>
             <MyFeedHeader JWT={JWT} />
           </View>
+
           <View style={styles.profileView}>
             <Profile
               profileImg={profileImg}

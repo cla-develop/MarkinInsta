@@ -83,7 +83,7 @@ export default function MyPoint() {
   return (
     <View style={styles.allView}>
       {asd === 1 && (
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={{alignItems: 'center', height: 40}}>
             <TouchableOpacity
               onPress={() => navigation.goBack()}

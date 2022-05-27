@@ -124,7 +124,7 @@ export default function PhonNum({navigation, route}: any) {
 
       <View style={{flexDirection: 'row', marginTop: 80}}>
         <TextInput
-          placeholder="휴대폰 번호를 압력하세요."
+          placeholder="휴대폰 번호를 입력하세요."
           autoCapitalize={'none'}
           autoCorrect={false}
           clearTextOnFocus={true}

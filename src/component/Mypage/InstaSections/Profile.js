@@ -44,7 +44,7 @@ export default function Profile(props) {
                 </Text>
               )}
             </View>
-            <TouchableOpacity onPress={() => navigation.navigate('Category')}>
+            <TouchableOpacity onPress={() => navigation.navigate('MyCategory')}>
               {props.Category !== undefined && (
                 <View style={{flexDirection: 'row', marginTop: 13}}>
                   {props.Category.map(item => (

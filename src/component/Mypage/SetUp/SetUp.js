@@ -111,7 +111,7 @@ export default function SetUp() {
         </TouchableOpacity>
 
         {/* 채널연결관리 */}
-        <TouchableOpacity onPress={() => navigation.navigate('ManageLink')}>
+        {/* <TouchableOpacity onPress={() => navigation.navigate('ManageLink')}>
           <View style={{flexDirection: 'row', height: 50}}>
             <View style={{justifyContent: 'center'}}>
               <Image source={link} style={{height: 25, width: 25}} />
@@ -120,7 +120,7 @@ export default function SetUp() {
               <Text style={styles.NotoReg16}>채널 연결관리</Text>
             </View>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         {/* 채널연결관리 */}
         <TouchableOpacity onPress={() => Logout()}>
           <View style={{flexDirection: 'row', height: 50}}>

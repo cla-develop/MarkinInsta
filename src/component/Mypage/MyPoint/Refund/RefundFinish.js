@@ -31,7 +31,13 @@ export default function RefundFinish({route}) {
           포인트 매달 15일, 말일에 환급됩니다.
         </Text>
         <View style={{width: '100%', marginTop: 60}}>
-          <TouchableOpacity onPress={() => navigation.navigate('MyPoint')}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.reset({
+                index: 0,
+                routes: [{name: 'MyPoint'}],
+              })
+            }>
             <View style={[styles.btnView, {backgroundColor: '#7553FF'}]}>
               <Text style={[styles.NotoMe18, {color: 'white'}]}>
                 나의 포인트로 돌아가기

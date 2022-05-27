@@ -5,9 +5,10 @@ import {useNavigation} from '@react-navigation/native';
 import UnOAuth from '../../../../Utils/UnOAuth/UnOAuth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import Loading from '../../../../Utils/Loading';
 export default function RealEffect(props: any) {
   const navigation = useNavigation();
-  const [isFb, setisFb] = useState(false);
+  const [isFb, setisFb] = useState(0);
   const [realFollower, setrealFollower] = useState(0);
 
   useEffect(() => {
@@ -20,9 +21,9 @@ export default function RealEffect(props: any) {
       .then(response => {
         console.log(response.data.code + 'asdsadsa');
         if (response.data.code === 3008) {
-          setisFb(false);
+          setisFb(1);
         } else {
-          setisFb(true);
+          setisFb(2);
           setrealFollower(response.data.result.realFollower);
         }
       })
@@ -31,7 +32,7 @@ export default function RealEffect(props: any) {
 
   return (
     <View style={{marginTop: 15}}>
-      {isFb === true ? (
+      {isFb === 2 && (
         <TouchableOpacity onPress={() => navigation.navigate('RealEffect')}>
           <View style={styles.mainView}>
             <View style={{flexDirection: 'row', marginTop: 15, marginLeft: 15}}>
@@ -59,19 +60,34 @@ export default function RealEffect(props: any) {
             </View>
           </View>
         </TouchableOpacity>
-      ) : (
-        <View style={styles.unView}>
-          <View style={{flexDirection: 'row', marginTop: 15, marginLeft: 15}}>
-            <Text style={styles.TopText}>진짜 영향력</Text>
-            <View style={{position: 'absolute', right: 15}}>
-              <Icons.AntDesign name="right" color="#DEDEDE" size={20} />
+      )}
+
+      {isFb === 1 && (
+        <View style={{marginBottom: 30}}>
+          <UnOAuth />
+        </View>
+      )}
+      {isFb === 0 && (
+        <View>
+          <View style={styles.unView}>
+            <View style={{flexDirection: 'row', marginLeft: 15}}>
+              <Text style={styles.TopText}>나의 랭킹</Text>
             </View>
-          </View>
-          <View style={{marginTop: -15, paddingBottom: 30}}>
-            <UnOAuth />
+            <Loading />
           </View>
         </View>
       )}
+      {/* <View style={styles.unView}>
+        <View style={{flexDirection: 'row', marginTop: 15, marginLeft: 15}}>
+          <Text style={styles.TopText}>진짜 영향력</Text>
+          <View style={{position: 'absolute', right: 15}}>
+            <Icons.AntDesign name="right" color="#DEDEDE" size={20} />
+          </View>
+        </View>
+        <View style={{marginTop: -15, paddingBottom: 30}}>
+          <UnOAuth />
+        </View>
+      </View> */}
     </View>
   );
 }

@@ -49,6 +49,7 @@ import Loading from './src/component/SignIn/Loading';
 import LinkChanel from './src/component/SignIn/LinkChannel/LinkChanel';
 import {Settings} from 'react-native-fbsdk-next';
 import SplashScreen from 'react-native-splash-screen';
+import MyCategory from './src/component/Mypage/Category/Category';
 const Stack = createStackNavigator();
 
 function App() {
@@ -109,6 +110,7 @@ function App() {
         <Stack.Screen name="Ask" component={Ask} />
         <Stack.Screen name="LinkChanel" component={LinkChanel} />
         <Stack.Screen name="AddId" component={AddId} />
+        <Stack.Screen name="MyCategory" component={MyCategory} />
         {/* 매니저  */}
         <Stack.Screen name="Manager" component={Manger} />
         <Stack.Screen name="MyRanking" component={MyRanking} />
