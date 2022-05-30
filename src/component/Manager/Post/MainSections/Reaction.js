@@ -134,7 +134,7 @@ export default function Reaction(props) {
             <UnOAuth />
           </View>
         )}
-        {isFb === 2 && (
+        {isFb === 0 && (
           <View style={{paddingBottom: 30}}>
             <Loading />
           </View>

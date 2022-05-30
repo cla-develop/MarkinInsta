@@ -66,7 +66,7 @@ export default function SliderSections(props: any) {
             {props.Quality < 100 && props.Quality > 70 && (
               <Text style={styles.purpleText}>좋음</Text>
             )}
-            {props.Quality >= 10 && (
+            {props.Quality >= 100 && (
               <Text style={styles.purpleText}>매우 좋음</Text>
             )}
             <Text style={styles.blackText}>이에요.</Text>

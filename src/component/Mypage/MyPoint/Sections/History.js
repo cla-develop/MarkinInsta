@@ -39,7 +39,7 @@ export default function History(props) {
               </View>
             )}
             {item.content === '환급' ? (
-              <View style={{justifyContent: 'center', width: 80}}>
+              <View style={{justifyContent: 'center', width: 100}}>
                 <Text style={styles.pointText}>
                   -{item.point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
                   P

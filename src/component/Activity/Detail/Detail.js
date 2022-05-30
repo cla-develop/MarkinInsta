@@ -14,7 +14,7 @@ import ActInfo from './Sections/ActInfo';
 import Icons from '../../Icons/Icons';
 import axios from 'axios';
 import moment from 'moment';
-
+import noprofile from '../../../images/noprofile.png';
 export default function Detail({route}) {
   const {Id} = route.params;
   const navigation = useNavigation();
@@ -112,7 +112,9 @@ export default function Detail({route}) {
       <ScrollView>
         <View style={{marginTop: 20}}>
           <Image
-            source={{uri: thumnail}}
+            source={
+              thumnail === '' || thumnail === null ? noprofile : {uri: thumnail}
+            }
             style={{width: '100%', height: 360}}
           />
         </View>
@@ -254,6 +256,32 @@ export default function Detail({route}) {
           height: 100,
           width: '100%',
         }}>
+        {/* {DateOrEnd === 'Date' ? (
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Apply', {Id: Id})}>
+            <View style={styles.footerView}>
+              <Text
+                style={{
+                  fontFamily: 'NotoSansKR-Bold',
+                  color: 'white',
+                  fontSize: 18,
+                }}>
+                신청하기
+              </Text>
+            </View>
+          </TouchableOpacity>
+        ) : (
+          <View style={styles.footerView2}>
+            <Text
+              style={{
+                fontFamily: 'NotoSansKR-Bold',
+                color: 'white',
+                fontSize: 18,
+              }}>
+              모집종료
+            </Text>
+          </View>
+        )} */}
         <TouchableOpacity
           onPress={() => navigation.navigate('Apply', {Id: Id})}>
           <View style={styles.footerView}>
@@ -368,6 +396,15 @@ const styles = StyleSheet.create({
   },
   footerView: {
     backgroundColor: 'black',
+    width: 340,
+    borderRadius: 6,
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  footerView2: {
+    backgroundColor: '#DEDEDE',
     width: 340,
     borderRadius: 6,
     height: 60,

@@ -9,7 +9,9 @@ import {
 } from 'react-native';
 import noprofile from '../../../../images/noprofile.png';
 import axios from 'axios';
+import {useNavigation} from '@react-navigation/native';
 export default function SoonEnd() {
+  const navigation = useNavigation();
   const [Result, setResult] = useState([]);
   useEffect(() => {
     axios
@@ -34,7 +36,11 @@ export default function SoonEnd() {
         pagingEnabled={true}>
         <View style={{flexDirection: 'row'}}>
           {Result.map(item => (
-            <TouchableOpacity key={item.advertisementNo}>
+            <TouchableOpacity
+              key={item.advertisementNo}
+              onPress={() =>
+                navigation.navigate('Detail', {Id: item.advertisementNo})
+              }>
               <View style={{width: 300, marginRight: -30}}>
                 <Image
                   source={

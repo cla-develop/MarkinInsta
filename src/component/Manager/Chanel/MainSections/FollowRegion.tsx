@@ -7,7 +7,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import PieChart from 'react-native-pie-chart';
 import UnOAuth from '../../../../Utils/UnOAuth/UnOAuth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Spinner from '../../../../images/Spinner.gif';
+import Loading from '../../../../Utils/Loading';
 export default function FollowRegion(props: any) {
   const [series, setseries] = useState([]);
   const [cityseries, setcityseries] = useState([]);
@@ -24,7 +24,7 @@ export default function FollowRegion(props: any) {
       setJWT(value);
       call(value);
     });
-  });
+  }, []);
 
   const call = value => {
     axios
@@ -52,7 +52,7 @@ export default function FollowRegion(props: any) {
               }),
             ),
           );
-          console.log(followerTopCountry);
+
           setfollowerTopCity(
             response.data.result.followerTopCity.map(
               (node: {city: any; population: any; ratio: any}) => ({
@@ -221,8 +221,13 @@ export default function FollowRegion(props: any) {
         )}
         {isFb === 1 && <UnOAuth />}
         {isFb === 0 && (
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
-            <Image source={Spinner} style={{width: 150, height: 150}} />
+          <View>
+            <View style={styles.unView}>
+              <View style={{flexDirection: 'row', marginLeft: 15}}>
+                <Text style={styles.TopText}>나의 랭킹</Text>
+              </View>
+              <Loading />
+            </View>
           </View>
         )}
       </View>
@@ -237,6 +242,11 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     backgroundColor: 'white',
     paddingBottom: 40,
+  },
+  unView: {
+    width: '95%',
+    borderRadius: 18,
+    backgroundColor: 'white',
   },
   TopText: {
     fontSize: 20,

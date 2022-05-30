@@ -50,6 +50,7 @@ import LinkChanel from './src/component/SignIn/LinkChannel/LinkChanel';
 import {Settings} from 'react-native-fbsdk-next';
 import SplashScreen from 'react-native-splash-screen';
 import MyCategory from './src/component/Mypage/Category/Category';
+import LinkFinish from './src/component/OAuth/LinkMarkin/LinkFinish';
 const Stack = createStackNavigator();
 
 function App() {
@@ -93,6 +94,7 @@ function App() {
         <Stack.Screen name="Professional" component={Professional} />
         <Stack.Screen name="InstaFace" component={InstaFace} />
         <Stack.Screen name="LinkMarkin" component={LinkMarkin} />
+        <Stack.Screen name="LinkFinish" component={LinkFinish} />
         {/* 마이 페이지 */}
         <Stack.Screen name="MyPage" component={MyPage} />
         <Stack.Screen name="MyPoint" component={MyPoint} />

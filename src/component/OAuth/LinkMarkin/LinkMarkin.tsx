@@ -13,7 +13,6 @@ const loginWithFacebook = () => {
     'public_profile',
     'openid',
     'pages_show_list',
-    'business_management',
     'instagram_basic',
     'instagram_manage_insights',
     'pages_read_engagement',
@@ -65,6 +64,7 @@ export default function LinkMarkin() {
         }).then(response => {
           if (response.data.isSuccess === true) {
             console.log(response.data.message);
+            navigation.navigate('LinkFinish');
           } else {
             console.log(response.data.message + 'asd');
           }
@@ -176,7 +176,7 @@ export default function LinkMarkin() {
           </TouchableOpacity>
         </View>
       )}
-      {Page !== 4 ? (
+      {Page !== 4 && (
         <View style={{top: 120, left: '5%'}}>
           {/* <TouchableOpacity onPress={() => loginWithFacebook()}>
             <View style={styles.purpleBtn}>
@@ -201,14 +201,6 @@ export default function LinkMarkin() {
               onLogoutFinished={() => console.log('logout.')}
             />
           </View>
-        </View>
-      ) : (
-        <View style={{top: 85, left: '5%'}}>
-          <TouchableOpacity onPress={() => navigation.pop(2)}>
-            <View style={styles.purpleBtn}>
-              <Text style={styles.instaText}>계정 연결 완료하기</Text>
-            </View>
-          </TouchableOpacity>
         </View>
       )}
     </View>
@@ -250,11 +242,6 @@ const styles = StyleSheet.create({
     borderRadius: 17,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  instaText: {
-    fontFamily: 'NotoSansKR-Medium',
-    color: 'white',
-    fontSize: 18,
   },
 });
 

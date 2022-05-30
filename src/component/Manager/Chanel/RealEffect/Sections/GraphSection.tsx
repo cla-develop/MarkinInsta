@@ -178,7 +178,21 @@ export default function GraphSection(props: any) {
             <Text style={styles.purpleText}>상위 {props.MyPercent}%</Text>
             <Text style={styles.blackText}>로,</Text>
             {/*  */}
-            <Text style={styles.purpleText}>아주 높은편</Text>
+            {props.MyPercent <= 10 && (
+              <Text style={styles.purpleText}>매우 좋음</Text>
+            )}
+            {props.MyPercent <= 40 && props.MyPercent > 10 && (
+              <Text style={styles.purpleText}>좋음</Text>
+            )}
+            {props.MyPercent <= 70 && props.MyPercent > 40 && (
+              <Text style={styles.purpleText}>적정</Text>
+            )}
+            {props.MyPercent < 100 && props.MyPercent > 70 && (
+              <Text style={styles.purpleText}>나쁨</Text>
+            )}
+            {props.MyPercent >= 100 && (
+              <Text style={styles.purpleText}>매우 나쁨</Text>
+            )}
             <Text style={styles.blackText}>이에요.</Text>
           </View>
         </View>

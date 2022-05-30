@@ -13,9 +13,10 @@ export default function Loading() {
   useEffect(() => {
     AsyncStorage.getItem('JWT').then(value => {
       setJWT(value);
+      crawl(value);
     });
-  }, []);
-  useEffect(() => {
+  });
+  const crawl = () => {
     axios
       .get('https://www.markin-app.site/app/users/instagram/crawl', {
         headers: {
@@ -27,7 +28,7 @@ export default function Loading() {
         setisSuccess(response.data.isSuccess);
       })
       .catch(err => console.log(err));
-  }, [JWT]);
+  };
   useEffect(() => {
     if (isSuccess === true) {
       navigation.reset({

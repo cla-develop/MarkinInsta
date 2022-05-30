@@ -6,7 +6,6 @@ import markin1 from './images/markin_connect_1.png';
 import markin2 from './images/markin_connect_2.png';
 import markin3 from './images/markin_connect_3.png';
 import markin4 from './images/markin_connect_4.png';
-import markin from './images/markinConnect.png';
 
 const ENTRIES1 = [
   {
@@ -24,10 +23,6 @@ const ENTRIES1 = [
   {
     id: 3,
     illust: markin4,
-  },
-  {
-    id: 4,
-    illust: markin,
   },
 ];
 
@@ -53,23 +48,23 @@ const ENTRIES1Page = ({
     illust: string;
   };
 }) => {
-  if (item.id === 4) {
-    return (
-      <View style={{width: 200, marginLeft: 120}}>
-        <Image style={{width: 100, height: 100}} source={item.illust} />
-        <View style={styles.fourthView}>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={styles.purpleText}>계정연결</Text>
-            <Text style={styles.blackText}>이</Text>
-          </View>
-          <Text style={styles.blackText}>완료되었습니다.</Text>
-        </View>
-      </View>
-    );
-  } else {
-    return <Image style={{width: 320, height: 360}} source={item.illust} />;
-  }
+  // if (item.id === 4) {
+  //   return (
+  //     <View style={{width: 200, marginLeft: 120}}>
+  //       <Image style={{width: 100, height: 100}} source={item.illust} />
+  //       <View style={styles.fourthView}>
+  //         <View style={{flexDirection: 'row'}}>
+  //           <Text style={styles.purpleText}>계정연결</Text>
+  //           <Text style={styles.blackText}>이</Text>
+  //         </View>
+  //         <Text style={styles.blackText}>완료되었습니다.</Text>
+  //       </View>
+  //     </View>
+  //   );
+  // } else {
+  return <Image style={{width: 320, height: 360}} source={item.illust} />;
 };
+
 const styles = StyleSheet.create({
   blackText: {
     fontFamily: 'NotoSansKR-Medium',

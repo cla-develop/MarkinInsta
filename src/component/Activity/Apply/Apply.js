@@ -8,6 +8,7 @@ import {
   Image,
   ScrollView,
   TextInput,
+  Alert,
 } from 'react-native';
 import axios from 'axios';
 import Icons from '../../Icons/Icons';
@@ -16,6 +17,7 @@ import AddressModal from './Modal/AddressModal';
 import instaLogo from '../../../images/instaLogo.png';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import noprofile from '../../../images/noprofile.png';
+import Finish from './Modal/Finish';
 export default function Apply({route}) {
   const {Id} = route.params;
   const navigation = useNavigation();
@@ -34,7 +36,7 @@ export default function Apply({route}) {
   const [instaIDs, setinstaIDs] = useState([]);
   const [instagramId, setinstagramId] = useState('');
   const [JWT, setJWT] = useState('');
-
+  const [FinishModalvis, setFinishModalvis] = useState(false);
   useEffect(() => {
     AsyncStorage.getItem('JWT').then(value => {
       setJWT(value);
@@ -103,7 +105,7 @@ export default function Apply({route}) {
       });
       setSuccess(response.data);
       console.log(Success);
-      navigateToBack();
+      setFinishModalvis(true);
     } catch (e) {
       console.log(e);
     }
@@ -311,6 +313,10 @@ export default function Apply({route}) {
           setAddress={setAddress}
           setIsModalVis={setIsModalVis}
           setPostCode={setPostCode}
+        />
+        <Finish
+          FinishModalvis={FinishModalvis}
+          setFinishModalvis={setFinishModalvis}
         />
       </ScrollView>
     </View>
