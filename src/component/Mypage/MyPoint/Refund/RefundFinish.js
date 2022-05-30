@@ -35,13 +35,11 @@ export default function RefundFinish({route}) {
             onPress={() =>
               navigation.reset({
                 index: 0,
-                routes: [{name: 'MyPoint'}],
+                routes: [{name: 'Body'}],
               })
             }>
             <View style={[styles.btnView, {backgroundColor: '#7553FF'}]}>
-              <Text style={[styles.NotoMe18, {color: 'white'}]}>
-                나의 포인트로 돌아가기
-              </Text>
+              <Text style={[styles.NotoMe18, {color: 'white'}]}>완료하기</Text>
             </View>
           </TouchableOpacity>
         </View>

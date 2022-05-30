@@ -41,7 +41,7 @@ export default function RList(props: any) {
   }, [props.orderby, props.category, props.upperFollower, props.lowerFollower]);
 
   return (
-    <View style={{marginBottom: '200%'}}>
+    <View style={{marginBottom: '130%'}}>
       {Data.map(
         item => (
           // item.id.toLowerCase().includes(props.isSearch) === true && (

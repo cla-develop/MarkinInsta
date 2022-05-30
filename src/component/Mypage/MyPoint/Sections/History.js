@@ -18,7 +18,7 @@ export default function History(props) {
               )}
             </View>
             <View
-              style={{justifyContent: 'center', marginLeft: 15, width: '60%'}}>
+              style={{justifyContent: 'center', marginLeft: 15, width: '53%'}}>
               <Text style={styles.TitleText}>{item.content}</Text>
               <Text style={styles.TimeText}>{item.createdTime}</Text>
             </View>
@@ -52,7 +52,7 @@ export default function History(props) {
                 </Text>
               </View>
             ) : (
-              <View style={{justifyContent: 'center', width: 80}}>
+              <View style={{justifyContent: 'center', width: 100}}>
                 <Text style={styles.pointText}>
                   +{item.point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
                   P

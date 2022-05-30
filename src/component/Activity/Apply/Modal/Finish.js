@@ -16,10 +16,16 @@ export default function Finish(props) {
       <Modal isVisible={props.FinishModalvis}>
         <View style={styles.modalView}>
           <Text style={{fontFamily: 'NotoSansKR-Bold', fontSize: 24}}>
-            ACTIVITY 신청이{' '}
+            신청완료 🙌
           </Text>
-          <Text style={{fontFamily: 'NotoSansKR-Regular', fontSize: 24}}>
-            완료되었습니다.{' '}
+          <Text
+            style={{
+              fontFamily: 'NotoSansKR-Regular',
+              fontSize: 14,
+              textAlign: 'center',
+            }}>
+            선정여부는 '마이페이지 {'>'} 진행중인 활동' 에서 {'\n'}조회하실 수
+            있습니다.
           </Text>
           <TouchableOpacity onPress={() => end()}>
             <View style={styles.btnView}>

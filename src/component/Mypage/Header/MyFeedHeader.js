@@ -46,7 +46,7 @@ export default function MyFeedHeader(props) {
       {/* </TouchableOpacity> */}
       <View style={{width: 220}}></View>
       <TouchableOpacity onPress={() => navigation.navigate('SetUp')}>
-        <View style={{marginTop: 50}}>
+        <View style={{marginTop: 36}}>
           <Image source={setting} style={styles.setting} />
         </View>
       </TouchableOpacity>

@@ -39,7 +39,14 @@ export default function Pictures(props) {
       /> */}
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Div className={'row '} style={{width: '100%'}}>
+        <Div
+          className={'row '}
+          style={{
+            width: '104%',
+            marginLeft: '-2%',
+            marginTop: '-1%',
+            marginBottom: '-2.7%',
+          }}>
           {props.Data.map(item => (
             <Div
               className={'col-4'}
