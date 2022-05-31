@@ -9,15 +9,22 @@ import UnOAuth from '../../../../Utils/UnOAuth/UnOAuth';
 import Loading from '../../../../Utils/Loading';
 // import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export default function FollowerChange(props) {
   // const navigation = useNavigation();
   const [isFb, setisFb] = useState(0);
   const [Data, setData] = useState([]);
   useEffect(() => {
+    AsyncStorage.getItem('JWT').then(value => {
+      call(value);
+    });
+  }, []);
+  const call = value => {
     axios
       .get('https://www.markin-app.site/app/channel/follower', {
         headers: {
-          'x-access-token': props.JWT,
+          'x-access-token': value,
         },
       })
       .then(response => {
@@ -29,7 +36,7 @@ export default function FollowerChange(props) {
         }
       })
       .catch(err => console.log(err));
-  }, [props.JWT]);
+  };
 
   return (
     <View style={{marginTop: 10}}>

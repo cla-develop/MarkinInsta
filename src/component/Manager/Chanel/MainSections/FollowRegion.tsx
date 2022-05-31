@@ -18,10 +18,9 @@ export default function FollowRegion(props: any) {
     {city: '', population: 0, ratio: ''},
   ]);
   const [isFb, setisFb] = useState(0);
-  const [JWT, setJWT] = useState('');
+
   useEffect(() => {
     AsyncStorage.getItem('JWT').then(value => {
-      setJWT(value);
       call(value);
     });
   }, []);

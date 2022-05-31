@@ -10,8 +10,12 @@ export default function RealEffect(props: any) {
   const navigation = useNavigation();
   const [isFb, setisFb] = useState(0);
   const [realFollower, setrealFollower] = useState(0);
-
   useEffect(() => {
+    AsyncStorage.getItem('JWT').then(value => {
+      call(value);
+    });
+  }, []);
+  const call = value => {
     axios
       .get('https://www.markin-app.site/app/channel/influence', {
         headers: {
@@ -28,7 +32,7 @@ export default function RealEffect(props: any) {
         }
       })
       .catch(err => console.log(err));
-  }, [props.JWT]);
+  };
 
   return (
     <View style={{marginTop: 15}}>

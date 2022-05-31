@@ -8,14 +8,20 @@ import Icons from '../../../Icons/Icons';
 import axios from 'axios';
 import UnOAuth from '../../../../Utils/UnOAuth/UnOAuth';
 import Loading from '../../../../Utils/Loading';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Reaction(props) {
   const [Data, setData] = useState([]);
   const [isFb, setisFb] = useState(0);
   useEffect(() => {
+    AsyncStorage.getItem('JWT').then(value => {
+      call(value);
+    });
+  }, []);
+  const call = value => {
     axios
       .get('https://www.markin-app.site/app/media/reaction', {
         headers: {
-          'x-access-token': props.JWT,
+          'x-access-token': value,
         },
       })
       .then(response => {
@@ -27,7 +33,7 @@ export default function Reaction(props) {
         }
       })
       .catch(err => console.log(err));
-  }, [props.JWT]);
+  };
   const [asd, setasd] = useState(0);
 
   return (

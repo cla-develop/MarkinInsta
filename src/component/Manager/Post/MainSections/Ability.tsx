@@ -3,16 +3,21 @@ import {View, Text, StyleSheet, Image} from 'react-native';
 import Icons from '../../../Icons/Icons';
 import saveMoney from '../../../../images/saveMoney.png';
 import axios from 'axios';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Ability(props: any) {
   const [LowerCost, setLowerCost] = useState(10);
   const [upperCost, setupperCost] = useState(10);
   useEffect(() => {
+    AsyncStorage.getItem('JWT').then(value => {
+      call(value);
+    });
+  }, []);
+  const call = value => {
     // tslint:disable-next-line: no-floating-promises
     axios
       .get(`https://www.markin-app.site/app/media/cost`, {
         headers: {
-          'x-access-token': props.JWT,
+          'x-access-token': value,
         },
       })
       .then(response => {
@@ -20,7 +25,7 @@ export default function Ability(props: any) {
         setupperCost(response.data.result.upper_cost);
       })
       .catch(err => console.log(err));
-  }, [props.JWT]);
+  };
   return (
     <View style={{marginTop: 15}}>
       <View style={styles.mainView}>

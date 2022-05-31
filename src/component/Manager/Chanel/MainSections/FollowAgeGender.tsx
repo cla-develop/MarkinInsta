@@ -6,6 +6,7 @@ import girl from './images/girl.png';
 import axios from 'axios';
 import Loading from '../../../../Utils/Loading';
 import UnOAuth from '../../../../Utils/UnOAuth/UnOAuth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function FollowAgeGender(props: any) {
   const [first, setfirst] = useState([]);
   const [Second, setSecond] = useState([]);
@@ -27,14 +28,18 @@ export default function FollowAgeGender(props: any) {
   const [MaleRate, setMaleRate] = useState('');
   const [FemaleRate, setFemaleRate] = useState('');
   const [isFb, setisFb] = useState(0);
-
   useEffect(() => {
+    AsyncStorage.getItem('JWT').then(value => {
+      call(value);
+    });
+  }, []);
+  const call = value => {
     const getchannel = async () => {
       try {
         await axios
           .get('https://www.markin-app.site/app/channel', {
             headers: {
-              'x-access-token': props.JWT,
+              'x-access-token': value,
             },
           })
           .then(response => {
@@ -96,7 +101,7 @@ export default function FollowAgeGender(props: any) {
       }
     };
     getchannel();
-  }, [props.JWT]);
+  };
   const [asd, setasd] = useState(0);
   useEffect(() => {
     setTimeout(() => {

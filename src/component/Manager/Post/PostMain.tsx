@@ -27,23 +27,16 @@ export default function PostMain() {
   const [JWT, setJWT] = useState('');
   useEffect(() => {
     AsyncStorage.getItem('JWT').then(value => {
-      setJWT(value);
+      call(value);
+      callpop(value);
     });
   }, []);
-  const [asd, setasd] = useState(0);
-  useEffect(() => {
-    setTimeout(() => {
-      setasd(1);
-    }, 100);
-  }, []);
-
-  useEffect(() => {
+  const call = value => {
     // tslint:disable-next-line: no-floating-promises
     axios
       .get(`https://www.markin-app.site/app/media/reaction`, {
         headers: {
-          'x-access-token':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI0LCJpbnN0YWdyYW1JZCI6MTc4NDE0MDAyMjk3MDE4MjgsImlhdCI6MTY1MjUzNDMzMCwiZXhwIjoxNjg0MDcwMzMwLCJzdWIiOiJ1c2VySW5mbyJ9.Qr9EjC5iP5gddbdYfdKGPxjWNxOQXAFbdrkqaUn4NUE',
+          'x-access-token': value,
         },
       })
       .then(response => {
@@ -53,13 +46,13 @@ export default function PostMain() {
         settotalSaved(response.data.result.totalSaved);
       })
       .catch(err => console.log(err));
-  }, []);
-  useEffect(() => {
+  };
+  const callpop = value => {
     // tslint:disable-next-line: no-floating-promises
     axios
       .get(`https://www.markin-app.site/app/media/popular`, {
         headers: {
-          'x-access-token': JWT,
+          'x-access-token': value,
         },
       })
       .then(response => {
@@ -99,7 +92,7 @@ export default function PostMain() {
         );
       })
       .catch(err => console.log(err));
-  }, [JWT]);
+  };
   useEffect(() => {
     setStand('좋아요순');
   }, []);
@@ -107,40 +100,38 @@ export default function PostMain() {
   const navigation = useNavigation();
   return (
     <View>
-      {asd === 1 && (
-        <>
-          <Ability JWT={JWT} />
+      <>
+        <Ability JWT={JWT} />
 
-          <Reaction
-            totalImpressions={totalImpressions}
-            totalReach={totalReach}
-            totalEngagement={totalEngagement}
-            totalSaved={totalSaved}
-            JWT={JWT}
-          />
+        <Reaction
+          totalImpressions={totalImpressions}
+          totalReach={totalReach}
+          totalEngagement={totalEngagement}
+          totalSaved={totalSaved}
+          JWT={JWT}
+        />
 
-          {/* <TouchableOpacity>
+        {/* <TouchableOpacity>
         <UploadReco />
       </TouchableOpacity> */}
-          <PopularPost
-            IsModalVisible={IsModalVisible}
-            setIsModalVisible={setIsModalVisible}
-            Stand={Stand}
-            setStand={setStand}
-            topMediaByLike={topMediaByLike}
-            topMediaByComments={topMediaByComments}
-            JWT={JWT}
-          />
-          <PopModal
-            setIsModalVisible={setIsModalVisible}
-            IsModalVisible={IsModalVisible}
-            Stand={Stand}
-            setStand={setStand}
-            JWT={JWT}
-          />
-          <View style={{height: 200}}></View>
-        </>
-      )}
+        <PopularPost
+          IsModalVisible={IsModalVisible}
+          setIsModalVisible={setIsModalVisible}
+          Stand={Stand}
+          setStand={setStand}
+          topMediaByLike={topMediaByLike}
+          topMediaByComments={topMediaByComments}
+          JWT={JWT}
+        />
+        <PopModal
+          setIsModalVisible={setIsModalVisible}
+          IsModalVisible={IsModalVisible}
+          Stand={Stand}
+          setStand={setStand}
+          JWT={JWT}
+        />
+        <View style={{height: 170}}></View>
+      </>
     </View>
   );
 }

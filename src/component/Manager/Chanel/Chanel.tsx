@@ -27,9 +27,9 @@ export default function Chanel() {
   return (
     <>
       {/* 진짜 영향력 */}
-      {asd === 1 && <RealEffect JWT={JWT} />}
+      <RealEffect />
       {/* 내 랭킹 */}
-      {asd === 1 && <MyRank ranking={ranking} JWT={JWT} />}
+      <MyRank ranking={ranking} />
       {/* 팔로우 변화 추이 */}
       {/* <View style={styles.UnOAuthView}>
         <View style={{flexDirection: 'row', marginTop: 15, marginLeft: 15}}>
@@ -40,7 +40,7 @@ export default function Chanel() {
         </View>
         <UnOAuth />
       </View> */}
-      {asd === 1 && <FollowerChange JWT={JWT} />}
+      <FollowerChange />
       {/* 팔로워 연령 및 성비 */}
       {/* <View style={styles.UnOAuthView}>
         <View style={{flexDirection: 'row', marginTop: 15, marginLeft: 15}}>
@@ -52,7 +52,7 @@ export default function Chanel() {
         <UnOAuth />
       </View> */}
 
-      {asd === 1 && <FollowAgeGender JWT={JWT} />}
+      <FollowAgeGender />
 
       {/* 팔로워 지역 Top 5 */}
       {/* <View style={styles.UnOAuthView}>
@@ -64,8 +64,8 @@ export default function Chanel() {
         </View>
         <UnOAuth />
       </View> */}
-      {asd === 1 && <FollowRegion JWT={JWT} />}
-      <View style={{height: 200}}></View>
+      <FollowRegion />
+      <View style={{height: 170}}></View>
     </>
   );
 }
