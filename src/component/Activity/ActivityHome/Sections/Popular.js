@@ -18,26 +18,25 @@ export default function Popular() {
       .get(`https://www.markin-app.site/app/activity/popular`)
       .then(response => {
         setResult(response.data.result);
-        setendDay(
-          new Date(
-            moment(response.data.result.campaignApplyEnd, 'YYYY.MM.DD').format(
-              'YYYY-MM-DD',
-            ),
-          ),
-        );
+        // setendDay(
+        //   new Date(
+        //     moment(response.data.result.campaignApplyEnd, 'YYYY.MM.DD').format(
+        //       'YYYY-MM-DD',
+        //     ),
+        //   ),
+        // );
       })
       .catch(err => console.log(err));
   }, []);
-  useEffect(() => {
-    console.log(endDay);
-    if (endDay > today) {
-      setDateOrEnd('Date');
-      setleftDate(Math.abs((endDay - today) / (1000 * 60 * 60 * 24)));
+
+  const DateCheck = value => {
+    const da = new Date(moment(value, 'YYYY.MM.DD').format('YYYY-MM-DD'));
+    if (da > today) {
+      return Math.abs((da - today) / (1000 * 60 * 60 * 24));
     } else {
-      setDateOrEnd('End');
-      setleftDate('모집종료');
+      return false;
     }
-  }, [endDay]);
+  };
   return (
     <View>
       {/* <View style={{flexDirection: 'row'}}> */}
@@ -82,12 +81,13 @@ export default function Popular() {
                   </Text>
                 </View>
                 <View style={styles.greyView}>
-                  {DateOrEnd === 'Date' ? (
-                    <Text style={{fontSize: 12}}>
-                      {Math.floor(leftDate).toString()}일 남음
-                    </Text>
-                  ) : (
+                  {DateCheck(item.campaignApplyEnd) === false ? (
                     <Text style={{fontSize: 12}}>모집종료</Text>
+                  ) : (
+                    <Text style={{fontSize: 12}}>
+                      {Math.floor(DateCheck(item.campaignApplyEnd)).toString()}
+                      일 남음
+                    </Text>
                   )}
                 </View>
               </View>

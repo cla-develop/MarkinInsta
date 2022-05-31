@@ -4,24 +4,31 @@ import styles from '../../Styles';
 import Icons from '../../Icons/Icons';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export default function MYActivity() {
   const navigation = useNavigation();
   const [Menu, setMenu] = useState('신청');
   const [Activties, setActivities] = useState([]);
   useEffect(() => {
+    AsyncStorage.getItem('JWT').then(value => {
+      call(value);
+    });
+  }, [Menu]);
+  const call = value => {
     // tslint:disable-next-line: no-floating-promises
     axios
       .get(`https://www.markin-app.site/app/users/activity?status=${Menu}`, {
         headers: {
-          'x-access-token':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImluc3RhZ3JhbUlkIjoiNDIzNDQwMzAxMzMyODU5MiIsImlhdCI6MTY0MzQ4MDg1MCwiZXhwIjoxNjc1MDE2ODUwLCJzdWIiOiJ1c2VySW5mbyJ9.MlsJ3tZcye9WdqRwz-AKY5KNZf46B1gFQ8nqgrJxGMg',
+          'x-access-token': value,
         },
       })
       .then(response => {
         setActivities(response.data.result);
+        console.log(Menu);
       })
       .catch(err => console.log(err));
-  }, [Menu]);
+  };
   return (
     <View style={styles.allView}>
       <View style={styles.CenterTiileView}>

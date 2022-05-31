@@ -103,9 +103,12 @@ export default function Apply({route}) {
         },
         url: `https://www.markin-app.site/app/activity/${Id}`,
       });
-      setSuccess(response.data);
-      console.log(Success);
-      setFinishModalvis(true);
+      if (response.data.code === 3010) {
+        Alert.alert('이미 신청하셨습니다.');
+      } else {
+        setSuccess(response.data);
+        setFinishModalvis(true);
+      }
     } catch (e) {
       console.log(e);
     }

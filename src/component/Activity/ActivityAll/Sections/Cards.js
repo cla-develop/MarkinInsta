@@ -3,8 +3,18 @@ import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Div} from 'reactnative-ui-bootstrap';
 import issue1 from '../../../../images/issue1.png';
+import moment from 'moment';
 export default function Cards(props) {
   const navigation = useNavigation();
+  const today = new Date();
+  const DateCheck = value => {
+    const da = new Date(moment(value, 'YYYY.MM.DD').format('YYYY-MM-DD'));
+    if (da > today) {
+      return Math.abs((da - today) / (1000 * 60 * 60 * 24));
+    } else {
+      return false;
+    }
+  };
   return (
     <Div className={'row '}>
       {props.AllResult.map(item => (
@@ -30,12 +40,13 @@ export default function Cards(props) {
                 </Text>
               </View>
               <View style={styles.dayView}>
-                {props.DateOrEnd === 'Date' ? (
-                  <Text style={{fontSize: 12}}>
-                    {Math.floor(props.leftDate).toString()}일 남음
-                  </Text>
-                ) : (
+                {DateCheck(item.campaignApplyEnd) === false ? (
                   <Text style={{fontSize: 12}}>모집종료</Text>
+                ) : (
+                  <Text style={{fontSize: 12}}>
+                    {Math.floor(DateCheck(item.campaignApplyEnd)).toString()}일
+                    남음
+                  </Text>
                 )}
               </View>
             </View>
@@ -82,6 +93,6 @@ const styles = StyleSheet.create({
     right: '6%',
     borderRadius: 3,
     padding: 3,
-    marginTop: -2,
+    marginTop: 2,
   },
 });

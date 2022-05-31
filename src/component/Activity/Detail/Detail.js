@@ -256,7 +256,7 @@ export default function Detail({route}) {
           height: 100,
           width: '100%',
         }}>
-        {/* {DateOrEnd === 'Date' ? (
+        {DateOrEnd === 'Date' ? (
           <TouchableOpacity
             onPress={() => navigation.navigate('Apply', {Id: Id})}>
             <View style={styles.footerView}>
@@ -281,8 +281,8 @@ export default function Detail({route}) {
               모집종료
             </Text>
           </View>
-        )} */}
-        <TouchableOpacity
+        )}
+        {/* <TouchableOpacity
           onPress={() => navigation.navigate('Apply', {Id: Id})}>
           <View style={styles.footerView}>
             <Text
@@ -294,7 +294,7 @@ export default function Detail({route}) {
               신청하기
             </Text>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </View>
   );

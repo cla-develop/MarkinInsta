@@ -13,7 +13,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 export default function SetUp() {
   const nDAta = null;
-  const storeData = async value => {
+
+  const storeData = async () => {
     try {
       await AsyncStorage.removeItem('JWT').then(
         navigation.reset({
@@ -22,7 +23,7 @@ export default function SetUp() {
         }),
       );
     } catch (e) {
-      console.log('qwwqqqqqq');
+      console.log(e);
     }
   };
   const [JWT, setJWT] = useState('');
@@ -46,7 +47,7 @@ export default function SetUp() {
       url: 'https://www.markin-app.site/app/users/sign-out',
     }).then(response => {
       console.log(response.data.message);
-      storeData(nDAta);
+      storeData();
     });
   };
   const navigation = useNavigation();

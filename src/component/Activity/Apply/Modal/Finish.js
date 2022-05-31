@@ -15,7 +15,12 @@ export default function Finish(props) {
     <View>
       <Modal isVisible={props.FinishModalvis}>
         <View style={styles.modalView}>
-          <Text style={{fontFamily: 'NotoSansKR-Bold', fontSize: 24}}>
+          <Text
+            style={{
+              fontFamily: 'NotoSansKR-Bold',
+              fontSize: 22,
+              marginTop: 15,
+            }}>
             신청완료 🙌
           </Text>
           <Text
@@ -23,8 +28,9 @@ export default function Finish(props) {
               fontFamily: 'NotoSansKR-Regular',
               fontSize: 14,
               textAlign: 'center',
+              marginTop: 5,
             }}>
-            선정여부는 '마이페이지 {'>'} 진행중인 활동' 에서 {'\n'}조회하실 수
+            선정여부는 '마이페이지 {'>'} 진행중인 활동' {'\n'}에서 조회하실 수
             있습니다.
           </Text>
           <TouchableOpacity onPress={() => end()}>
@@ -60,6 +66,6 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 80,
+    marginTop: 70,
   },
 });

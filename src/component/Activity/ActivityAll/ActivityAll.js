@@ -55,16 +55,7 @@ export default function ActivityAll() {
       setLocal('전체지역');
     }
   }, [Type]);
-  useEffect(() => {
-    console.log(endDay);
-    if (endDay > today) {
-      setDateOrEnd('Date');
-      setleftDate(Math.abs((endDay - today) / (1000 * 60 * 60 * 24)));
-    } else {
-      setDateOrEnd('End');
-      setleftDate('모집종료');
-    }
-  }, [endDay]);
+
   return (
     <View>
       <View style={{marginTop: 20}}>

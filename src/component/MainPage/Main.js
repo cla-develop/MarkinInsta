@@ -70,7 +70,7 @@ export default function Main(props) {
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={{backgroundColor: '#F5F4F8'}}>
-          <TouchableOpacity onPress={() => navigation.navigate('OAuthMain')}>
+          <TouchableOpacity onPress={() => navigation.navigate('FeedBack')}>
             <View
               style={{
                 width: '100%',
