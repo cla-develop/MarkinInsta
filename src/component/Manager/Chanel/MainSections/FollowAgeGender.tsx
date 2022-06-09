@@ -43,10 +43,7 @@ export default function FollowAgeGender(props: any) {
             },
           })
           .then(response => {
-            if (
-              response.data.code === 3008 ||
-              response.data.followerGenderAge === null
-            ) {
+            if (response.data.followerGenderAge === undefined) {
               setisFb(1);
             } else {
               setisFb(2);
@@ -110,7 +107,7 @@ export default function FollowAgeGender(props: any) {
   }, []);
   return (
     <View style={{marginTop: 10}}>
-      {isFb === 2 && thirSum !== -1 && (
+      {isFb === 2 && (
         <View style={styles.mainView}>
           <View style={{flexDirection: 'row', marginTop: 15, marginLeft: 15}}>
             <Text style={styles.TopText}>팔로워 연령 및 성비</Text>
