@@ -84,10 +84,11 @@ function App() {
         screenOptions={{headerShown: false}}>
         <Stack.Screen name="SplashPage" component={SplashPage} />
         <Stack.Screen name="Home" component={Home} />
-
-        <Stack.Screen name="Detail" component={Detail} />
         <Stack.Screen name="Walkthrough" component={Walkthrough} />
+
         <Stack.Screen name="FacebookLogin" component={FacebookLogin} />
+        {/* ACTIVITY */}
+        <Stack.Screen name="Detail" component={Detail} />
         <Stack.Screen name="Activity" component={Activity} />
         <Stack.Screen name="Apply" component={Apply} />
         <Stack.Screen name="OAuthMain" component={OAuthMain} />

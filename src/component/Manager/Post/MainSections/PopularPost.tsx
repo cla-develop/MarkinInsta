@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
+import No from '../../../../images/noprofile.png';
 import Icons from '../../../Icons/Icons';
 
 export default function PopularPost(props: any) {
@@ -37,7 +38,11 @@ export default function PopularPost(props: any) {
                 <TouchableOpacity>
                   <View style={styles.cardView}>
                     <Image
-                      source={{uri: item.media_url}}
+                      source={
+                        item.media_url === '' || item.media_url === null
+                          ? No
+                          : {uri: item.media_url}
+                      }
                       style={styles.ImgStyle}
                     />
                     <View style={{flexDirection: 'row'}}>

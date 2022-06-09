@@ -4,6 +4,7 @@ import com.android.build.OutputFile
 import org.apache.tools.ant.taskdefs.condition.Os
 implementation 'com.facebook.fresco:animated-gif:2.5.0'
 implementation 'com.facebook.fresco:fresco'
+
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
  * and bundleReleaseJsAndAssets).

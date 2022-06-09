@@ -29,6 +29,7 @@ export default function FixInform() {
   const [OriginalPN, setOriginalPN] = useState('');
   useEffect(() => {
     AsyncStorage.getItem('JWT').then(value => {
+      Usercall(value);
       setJWT(value);
     });
   }, []);
@@ -56,11 +57,11 @@ export default function FixInform() {
       return false;
     }
   };
-  useEffect(() => {
+  const Usercall = value => {
     axios
       .get('https://www.markin-app.site/app/users', {
         headers: {
-          'x-access-token': JWT,
+          'x-access-token': value,
         },
       })
       .then(response => {
@@ -73,7 +74,7 @@ export default function FixInform() {
         setasd(1);
       })
       .catch(err => console.log(err));
-  }, [JWT]);
+  };
 
   const Send = () => {
     if (EVali === false) {

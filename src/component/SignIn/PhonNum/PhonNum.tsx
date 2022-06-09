@@ -165,7 +165,7 @@ export default function PhonNum({navigation, route}: any) {
       )}
 
       {PNVali === true ||
-        (isPhNum === '' && (
+        (isPhNum !== '' && (
           <View style={styles.warnView}>
             <Text style={styles.warnText}>
               전화번호를 올바르게 입력해주세요.

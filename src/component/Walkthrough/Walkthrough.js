@@ -4,7 +4,7 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Icons from '../Icons/Icons';
 import MyCarousel from './MyCarosel';
-export default function Splash() {
+export default function Walkthrough() {
   const navigation = useNavigation();
   const [Page, setPage] = useState(0);
   return (

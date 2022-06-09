@@ -7,7 +7,7 @@ import IdModal from './IdModal';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 //더미 아이디
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function MyFeedHeader(props) {
   const navigation = useNavigation();
   const [isModal, setisModal] = useState(false);
@@ -16,10 +16,15 @@ export default function MyFeedHeader(props) {
   const [Data, setData] = useState([]);
   const [first, setfirst] = useState('');
   useEffect(() => {
+    AsyncStorage.getItem('JWT').then(value => {
+      call(value);
+    });
+  }, []);
+  const call = value => {
     axios
       .get(`https://www.markin-app.site/app/users/instagram`, {
         headers: {
-          'x-access-token': props.JWT,
+          'x-access-token': value,
         },
       })
       .then(response => {
@@ -28,7 +33,7 @@ export default function MyFeedHeader(props) {
         setfirst(response.data.result[0].username);
       })
       .catch(err => console.log(err));
-  }, [props.JWT]);
+  };
   return (
     <View style={{flexDirection: 'row'}}>
       {/* <TouchableOpacity
