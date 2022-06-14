@@ -43,9 +43,15 @@ export default function FollowAgeGender(props: any) {
             },
           })
           .then(response => {
-            if (response.data.followerGenderAge === undefined) {
+            console.log(response.data.followerGenderAge + 'gender');
+            if (
+              response.data.followerGenderAge == null ||
+              response.data.followerGenderAge === undefined
+            ) {
               setisFb(1);
-            } else {
+            } else if (
+              response.data.result.followerGenderAge['maxValue'] >= 0
+            ) {
               setisFb(2);
               console.log(response.data.result.followerGenderAge['maxValue']);
               setMax(response.data.result.followerGenderAge['maxValue']);
@@ -93,18 +99,13 @@ export default function FollowAgeGender(props: any) {
           });
       } catch {
         err => {
-          console.log(err);
+          console.log(err + 'asda');
         };
       }
     };
     getchannel();
   };
-  const [asd, setasd] = useState(0);
-  useEffect(() => {
-    setTimeout(() => {
-      setasd(1);
-    }, 2000);
-  }, []);
+
   return (
     <View style={{marginTop: 10}}>
       {isFb === 2 && (
@@ -134,86 +135,88 @@ export default function FollowAgeGender(props: any) {
               </View>
             </View>
           </View>
-          {asd === 1 && (
-            <View style={{flexDirection: 'row', paddingLeft: 13, height: 250}}>
-              <View style={styles.GraphView}>
-                <Text style={styles.noto}>{firSum}명</Text>
-                <View
-                  style={[
-                    styles.greyGraph,
-                    {
-                      backgroundColor: firSum === Max ? '#7603FF' : '#EDEDED',
-                      height: 180 / (Max / firSum),
-                    },
-                  ]}></View>
-                <Text style={styles.ageText}>13-17</Text>
-              </View>
-              <View style={styles.GraphView}>
-                <Text style={styles.noto}>{secSum}명</Text>
-                <View
-                  style={[
-                    styles.greyGraph,
-                    {
-                      backgroundColor: secSum === Max ? '#7603FF' : '#EDEDED',
-                      height: 180 / (Max / secSum),
-                    },
-                  ]}></View>
-                <Text>18-24</Text>
-              </View>
-              <View style={styles.GraphView}>
-                <Text style={styles.noto}>{thirSum}명</Text>
-                <View
-                  style={[
-                    styles.greyGraph,
-                    {
-                      backgroundColor: thirSum === Max ? '#7603FF' : '#EDEDED',
-                      height: 180 / (Max / thirSum),
-                    },
-                  ]}></View>
-                <Text style={styles.ageText}>25-34</Text>
-              </View>
-              <View style={styles.GraphView}>
-                <Text style={styles.noto}>{fourSum}명</Text>
-                <View
-                  style={[
-                    styles.greyGraph,
-                    {
-                      backgroundColor: fourSum === Max ? '#7603FF' : '#EDEDED',
-                      height: 180 / (Max / fourSum),
-                    },
-                  ]}></View>
-                <Text style={styles.ageText}>35-44</Text>
-              </View>
-              <View style={styles.GraphView}>
-                <Text style={styles.noto}>{fifSum}명</Text>
-                <View
-                  style={[
-                    styles.greyGraph,
-                    {
-                      backgroundColor: fifSum === Max ? '#7603FF' : '#EDEDED',
-                      height: 180 / (Max / fifSum),
-                    },
-                  ]}></View>
-                <Text style={styles.ageText}>45-54</Text>
-              </View>
-              <View style={styles.GraphView}>
-                <Text style={styles.noto}>{sixSum}명</Text>
-                <View
-                  style={[
-                    styles.greyGraph,
-                    {
-                      backgroundColor: sixSum === Max ? '#7603FF' : '#EDEDED',
-                      height: 180 / (Max / sixSum),
-                    },
-                  ]}></View>
-                <Text style={styles.ageText}>55+</Text>
-              </View>
+
+          <View style={{flexDirection: 'row', paddingLeft: 13, height: 250}}>
+            <View style={styles.GraphView}>
+              <Text style={styles.noto}>{firSum}명</Text>
+              <View
+                style={[
+                  styles.greyGraph,
+                  {
+                    backgroundColor: firSum === Max ? '#7603FF' : '#EDEDED',
+                    height: 180 / (Max / firSum),
+                  },
+                ]}></View>
+              <Text style={styles.ageText}>13-17</Text>
             </View>
-          )}
+            <View style={styles.GraphView}>
+              <Text style={styles.noto}>{secSum}명</Text>
+              <View
+                style={[
+                  styles.greyGraph,
+                  {
+                    backgroundColor: secSum === Max ? '#7603FF' : '#EDEDED',
+                    height: 180 / (Max / secSum),
+                  },
+                ]}></View>
+              <Text>18-24</Text>
+            </View>
+            <View style={styles.GraphView}>
+              <Text style={styles.noto}>{thirSum}명</Text>
+              <View
+                style={[
+                  styles.greyGraph,
+                  {
+                    backgroundColor: thirSum === Max ? '#7603FF' : '#EDEDED',
+                    height: 180 / (Max / thirSum),
+                  },
+                ]}></View>
+              <Text style={styles.ageText}>25-34</Text>
+            </View>
+            <View style={styles.GraphView}>
+              <Text style={styles.noto}>{fourSum}명</Text>
+              <View
+                style={[
+                  styles.greyGraph,
+                  {
+                    backgroundColor: fourSum === Max ? '#7603FF' : '#EDEDED',
+                    height: 180 / (Max / fourSum),
+                  },
+                ]}></View>
+              <Text style={styles.ageText}>35-44</Text>
+            </View>
+            <View style={styles.GraphView}>
+              <Text style={styles.noto}>{fifSum}명</Text>
+              <View
+                style={[
+                  styles.greyGraph,
+                  {
+                    backgroundColor: fifSum === Max ? '#7603FF' : '#EDEDED',
+                    height: 180 / (Max / fifSum),
+                  },
+                ]}></View>
+              <Text style={styles.ageText}>45-54</Text>
+            </View>
+            <View style={styles.GraphView}>
+              <Text style={styles.noto}>{sixSum}명</Text>
+              <View
+                style={[
+                  styles.greyGraph,
+                  {
+                    backgroundColor: sixSum === Max ? '#7603FF' : '#EDEDED',
+                    height: 180 / (Max / sixSum),
+                  },
+                ]}></View>
+              <Text style={styles.ageText}>55+</Text>
+            </View>
+          </View>
         </View>
       )}
       {isFb === 1 && (
         <View style={styles.mainView}>
+          <View style={{flexDirection: 'row', marginLeft: 15, marginTop: 10}}>
+            <Text style={styles.TopText}>팔로워 연령 및 성비</Text>
+          </View>
           <UnOAuth />
         </View>
       )}
@@ -222,7 +225,7 @@ export default function FollowAgeGender(props: any) {
         <View>
           <View style={styles.unView}>
             <View style={{flexDirection: 'row', marginLeft: 15}}>
-              <Text style={styles.TopText}>나의 랭킹</Text>
+              <Text style={styles.TopText}>팔로워 연령 및 성비</Text>
             </View>
             <Loading />
           </View>

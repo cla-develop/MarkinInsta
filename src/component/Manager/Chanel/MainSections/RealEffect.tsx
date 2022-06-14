@@ -19,7 +19,7 @@ export default function RealEffect(props: any) {
     axios
       .get('https://www.markin-app.site/app/channel/influence', {
         headers: {
-          'x-access-token': props.JWT,
+          'x-access-token': value
         },
       })
       .then(response => {

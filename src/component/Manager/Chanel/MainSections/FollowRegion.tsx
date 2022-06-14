@@ -218,12 +218,23 @@ export default function FollowRegion(props: any) {
             )}
           </>
         )}
-        {isFb === 1 && <UnOAuth />}
+        {isFb === 1 && (
+          <View>
+            <View style={styles.unView}>
+              <View
+                style={{flexDirection: 'row', marginLeft: 15, marginTop: 10}}>
+                <Text style={styles.TopText}>팔로워 지역 Top 5</Text>
+              </View>
+              <UnOAuth />
+            </View>
+          </View>
+        )}
         {isFb === 0 && (
           <View>
             <View style={styles.unView}>
-              <View style={{flexDirection: 'row', marginLeft: 15}}>
-                <Text style={styles.TopText}>나의 랭킹</Text>
+              <View
+                style={{flexDirection: 'row', marginLeft: 15, marginTop: 10}}>
+                <Text style={styles.TopText}>팔로워 지역 Top 5</Text>
               </View>
               <Loading />
             </View>

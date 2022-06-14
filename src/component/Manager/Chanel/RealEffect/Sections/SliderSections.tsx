@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     color: '#747474',
   },
   nameText: {
-    fonstSize: 17,
+    fontSize: 17,
     fontFamily: 'Roboto-Bold',
     color: '#181818',
     marginTop: 5,

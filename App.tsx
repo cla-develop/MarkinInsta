@@ -48,6 +48,7 @@ import SplashPage from './src/component/SplashPage';
 import Loading from './src/component/SignIn/Loading';
 import LinkChanel from './src/component/SignIn/LinkChannel/LinkChanel';
 import {Settings} from 'react-native-fbsdk-next';
+
 import SplashScreen from 'react-native-splash-screen';
 import MyCategory from './src/component/Mypage/Category/Category';
 import LinkFinish from './src/component/OAuth/LinkMarkin/LinkFinish';

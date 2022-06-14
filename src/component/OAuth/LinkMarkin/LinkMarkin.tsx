@@ -8,36 +8,6 @@ import {LoginManager, AccessToken, LoginButton} from 'react-native-fbsdk-next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-const loginWithFacebook = () => {
-  LoginManager.logInWithPermissions([
-    'public_profile',
-    'openid',
-    'pages_show_list',
-    'instagram_basic',
-    'instagram_manage_insights',
-    'pages_read_engagement',
-  ]).then(
-    function (result) {
-      if (result.isCancelled) {
-        console.log('==> Login cancelled');
-      } else if (error) {
-        console.log(
-          'login has error' + result.error,
-          // '==> Login success with permissions: ' +
-          //   result.grantedPermissions.toString(),
-        );
-      } else {
-        AccessToken.getCurrentAccessToken().then(data => {
-          console.log(data.accessToken.toString());
-        });
-      }
-    },
-    function (error) {
-      console.log('==> Login fail with error: ' + error);
-    },
-  );
-};
-
 export default function LinkMarkin() {
   const navigation = useNavigation();
   const [Page, setPage] = useState(0);
@@ -187,6 +157,34 @@ export default function LinkMarkin() {
             <LoginButton
               style={{width: '90%', height: 50, borderRadius: 20}}
               onLoginFinished={(error, result) => {
+                LoginManager.logInWithPermissions([
+                  'public_profile',
+                  'openid',
+                  'pages_show_list',
+                  'instagram_basic',
+                  'instagram_manage_insights',
+                  'pages_read_engagement',
+                ]).then(
+                  function (result) {
+                    if (result.isCancelled) {
+                      console.log('==> Login cancelled');
+                    } else if (error) {
+                      console.log('login has error' + result.error);
+                    } else {
+                      AccessToken.getCurrentAccessToken().then(data => {
+                        console.log(data.accessToken.toString());
+                        setAccessTokenFb(data.accessToken.toString());
+                      });
+                      console.log(
+                        'Login success with permissions: ' +
+                          result.grantedPermissions.toString(),
+                      );
+                    }
+                  },
+                  function (error) {
+                    console.log('==> Login fail with error: ' + error);
+                  },
+                );
                 if (error) {
                   console.log('login has error: ' + result.error);
                 } else if (result.isCancelled) {
@@ -194,7 +192,6 @@ export default function LinkMarkin() {
                 } else {
                   AccessToken.getCurrentAccessToken().then(data => {
                     console.log(data.accessToken.toString());
-                    setAccessTokenFb(data.accessToken);
                   });
                 }
               }}
