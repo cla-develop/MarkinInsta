@@ -49,9 +49,8 @@ export default function FollowAgeGender(props: any) {
               response.data.followerGenderAge === undefined
             ) {
               setisFb(1);
-            } else if (
-              response.data.result.followerGenderAge['maxValue'] >= 0
-            ) {
+            }
+            if (response.data.result.followerGenderAge['maxValue'] >= 0) {
               setisFb(2);
               console.log(response.data.result.followerGenderAge['maxValue']);
               setMax(response.data.result.followerGenderAge['maxValue']);

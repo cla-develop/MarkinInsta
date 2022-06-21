@@ -53,7 +53,7 @@ export default function WebViewModal(props: any) {
 const styles = StyleSheet.create({
   ModalView: {
     justifyContent: 'flex-end',
-    marginTop: 150,
+
     marginBottom: -10,
     width: '100%',
     marginLeft: -2,

@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  useWindowDimensions,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Description from './Sections/Description';
@@ -15,6 +16,7 @@ import Icons from '../../Icons/Icons';
 import axios from 'axios';
 import moment from 'moment';
 import noprofile from '../../../images/noprofile.png';
+import RenderHtml from 'react-native-render-html';
 export default function Detail({route}) {
   const {Id} = route.params;
   const navigation = useNavigation();
@@ -98,7 +100,10 @@ export default function Detail({route}) {
       setleftDate('모집종료');
     }
   }, [endDay]);
-
+  const offerSource = {
+    html: `${offer}`,
+  };
+  const {width} = useWindowDimensions();
   return (
     <View style={styles.allView}>
       <View style={{alignItems: 'center', height: 40}}>
@@ -168,12 +173,8 @@ export default function Detail({route}) {
         {/* 제공내역 */}
         <View style={styles.FirstSection}>
           <Text style={styles.nameText}>제공내역</Text>
-          <View>
-            <Text style={styles.greyText}>
-              여드름흉터, 수두흉터, 점뺀흉터, 긁힌흉터, 손톱흉터 등 양볼{'\n'}에
-              패인흉터 치료 {'\n'}
-              {'\n'}6회 방문 흉터 침치료+피부결치료 (400만원 상당){' '}
-            </Text>
+          <View style={{width: '90%'}}>
+            <RenderHtml source={offerSource} width={width} />
           </View>
         </View>
         {/* 모집기간 */}

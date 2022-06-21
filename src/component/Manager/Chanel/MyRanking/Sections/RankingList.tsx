@@ -12,8 +12,7 @@ export default function RankingList(props: any) {
               backgroundColor:
                 item.username == props.UserName ? '#7553FF' : 'white',
             },
-          ]}
-          key={item.username}>
+          ]}>
           <View
             style={{
               flexDirection: 'row',

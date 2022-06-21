@@ -21,7 +21,7 @@ export default function Cards(props) {
         <Div
           className={'col-6'}
           style={{height: 300}}
-          key={item.ApplicationCount}>
+          key={item.advertisementNo}>
           <TouchableOpacity
             onPress={() =>
               navigation.navigate('Detail', {Id: item.advertisementNo})

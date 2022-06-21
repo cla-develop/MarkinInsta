@@ -1,7 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
 import {useNavigation} from '@react-navigation/native';
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Linking} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Button,
+  Linking,
+} from 'react-native';
 import Icons from '../../Icons/Icons';
 import MyCarousel from './MyCarosel';
 import {LoginManager, AccessToken, LoginButton} from 'react-native-fbsdk-next';
@@ -154,7 +161,7 @@ export default function LinkMarkin() {
             </View>
           </TouchableOpacity> */}
           <View style={{top: 10}}>
-            <LoginButton
+            {/* <LoginButton
               style={{width: '90%', height: 50, borderRadius: 20}}
               onLoginFinished={(error, result) => {
                 LoginManager.logInWithPermissions([
@@ -196,7 +203,40 @@ export default function LinkMarkin() {
                 }
               }}
               onLogoutFinished={() => console.log('logout.')}
-            />
+            /> */}
+            <TouchableOpacity
+              onPress={() => {
+                LoginManager.logInWithPermissions([
+                  'public_profile',
+                  'openid',
+                  'pages_show_list',
+                  'instagram_basic',
+                  'instagram_manage_insights',
+                  'pages_read_engagement',
+                ]).then(
+                  function (result) {
+                    if (result.isCancelled) {
+                      console.log('Login Cancelled ' + JSON.stringify(result));
+                    } else {
+                      console.log(
+                        'Login success with  permisssions: ' +
+                          result.grantedPermissions.toString(),
+                      );
+                      AccessToken.getCurrentAccessToken().then(data => {
+                        console.log(data.accessToken.toString());
+                        setAccessTokenFb(data.accessToken.toString());
+                      });
+                    }
+                  },
+                  function (error) {
+                    console.log('Login failed with error: ' + error);
+                  },
+                );
+              }}>
+              <View style={styles.purpleBtn}>
+                <Text style={styles.instaText}>Facebook으로 로그인하기</Text>
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
       )}
@@ -233,12 +273,17 @@ const styles = StyleSheet.create({
     color: '#424242',
   },
   purpleBtn: {
-    backgroundColor: '#7553FF',
+    backgroundColor: '#1A77F2',
     width: '90%',
     height: 60,
     borderRadius: 17,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  instaText: {
+    fontFamily: 'NotoSansKR-Medium',
+    color: 'white',
+    fontSize: 18,
   },
 });
 

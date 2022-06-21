@@ -83,6 +83,8 @@ export default function FixInform() {
       Alert.alert('인증번호를 확인하세요.');
     } else if (Original === Email && OriginalPN === PhonNum) {
       Alert.alert('변경사항이 없습니다.');
+    } else if (anotherNum === true && showV === false) {
+      Alert.alert('인증번호를 요청하세요.');
     } else {
       axios({
         method: 'patch',
