@@ -12,7 +12,7 @@ export default function SplashPage() {
         if (value !== null) {
           navigation.replace('Body');
         } else {
-          navigation.replace('ChooseWay');
+          navigation.replace('Walkthrough');
           console.log(value);
         }
       });
