@@ -50,7 +50,7 @@ export default function MainHeader(props) {
       </View>
 
       <View style={{flexDirection: 'row', width: '100%', paddingTop: 0}}>
-        <TouchableOpacity onPress={handlefocusHome}>
+        <TouchableOpacity onPress={handlefocusHome} style={{width: '50%'}}>
           {props.stateChange === 1 ? (
             <View style={styles.focusView}>
               <Text style={styles.focusText}>홈</Text>
@@ -72,7 +72,7 @@ export default function MainHeader(props) {
             </View>
           )}
         </TouchableOpacity> */}
-        <TouchableOpacity onPress={handlefocusRanking}>
+        <TouchableOpacity onPress={handlefocusRanking} style={{width: '50%'}}>
           {props.stateChange === 3 ? (
             <View style={styles.focusView}>
               <Text style={styles.focusText}>랭킹</Text>
@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Quantico-Bold',
     transform: [{translateX: 0}, {translateY: 0}],
     fontSize: 22,
+    color: 'black',
   },
   greyText: {
     opacity: 0.5,
@@ -103,14 +104,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   focusView: {
-    width: 195,
     height: 50,
     justifyContent: 'center',
     borderBottomColor: 'black',
     borderBottomWidth: 1,
   },
   unsfocusView: {
-    width: 195,
     height: 50,
     justifyContent: 'center',
     borderBottomColor: '#E5E5E5',
@@ -120,5 +119,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'NotoSansKR-Bold',
     fontSize: 16,
+    color: 'black',
   },
 });

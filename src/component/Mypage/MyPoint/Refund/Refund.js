@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   TextInput,
+  ScrollView,
 } from 'react-native';
 import Icons from '../../../Icons/Icons';
 import {useNavigation} from '@react-navigation/native';
@@ -53,126 +54,128 @@ export default function Refund({route}) {
 
   return (
     <View style={styles.allView}>
-      <View style={{alignItems: 'center', height: 40}}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={{position: 'absolute', left: '5%'}}>
-          <Icons.Entypo name="chevron-thin-left" size={20} color="black" />
-        </TouchableOpacity>
-      </View>
-      <Text style={styles.TitleText}>환급하기</Text>
-      <View style={{margin: '5%'}}>
-        <Text style={styles.bText}>환급할 금액</Text>
-        <TextInput
-          style={styles.Inputstyle}
-          placeholder="환급할 금액을 입력해주세요."
-          value={Point}
-          keyboardType="number-pad"
-          onChangeText={i => setPoint(i)}
-        />
-        {parseInt(Point) < 10000 && myPoint > 10000 && (
-          <View style={{borderTopColor: '#FF5959', borderTopWidth: 1}}>
-            <Text style={[styles.NotoMe12]}>
-              환급 최소 금액은 10,000원입니다.
-            </Text>
-          </View>
-        )}
-        {parseInt(Point) > myPoint && (
-          <View style={{borderTopColor: '#FF5959', borderTopWidth: 1}}>
-            <Text style={[styles.NotoMe12]}>
-              환급 가능 금액을 초과했습니다.
-            </Text>
-          </View>
-        )}
-        <View style={styles.greyView}>
-          <Text style={styles.greyText}>
-            환급 가능 금액{' '}
-            {myPoint.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
-          </Text>
-        </View>
-        <View style={{marginTop: 25}}>
-          <Text style={styles.bText}>예금주</Text>
-          <TextInput
-            style={styles.Inputstyle}
-            placeholder="이름 입력"
-            value={bankAccountName}
-            onChangeText={i => setbankAccountName(i)}
-          />
-          <TextInput
-            value={IDnum}
-            onChangeText={i => setIDnum(i)}
-            style={styles.Inputstyle}
-            placeholder="주민등록번호 (000000-0000000)"
-          />
-        </View>
-        <View style={{marginTop: 25}}>
-          <Text style={styles.bText}>입금 계좌</Text>
-          <TextInput
-            style={styles.Inputstyle}
-            placeholder="은행명"
-            value={bank}
-            onChangeText={i => setbank(i)}
-          />
-          <TextInput
-            keyboardType="numeric"
-            style={styles.Inputstyle}
-            placeholder="입금 계좌 번호 (-)를 제외한 숫자만 입력"
-            value={backAccountNum}
-            onChangeText={i => setbackAccountNum(i)}
-          />
-        </View>
-        <View style={{marginTop: 45}}>
-          <Text style={{fontFamily: 'NotoSansKR-Bold', fontSize: 18}}>
-            개인정보 이용동의
-          </Text>
-          <TouchableOpacity onPress={() => setWeCheck(!WeCheck)}>
-            <View style={{flexDirection: 'row', marginTop: 15}}>
-              <View style={{justifyContent: 'center'}}>
-                <Icons.AntDesign
-                  name="check"
-                  size={16}
-                  style={{color: WeCheck === true ? '#7553FF' : '#DEDEDE'}}
-                />
-              </View>
-              <View style={{justifyContent: 'center'}}>
-                <Text style={styles.TermsText}>
-                  개인정보 취급위탁에 대해 동의합니다.(필수)
-                </Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setEcheck(!Echeck)}>
-            <View style={{flexDirection: 'row', marginTop: 15}}>
-              <View style={{justifyContent: 'center'}}>
-                <Icons.AntDesign
-                  name="check"
-                  size={16}
-                  style={{color: Echeck === true ? '#7553FF' : '#DEDEDE'}}
-                />
-              </View>
-              <View style={{justifyContent: 'center'}}>
-                <Text style={styles.TermsText}>
-                  개인정보 취급위탁에 대해 동의합니다.(필수)
-                </Text>
-              </View>
-            </View>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={{alignItems: 'center', height: 40}}>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={{position: 'absolute', left: '5%'}}>
+            <Icons.Entypo name="chevron-thin-left" size={20} color="black" />
           </TouchableOpacity>
         </View>
-        {Echeck === true &&
-        WeCheck === true &&
-        parseInt(Point) >= 10000 &&
-        parseInt(Point) <= myPoint ? (
-          <TouchableOpacity onPress={() => Send()}>
-            <View style={[styles.btnView, {backgroundColor: '#7553FF'}]}>
+        <Text style={styles.TitleText}>환급하기</Text>
+        <View style={{margin: '5%'}}>
+          <Text style={styles.bText}>환급할 금액</Text>
+          <TextInput
+            style={styles.Inputstyle}
+            placeholder="환급할 금액을 입력해주세요."
+            value={Point}
+            keyboardType="number-pad"
+            onChangeText={i => setPoint(i)}
+          />
+          {parseInt(Point) < 10000 && myPoint > 10000 && (
+            <View style={{borderTopColor: '#FF5959', borderTopWidth: 1}}>
+              <Text style={[styles.NotoMe12]}>
+                환급 최소 금액은 10,000원입니다.
+              </Text>
+            </View>
+          )}
+          {parseInt(Point) > myPoint && (
+            <View style={{borderTopColor: '#FF5959', borderTopWidth: 1}}>
+              <Text style={[styles.NotoMe12]}>
+                환급 가능 금액을 초과했습니다.
+              </Text>
+            </View>
+          )}
+          <View style={styles.greyView}>
+            <Text style={styles.greyText}>
+              환급 가능 금액{' '}
+              {myPoint.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
+            </Text>
+          </View>
+          <View style={{marginTop: 25}}>
+            <Text style={styles.bText}>예금주</Text>
+            <TextInput
+              style={styles.Inputstyle}
+              placeholder="이름 입력"
+              value={bankAccountName}
+              onChangeText={i => setbankAccountName(i)}
+            />
+            <TextInput
+              value={IDnum}
+              onChangeText={i => setIDnum(i)}
+              style={styles.Inputstyle}
+              placeholder="주민등록번호 (000000-0000000)"
+            />
+          </View>
+          <View style={{marginTop: 25}}>
+            <Text style={styles.bText}>입금 계좌</Text>
+            <TextInput
+              style={styles.Inputstyle}
+              placeholder="은행명"
+              value={bank}
+              onChangeText={i => setbank(i)}
+            />
+            <TextInput
+              keyboardType="numeric"
+              style={styles.Inputstyle}
+              placeholder="입금 계좌 번호 (-)를 제외한 숫자만 입력"
+              value={backAccountNum}
+              onChangeText={i => setbackAccountNum(i)}
+            />
+          </View>
+          <View style={{marginTop: 45}}>
+            <Text style={{fontFamily: 'NotoSansKR-Bold', fontSize: 18}}>
+              개인정보 이용동의
+            </Text>
+            <TouchableOpacity onPress={() => setWeCheck(!WeCheck)}>
+              <View style={{flexDirection: 'row', marginTop: 15}}>
+                <View style={{justifyContent: 'center'}}>
+                  <Icons.AntDesign
+                    name="check"
+                    size={16}
+                    style={{color: WeCheck === true ? '#7553FF' : '#DEDEDE'}}
+                  />
+                </View>
+                <View style={{justifyContent: 'center'}}>
+                  <Text style={styles.TermsText}>
+                    개인정보 취급위탁에 대해 동의합니다.(필수)
+                  </Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setEcheck(!Echeck)}>
+              <View style={{flexDirection: 'row', marginTop: 15}}>
+                <View style={{justifyContent: 'center'}}>
+                  <Icons.AntDesign
+                    name="check"
+                    size={16}
+                    style={{color: Echeck === true ? '#7553FF' : '#DEDEDE'}}
+                  />
+                </View>
+                <View style={{justifyContent: 'center'}}>
+                  <Text style={styles.TermsText}>
+                    개인정보 취급위탁에 대해 동의합니다.(필수)
+                  </Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </View>
+          {Echeck === true &&
+          WeCheck === true &&
+          parseInt(Point) >= 10000 &&
+          parseInt(Point) <= myPoint ? (
+            <TouchableOpacity onPress={() => Send()}>
+              <View style={[styles.btnView, {backgroundColor: '#7553FF'}]}>
+                <Text style={styles.btnText}>환급 신청</Text>
+              </View>
+            </TouchableOpacity>
+          ) : (
+            <View style={[styles.btnView, {backgroundColor: '#DEDEDE'}]}>
               <Text style={styles.btnText}>환급 신청</Text>
             </View>
-          </TouchableOpacity>
-        ) : (
-          <View style={[styles.btnView, {backgroundColor: '#DEDEDE'}]}>
-            <Text style={styles.btnText}>환급 신청</Text>
-          </View>
-        )}
-      </View>
+          )}
+        </View>
+      </ScrollView>
     </View>
   );
 }

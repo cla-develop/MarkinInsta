@@ -47,8 +47,13 @@ export default function ActivityHeader(props) {
         </View>
       </View>
 
-      <View style={{flexDirection: 'row', width: '100%', paddingTop: 0}}>
-        <TouchableOpacity onPress={handlefocusHome}>
+      <View
+        style={{
+          flexDirection: 'row',
+          width: '100%',
+          paddingTop: 0,
+        }}>
+        <TouchableOpacity onPress={handlefocusHome} style={{width: '50%'}}>
           {props.StateChange === 1 ? (
             <View style={styles.focusView}>
               <Text style={styles.focusText}>홈</Text>
@@ -59,7 +64,7 @@ export default function ActivityHeader(props) {
             </View>
           )}
         </TouchableOpacity>
-        <TouchableOpacity onPress={handlefocusALL}>
+        <TouchableOpacity onPress={handlefocusALL} style={{width: '50%'}}>
           {props.StateChange === 2 ? (
             <View style={styles.focusView}>
               <Text style={styles.focusText}>전체활동</Text>
@@ -82,6 +87,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Quantico-Bold',
     transform: [{translateX: 0}, {translateY: 0}],
     fontSize: 22,
+    color: 'black',
   },
   greyText: {
     opacity: 0.5,
@@ -90,14 +96,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   focusView: {
-    width: 195,
     height: 50,
     justifyContent: 'center',
     borderBottomColor: 'black',
     borderBottomWidth: 1,
   },
   unsfocusView: {
-    width: 195,
     height: 50,
     justifyContent: 'center',
     borderBottomColor: '#E5E5E5',
@@ -107,5 +111,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'NotoSansKR-Bold',
     fontSize: 16,
+    color: 'black',
   },
 });
