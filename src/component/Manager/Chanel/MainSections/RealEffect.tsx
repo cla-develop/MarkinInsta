@@ -19,12 +19,12 @@ export default function RealEffect(props: any) {
     axios
       .get('https://www.markin-app.site/app/channel/influence', {
         headers: {
-          'x-access-token': value
+          'x-access-token': value,
         },
       })
       .then(response => {
         console.log(response.data.code + 'asdsadsa');
-        if (response.data.code === 3008) {
+        if (response.data.isSuccess === false) {
           setisFb(1);
         } else {
           setisFb(2);
@@ -67,15 +67,20 @@ export default function RealEffect(props: any) {
       )}
 
       {isFb === 1 && (
-        <View style={{marginBottom: 30}}>
-          <UnOAuth />
+        <View>
+          <View style={[styles.unView, {paddingBottom: 30}]}>
+            <View style={{flexDirection: 'row', marginLeft: 15}}>
+              <Text style={styles.TopText}>진짜 영향력</Text>
+            </View>
+            <UnOAuth />
+          </View>
         </View>
       )}
       {isFb === 0 && (
         <View>
           <View style={styles.unView}>
             <View style={{flexDirection: 'row', marginLeft: 15}}>
-              <Text style={styles.TopText}>나의 랭킹</Text>
+              <Text style={styles.TopText}>진짜 영향력</Text>
             </View>
             <Loading />
           </View>
@@ -107,6 +112,7 @@ const styles = StyleSheet.create({
     width: '95%',
     borderRadius: 18,
     backgroundColor: 'white',
+    paddingTop: 15,
   },
   TopText: {
     fontSize: 20,

@@ -30,11 +30,7 @@ export default function MyPage() {
     });
   }, []);
   const [asd, setasd] = useState(0);
-  useEffect(() => {
-    setTimeout(() => {
-      setasd(1);
-    }, 500);
-  }, []);
+
   const profilecall = value => {
     // tslint:disable-next-line: no-floating-promises
     axios
@@ -44,6 +40,9 @@ export default function MyPage() {
         },
       })
       .then(response => {
+        if (response.data.isSuccess === false) {
+          setasd(3);
+        }
         setData(
           response.data.result.media.data.map(
             (node: {media_url: any; id: any}) => ({
@@ -81,28 +80,31 @@ export default function MyPage() {
 
   return (
     <View style={{height: '100%', backgroundColor: 'white'}}>
-      {asd === 1 && (
-        <>
-          <View style={styles.HeaderStyle}>
-            <MyFeedHeader JWT={JWT} />
-          </View>
+      <>
+        <View style={styles.HeaderStyle}>
+          <MyFeedHeader JWT={JWT} asd={asd} />
+        </View>
 
-          <View style={styles.profileView}>
-            <Profile
-              profileImg={profileImg}
-              Point={Point}
-              Category={Category}
-              followers_count={followers_count}
-              realFollower={realFollower}
-              CampaginCount={CampaginCount}
-            />
-          </View>
+        <View style={styles.profileView}>
+          <Profile
+            profileImg={profileImg}
+            Point={Point}
+            Category={Category}
+            followers_count={followers_count}
+            realFollower={realFollower}
+            CampaginCount={CampaginCount}
+          />
+        </View>
 
-          <View style={{width: '100%'}}>
-            <Pictures Data={Data} profileImg={profileImg} username={username} />
-          </View>
-        </>
-      )}
+        <View style={{width: '100%'}}>
+          <Pictures
+            Data={Data}
+            profileImg={profileImg}
+            username={username}
+            asd={asd}
+          />
+        </View>
+      </>
     </View>
   );
 }

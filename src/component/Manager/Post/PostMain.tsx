@@ -24,6 +24,7 @@ export default function PostMain() {
   const [topMediaByComments, settopMediaByComments] = useState([
     {comments_count: 0, like_count: 0, media_url: '', id: '', caption: ''},
   ]);
+  const [isFb, setisFb] = useState(0);
   const [JWT, setJWT] = useState('');
   useEffect(() => {
     AsyncStorage.getItem('JWT').then(value => {
@@ -56,6 +57,9 @@ export default function PostMain() {
         },
       })
       .then(response => {
+        if (response.data.isSuccess === false) {
+          setisFb(1);
+        }
         settopMediaByLike(
           response.data.result.topMediaByLike.map(
             (node: {
@@ -122,6 +126,7 @@ export default function PostMain() {
           topMediaByLike={topMediaByLike}
           topMediaByComments={topMediaByComments}
           JWT={JWT}
+          isFb={isFb}
         />
         <PopModal
           setIsModalVisible={setIsModalVisible}

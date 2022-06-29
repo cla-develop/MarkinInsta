@@ -13,6 +13,7 @@ import styles from '../../Styles';
 import Icons from '../../Icons/Icons';
 import UnOAuth from '../../../Utils/UnOAuth/UnOAuth';
 import PostReaction from './PostReaction/PostReaction';
+
 import axios from 'axios';
 export default function MyPic({route}) {
   const navigation = useNavigation();
@@ -22,21 +23,16 @@ export default function MyPic({route}) {
   const [JWT, setJWT] = useState('');
   useEffect(() => {
     AsyncStorage.getItem('JWT').then(value => {
-      setJWT(value);
+      call(value);
     });
   }, []);
   const [asd, setasd] = useState(0);
-  useEffect(() => {
-    setTimeout(() => {
-      setasd(1);
-    }, 1000);
-  }, []);
 
-  useEffect(() => {
+  const call = value => {
     axios
       .get(`https://www.markin-app.site/app/users/feed/${id}`, {
         headers: {
-          'x-access-token': JWT,
+          'x-access-token': value,
         },
       })
       .then(response => {
@@ -46,7 +42,7 @@ export default function MyPic({route}) {
         }
       })
       .catch(err => console.log(err));
-  }, [JWT]);
+  };
   console.log(mediaInsight);
   console.log(id);
   return (
@@ -58,26 +54,24 @@ export default function MyPic({route}) {
           <Icons.Entypo name="chevron-thin-left" size={20} color="black" />
         </TouchableOpacity>
       </View>
-      {asd === 1 && (
-        <>
-          <View style={{height: 35, flexDirection: 'row', marginBottom: 5}}>
-            <View style={inStyle.profileImgV}>
-              <Image source={{uri: profileImg}} />
-            </View>
-            <View
-              style={{justifyContent: 'center', height: 25, marginLeft: 10}}>
-              <Text style={styles.RoboMe18}>{Data.username}</Text>
-            </View>
-          </View>
-          <View
-            style={{backgroundColor: 'black', width: '100%', aspectRatio: 1}}>
-            <Image
-              source={{uri: Data.media_url}}
-              style={{width: '100%', aspectRatio: 1}}
-            />
-          </View>
 
-          {/* <View style={{flexDirection: 'row', marginTop: 15, marginLeft: '5%'}}>
+      <>
+        <View style={{height: 35, flexDirection: 'row', marginBottom: 5}}>
+          <View style={inStyle.profileImgV}>
+            <Image source={{uri: profileImg}} />
+          </View>
+          <View style={{justifyContent: 'center', height: 25, marginLeft: 10}}>
+            <Text style={styles.RoboMe18}>{Data.username}</Text>
+          </View>
+        </View>
+        <View style={{backgroundColor: 'black', width: '100%', aspectRatio: 1}}>
+          <Image
+            source={{uri: Data.media_url}}
+            style={{width: '100%', aspectRatio: 1}}
+          />
+        </View>
+
+        {/* <View style={{flexDirection: 'row', marginTop: 15, marginLeft: '5%'}}>
           <Icons.AntDesign name="hearto" size={20} />
           <View style={{justifyContent: 'center', marginLeft: 8}}>
             <Text style={styles.SpoqaMe14}>{like_count}</Text>
@@ -92,21 +86,21 @@ export default function MyPic({route}) {
           </View>
         </View> */}
 
-          <PostReaction mediaInsight={mediaInsight} JWT={JWT} />
-          {mediaInsight.length === 0 && (
-            <View
-              style={{
-                position: 'absolute',
-                bottom: 0,
-                backgroundColor: '#FFFFFFEE',
-                width: '100%',
-                height: 260,
-              }}>
-              <UnOAuth />
-            </View>
-          )}
-        </>
-      )}
+        <PostReaction mediaInsight={mediaInsight} JWT={JWT} />
+        {mediaInsight.length === 0 && (
+          <View
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              backgroundColor: '#FFFFFFEE',
+              width: '100%',
+              height: 260,
+            }}>
+            <UnOAuth />
+          </View>
+        )}
+      </>
+
       {/* un oAuth */}
 
       {/* <View style={{width: '100%', padding: '5%'}}>

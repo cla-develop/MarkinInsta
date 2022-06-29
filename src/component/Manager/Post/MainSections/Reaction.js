@@ -25,7 +25,7 @@ export default function Reaction(props) {
         },
       })
       .then(response => {
-        if (response.data.code === 3008) {
+        if (response.data.isSuccess === false) {
           setisFb(1);
         } else {
           setisFb(2);

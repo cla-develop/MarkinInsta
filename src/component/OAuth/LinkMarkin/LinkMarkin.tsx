@@ -20,27 +20,33 @@ export default function LinkMarkin() {
   const [Page, setPage] = useState(0);
   const [JWT, setJWT] = useState('');
   const [AccessTokenFb, setAccessTokenFb] = useState('');
-  useEffect(() => {
-    AsyncStorage.getItem('JWT').then(value => {
-      setJWT(value);
-      console.log(value + 'jWT토큰');
-    });
-  }, []);
+  // useEffect(() => {
+  //   AsyncStorage.getItem('JWT').then(value => {
+  //     setJWT(value);
+  //     console.log(value + 'jWT토큰');
+  //   });
+  // }, []);
+  const storeData = async (value: any) => {
+    try {
+      await AsyncStorage.setItem('JWT', value);
+    } catch (e) {
+      console.log('qwwqqqqqq');
+    }
+  };
   useEffect(() => {
     const checkSignin = async () => {
       try {
         await axios({
           method: 'post',
-          url: 'https://www.markin-app.site/app/oauth/facebook',
-          headers: {
-            'x-access-token': JWT,
-          },
+          url: 'https://www.markin-app.site/app/oauth/facebook/test',
+
           data: {
             access_token: AccessTokenFb,
           },
         }).then(response => {
           if (response.data.isSuccess === true) {
-            console.log(response.data.message);
+            console.log(response.data);
+            storeData(response.data.result.jwt);
             navigation.navigate('LinkFinish');
           } else {
             console.log(response.data.message + 'asd');

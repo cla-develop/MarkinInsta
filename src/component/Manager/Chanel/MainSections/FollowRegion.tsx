@@ -35,10 +35,7 @@ export default function FollowRegion(props: any) {
       .then(response => {
         console.log(response.data.code + 'qwerqwerqwerqwer');
 
-        if (
-          response.data.code === 3008 ||
-          response.data.result.followerTopCountry === null
-        ) {
+        if (response.data.isSuccess === false) {
           setisFb(1);
         } else {
           setisFb(2);

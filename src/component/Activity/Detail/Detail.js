@@ -17,6 +17,8 @@ import axios from 'axios';
 import moment from 'moment';
 import noprofile from '../../../images/noprofile.png';
 import RenderHtml from 'react-native-render-html';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import UnOAuth from '../../../Utils/UnOAuth/UnOAuth';
 export default function Detail({route}) {
   const {Id} = route.params;
   const navigation = useNavigation();
@@ -48,14 +50,22 @@ export default function Detail({route}) {
   const [DateOrEnd, setDateOrEnd] = useState('');
   const today = new Date();
   useEffect(() => {
+    AsyncStorage.getItem('JWT').then(value => {
+      call(value);
+    });
+  }, []);
+  const call = value => {
     axios
       .get(`https://www.markin-app.site/app/activity/${Id}`, {
         headers: {
-          'x-access-token':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImluc3RhZ3JhbUlkIjoiNDIzNDQwMzAxMzMyODU5MiIsImlhdCI6MTY0MzQ4MDg1MCwiZXhwIjoxNjc1MDE2ODUwLCJzdWIiOiJ1c2VySW5mbyJ9.MlsJ3tZcye9WdqRwz-AKY5KNZf46B1gFQ8nqgrJxGMg',
+          'x-access-token': value,
         },
       })
       .then(response => {
+        if (response.data.isSucces === undefined) {
+          setreward(-1000);
+        }
+
         setcampaignName(response.data.result.campaignName);
         setthumnail(response.data.result.thumnail);
         setproductIntroduce(response.data.result.productIntroduce);
@@ -89,7 +99,7 @@ export default function Detail({route}) {
         // console.log(
       })
       .catch(err => console.log(err));
-  }, []);
+  };
   useEffect(() => {
     console.log(endDay);
     if (endDay > today) {
@@ -114,176 +124,190 @@ export default function Detail({route}) {
         </TouchableOpacity>
         <Text style={styles.TitleText}>활동 상세설명</Text>
       </View>
-      <ScrollView>
-        <View style={{marginTop: 20}}>
-          <Image
-            source={
-              thumnail === '' || thumnail === null ? noprofile : {uri: thumnail}
-            }
-            style={{width: '100%', height: 360}}
-          />
+      {reward === -1000 ? (
+        <View style={{alignItems: 'center', marginTop: 200}}>
+          <UnOAuth />
         </View>
-        <View style={{width: '100%', padding: '5%'}}>
-          <Text style={styles.subTitle}>{campaignName}</Text>
-          <Text style={styles.underText}>{productIntroduce}</Text>
-          <View style={{marginTop: 22, flexDirection: 'row'}}>
-            <View style={{width: 80}}>
-              <Text style={styles.nameText}>리워드</Text>
+      ) : (
+        <>
+          <ScrollView>
+            <View style={{marginTop: 20}}>
+              <Image
+                source={
+                  thumnail === '' || thumnail === null
+                    ? noprofile
+                    : {uri: thumnail}
+                }
+                style={{width: '100%', height: 360}}
+              />
             </View>
-            <Text style={styles.pointText}>
-              {reward.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}P
-            </Text>
-          </View>
-        </View>
-        {/* 모집인원 */}
-        <View style={styles.FirstSection}>
-          <View style={{flexDirection: 'row'}}>
-            <View style={{width: 80}}>
-              <Text style={styles.nameText}>모집인원</Text>
-            </View>
-            <Text
-              style={{
-                fontFamily: 'NotoSansKR-Bold',
-                color: '#FF5959',
-                marginTop: 1,
-              }}>
-              {ApplicantCount}명
-            </Text>
-            <Text
-              style={{
-                fontFamily: 'NotoSansKR-Regular',
-                color: '#181818',
-                marginTop: 1,
-              }}>
-              {' '}
-              / {influencerNumber}명 모집
-            </Text>
-            <View style={styles.blackBlock}>
-              <Icons.AntDesign name="clockcircleo" size={13} color="white" />
-              {DateOrEnd === 'Date' ? (
-                <Text style={styles.whiteText}>
-                  {Math.floor(leftDate).toString()}일 남음
-                </Text>
-              ) : (
-                <Text style={styles.whiteText}>모집종료</Text>
-              )}
-            </View>
-          </View>
-        </View>
-        {/* 제공내역 */}
-        <View style={styles.FirstSection}>
-          <Text style={styles.nameText}>제공내역</Text>
-          <View style={{width: '90%'}}>
-            <RenderHtml source={offerSource} width={width} />
-          </View>
-        </View>
-        {/* 모집기간 */}
-        <View style={styles.FirstSection}>
-          <View style={{flexDirection: 'row', marginBottom: 10}}>
-            <View style={{width: 150}}>
-              <Text style={styles.infText}>인플루언서 모집기간 </Text>
-            </View>
-            <Text style={styles.greyText}>
-              {campaignApplyStart} ~ {campaignApplyEnd}
-            </Text>
-          </View>
-          <View style={{flexDirection: 'row', marginBottom: 10}}>
-            <View style={{width: 150}}>
-              <Text style={styles.infText}>인플루언서 발표 </Text>
-            </View>
-            <Text style={styles.greyText}>{influencerAnnouncement} </Text>
-          </View>
-          <View style={{flexDirection: 'row', marginBottom: 10}}>
-            <View style={{width: 150}}>
-              <Text style={styles.infText}>컨텐츠 업로드기간 </Text>
-            </View>
-            <Text style={styles.greyText}>
-              {contentsEnrollmentStart} ~ {contentsEnrollmentEnd}
-            </Text>
-          </View>
-          <View style={{flexDirection: 'row', marginBottom: 10}}>
-            <View style={{width: 150}}>
-              <Text style={styles.infText}>캠페인 종료 </Text>
-            </View>
-            <Text style={styles.greyText}>{campaignResultAnnouncement} </Text>
-          </View>
-        </View>
-        {/* 상세설명 + 활동안내 */}
-        {DesAct === 'Act' ? (
-          <View style={{flexDirection: 'row', width: '100%'}}>
-            <View style={{width: '50%', height: 50}}>
-              <TouchableOpacity onPress={() => setDesAct('Des')}>
-                <View style={styles.unClickrightView}>
-                  <Text>상세설명</Text>
+            <View style={{width: '100%', padding: '5%'}}>
+              <Text style={styles.subTitle}>{campaignName}</Text>
+              <Text style={styles.underText}>{productIntroduce}</Text>
+              <View style={{marginTop: 22, flexDirection: 'row'}}>
+                <View style={{width: 80}}>
+                  <Text style={styles.nameText}>리워드</Text>
                 </View>
-              </TouchableOpacity>
+                <Text style={styles.pointText}>
+                  {reward.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}P
+                </Text>
+              </View>
             </View>
-            <View style={styles.catView}>
-              <Text>활동안내</Text>
+            {/* 모집인원 */}
+            <View style={styles.FirstSection}>
+              <View style={{flexDirection: 'row'}}>
+                <View style={{width: 80}}>
+                  <Text style={styles.nameText}>모집인원</Text>
+                </View>
+                <Text
+                  style={{
+                    fontFamily: 'NotoSansKR-Bold',
+                    color: '#FF5959',
+                    marginTop: 1,
+                  }}>
+                  {ApplicantCount}명
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: 'NotoSansKR-Regular',
+                    color: '#181818',
+                    marginTop: 1,
+                  }}>
+                  {' '}
+                  / {influencerNumber}명 모집
+                </Text>
+                <View style={styles.blackBlock}>
+                  <Icons.AntDesign
+                    name="clockcircleo"
+                    size={13}
+                    color="white"
+                  />
+                  {DateOrEnd === 'Date' ? (
+                    <Text style={styles.whiteText}>
+                      {Math.floor(leftDate).toString()}일 남음
+                    </Text>
+                  ) : (
+                    <Text style={styles.whiteText}>모집종료</Text>
+                  )}
+                </View>
+              </View>
             </View>
-          </View>
-        ) : (
-          <View style={{flexDirection: 'row', width: '100%'}}>
-            <View style={styles.catView}>
-              <Text>상세설명</Text>
+            {/* 제공내역 */}
+            <View style={styles.FirstSection}>
+              <Text style={styles.nameText}>제공내역</Text>
+              <View style={{width: '90%'}}>
+                <RenderHtml source={offerSource} width={width} />
+              </View>
             </View>
-            <View style={{width: '50%', height: 50}}>
-              <TouchableOpacity onPress={() => setDesAct('Act')}>
-                <View style={styles.unClickView}>
+            {/* 모집기간 */}
+            <View style={styles.FirstSection}>
+              <View style={{flexDirection: 'row', marginBottom: 10}}>
+                <View style={{width: 150}}>
+                  <Text style={styles.infText}>인플루언서 모집기간 </Text>
+                </View>
+                <Text style={styles.greyText}>
+                  {campaignApplyStart} ~ {campaignApplyEnd}
+                </Text>
+              </View>
+              <View style={{flexDirection: 'row', marginBottom: 10}}>
+                <View style={{width: 150}}>
+                  <Text style={styles.infText}>인플루언서 발표 </Text>
+                </View>
+                <Text style={styles.greyText}>{influencerAnnouncement} </Text>
+              </View>
+              <View style={{flexDirection: 'row', marginBottom: 10}}>
+                <View style={{width: 150}}>
+                  <Text style={styles.infText}>컨텐츠 업로드기간 </Text>
+                </View>
+                <Text style={styles.greyText}>
+                  {contentsEnrollmentStart} ~ {contentsEnrollmentEnd}
+                </Text>
+              </View>
+              <View style={{flexDirection: 'row', marginBottom: 10}}>
+                <View style={{width: 150}}>
+                  <Text style={styles.infText}>캠페인 종료 </Text>
+                </View>
+                <Text style={styles.greyText}>
+                  {campaignResultAnnouncement}{' '}
+                </Text>
+              </View>
+            </View>
+            {/* 상세설명 + 활동안내 */}
+            {DesAct === 'Act' ? (
+              <View style={{flexDirection: 'row', width: '100%'}}>
+                <View style={{width: '50%', height: 50}}>
+                  <TouchableOpacity onPress={() => setDesAct('Des')}>
+                    <View style={styles.unClickrightView}>
+                      <Text>상세설명</Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.catView}>
                   <Text>활동안내</Text>
                 </View>
+              </View>
+            ) : (
+              <View style={{flexDirection: 'row', width: '100%'}}>
+                <View style={styles.catView}>
+                  <Text>상세설명</Text>
+                </View>
+                <View style={{width: '50%', height: 50}}>
+                  <TouchableOpacity onPress={() => setDesAct('Act')}>
+                    <View style={styles.unClickView}>
+                      <Text>활동안내</Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
+            {DesAct === 'Act' ? (
+              <View>
+                <ActInfo
+                  offer={offer}
+                  campaignMission={campaignMission}
+                  instruction={instruction}
+                />
+              </View>
+            ) : (
+              <View>
+                <Description campaignImage={campaignImage} />
+              </View>
+            )}
+          </ScrollView>
+          {/* 신청하기 버튼 */}
+          <View
+            style={{
+              alignItems: 'center',
+              height: 100,
+              width: '100%',
+            }}>
+            {DateOrEnd === 'Date' ? (
+              <TouchableOpacity
+                onPress={() => navigation.navigate('Apply', {Id: Id})}>
+                <View style={styles.footerView}>
+                  <Text
+                    style={{
+                      fontFamily: 'NotoSansKR-Bold',
+                      color: 'white',
+                      fontSize: 18,
+                    }}>
+                    신청하기
+                  </Text>
+                </View>
               </TouchableOpacity>
-            </View>
-          </View>
-        )}
-        {DesAct === 'Act' ? (
-          <View>
-            <ActInfo
-              offer={offer}
-              campaignMission={campaignMission}
-              instruction={instruction}
-            />
-          </View>
-        ) : (
-          <View>
-            <Description campaignImage={campaignImage} />
-          </View>
-        )}
-      </ScrollView>
-      {/* 신청하기 버튼 */}
-      <View
-        style={{
-          alignItems: 'center',
-          height: 100,
-          width: '100%',
-        }}>
-        {DateOrEnd === 'Date' ? (
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Apply', {Id: Id})}>
-            <View style={styles.footerView}>
-              <Text
-                style={{
-                  fontFamily: 'NotoSansKR-Bold',
-                  color: 'white',
-                  fontSize: 18,
-                }}>
-                신청하기
-              </Text>
-            </View>
-          </TouchableOpacity>
-        ) : (
-          <View style={styles.footerView2}>
-            <Text
-              style={{
-                fontFamily: 'NotoSansKR-Bold',
-                color: 'white',
-                fontSize: 18,
-              }}>
-              모집종료
-            </Text>
-          </View>
-        )}
-        {/* <TouchableOpacity
+            ) : (
+              <View style={styles.footerView2}>
+                <Text
+                  style={{
+                    fontFamily: 'NotoSansKR-Bold',
+                    color: 'white',
+                    fontSize: 18,
+                  }}>
+                  모집종료
+                </Text>
+              </View>
+            )}
+            {/* <TouchableOpacity
           onPress={() => navigation.navigate('Apply', {Id: Id})}>
           <View style={styles.footerView}>
             <Text
@@ -296,7 +320,9 @@ export default function Detail({route}) {
             </Text>
           </View>
         </TouchableOpacity> */}
-      </View>
+          </View>
+        </>
+      )}
     </View>
   );
 }

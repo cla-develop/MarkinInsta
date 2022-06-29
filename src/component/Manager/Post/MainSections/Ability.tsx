@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
+import UnOAuth from '../../../../Utils/UnOAuth/UnOAuth';
 import Icons from '../../../Icons/Icons';
 import saveMoney from '../../../../images/saveMoney.png';
 import axios from 'axios';
@@ -7,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Ability(props: any) {
   const [LowerCost, setLowerCost] = useState(10);
   const [upperCost, setupperCost] = useState(10);
+  const [isFb, setisFb] = useState(0);
   useEffect(() => {
     AsyncStorage.getItem('JWT').then(value => {
       call(value);
@@ -21,6 +23,9 @@ export default function Ability(props: any) {
         },
       })
       .then(response => {
+        if (response.data.isSuccess === false) {
+          setisFb(1);
+        }
         setLowerCost(response.data.result.lower_cost);
         setupperCost(response.data.result.upper_cost);
       })
@@ -32,20 +37,27 @@ export default function Ability(props: any) {
         <View style={{flexDirection: 'row', marginTop: 15, marginLeft: 15}}>
           <Text style={styles.TopText}>계정 광고 역량</Text>
         </View>
-        <View style={{flexDirection: 'row', width: '100%', padding: '5%'}}>
-          <View style={styles.ImageView}>
-            <Image source={saveMoney} style={{width: 66, height: 66}} />
+        {isFb === 1 ? (
+          <View>
+            <UnOAuth />
           </View>
-          <View style={{justifyContent: 'center', paddingTop: 5}}>
-            <Text style={{fontFamily: 'NotoSansKR-Medium', fontSize: 16}}>
-              나의 적정 협찬 비용은
-            </Text>
-            <Text style={styles.purpleText}>
-              {LowerCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 원 ~{' '}
-              {upperCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 원
-            </Text>
+        ) : (
+          <View style={{flexDirection: 'row', width: '100%', padding: '5%'}}>
+            <View style={styles.ImageView}>
+              <Image source={saveMoney} style={{width: 66, height: 66}} />
+            </View>
+            <View style={{justifyContent: 'center', paddingTop: 5}}>
+              <Text style={{fontFamily: 'NotoSansKR-Medium', fontSize: 16}}>
+                나의 적정 협찬 비용은
+              </Text>
+              <Text style={styles.purpleText}>
+                {LowerCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 원
+                ~ {upperCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
+                원
+              </Text>
+            </View>
           </View>
-        </View>
+        )}
       </View>
     </View>
   );
@@ -53,9 +65,10 @@ export default function Ability(props: any) {
 const styles = StyleSheet.create({
   mainView: {
     width: '95%',
-    height: 162,
+
     borderRadius: 18,
     backgroundColor: 'white',
+    paddingBottom: 30,
   },
   TopText: {
     fontSize: 20,

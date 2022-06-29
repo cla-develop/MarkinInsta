@@ -28,9 +28,11 @@ export default function MyFeedHeader(props) {
         },
       })
       .then(response => {
-        setData(response.data.result);
-        console.log(response.data.result);
-        setfirst(response.data.result[0].username);
+        if (response.data.isSuccess === true) {
+          setData(response.data.result);
+          console.log(response.data.result);
+          setfirst(response.data.result[0].username);
+        }
       })
       .catch(err => console.log(err));
   };
@@ -50,11 +52,14 @@ export default function MyFeedHeader(props) {
       /> */}
       {/* </TouchableOpacity> */}
       <View style={{width: 220}}></View>
-      <TouchableOpacity onPress={() => navigation.navigate('SetUp')}>
-        <View style={{marginTop: 36}}>
-          <Image source={setting} style={styles.setting} />
-        </View>
-      </TouchableOpacity>
+      {props.asd !== 3 && (
+        <TouchableOpacity onPress={() => navigation.navigate('SetUp')}>
+          <View style={{marginTop: 36}}>
+            <Image source={setting} style={styles.setting} />
+          </View>
+        </TouchableOpacity>
+      )}
+
       <IdModal
         isModal={isModal}
         setisModal={setisModal}
