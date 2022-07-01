@@ -43,7 +43,7 @@ export default function FollowAgeGender(props: any) {
             },
           })
           .then(response => {
-            console.log(response.data.followerGenderAge + 'gender');
+            console.log(response.data);
             if (
               response.data.followerGenderAge == null ||
               response.data.followerGenderAge === undefined
