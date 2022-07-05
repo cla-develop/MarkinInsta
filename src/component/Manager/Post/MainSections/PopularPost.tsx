@@ -9,133 +9,152 @@ import {
 } from 'react-native';
 import No from '../../../../images/noprofile.png';
 import Icons from '../../../Icons/Icons';
-
+import UnOAuth from '../../../../Utils/UnOAuth/UnOAuth';
 export default function PopularPost(props: any) {
   return (
     <View>
       <View style={{marginTop: 20, flexDirection: 'row'}}>
         <Text style={styles.TopText}>인기게시물</Text>
-        <TouchableOpacity onPress={() => props.setIsModalVisible(true)}>
-          <View style={styles.greyBtn}>
-            <Text style={styles.modalText}>{props.Stand}</Text>
-            <Icons.AntDesign
-              name="down"
-              size={15}
-              color="#9C9C9C"
-              style={{marginLeft: 3}}
-            />
-          </View>
-        </TouchableOpacity>
+        {props.isFb === 1 ? (
+          <View></View>
+        ) : (
+          <TouchableOpacity onPress={() => props.setIsModalVisible(true)}>
+            <View style={styles.greyBtn}>
+              <Text style={styles.modalText}>{props.Stand}</Text>
+              <Icons.AntDesign
+                name="down"
+                size={15}
+                color="#9C9C9C"
+                style={{marginLeft: 3}}
+              />
+            </View>
+          </TouchableOpacity>
+        )}
       </View>
-      {props.Stand === '좋아요순' && (
-        <ScrollView
-          style={{marginTop: 20}}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}>
-          <View style={{flexDirection: 'row'}}>
-            {props.topMediaByComments.map((item: any) => (
-              <View style={{width: 310}} key={item.id}>
-                <TouchableOpacity>
-                  <View style={styles.cardView}>
-                    <Image
-                      source={
-                        item.media_url === '' || item.media_url === null
-                          ? No
-                          : {uri: item.media_url}
-                      }
-                      style={styles.ImgStyle}
-                    />
-                    <View style={{flexDirection: 'row'}}>
-                      <View style={{flexDirection: 'row', margin: 10}}>
-                        <Icons.AntDesign
-                          name="hearto"
-                          color="black"
-                          size={20}
+      {props.isFb === 1 ? (
+        <View
+          style={{
+            width: '95%',
+            borderRadius: 18,
+            backgroundColor: 'white',
+            paddingBottom: 50,
+            marginTop: 20,
+          }}>
+          <UnOAuth />
+        </View>
+      ) : (
+        <>
+          {props.Stand === '좋아요순' && (
+            <ScrollView
+              style={{marginTop: 20}}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}>
+              <View style={{flexDirection: 'row'}}>
+                {props.topMediaByComments.map((item: any) => (
+                  <View style={{width: 310}} key={item.id}>
+                    <TouchableOpacity>
+                      <View style={styles.cardView}>
+                        <Image
+                          source={
+                            item.media_url === '' || item.media_url === null
+                              ? No
+                              : {uri: item.media_url}
+                          }
+                          style={styles.ImgStyle}
                         />
-                        <Text style={styles.numText}>
-                          {item.like_count.toString()}
-                        </Text>
+                        <View style={{flexDirection: 'row'}}>
+                          <View style={{flexDirection: 'row', margin: 10}}>
+                            <Icons.AntDesign
+                              name="hearto"
+                              color="black"
+                              size={20}
+                            />
+                            <Text style={styles.numText}>
+                              {item.like_count.toString()}
+                            </Text>
+                          </View>
+                          <View style={{flexDirection: 'row', margin: 10}}>
+                            <Icons.FontAwesome
+                              name="comment-o"
+                              color="black"
+                              size={20}
+                            />
+                            <Text style={styles.numText}>
+                              {item.comments_count.toString()}
+                            </Text>
+                          </View>
+                        </View>
+                        <View style={{height: 30, marginLeft: 20}}>
+                          <Text style={styles.subText}>{item.caption}</Text>
+                          {/* <Text style={styles.hashText}>
+                          #나리 #비숑 #댕댕이 #멍멍이
+                        </Text> */}
+                        </View>
                       </View>
-                      <View style={{flexDirection: 'row', margin: 10}}>
-                        <Icons.FontAwesome
-                          name="comment-o"
-                          color="black"
-                          size={20}
-                        />
-                        <Text style={styles.numText}>
-                          {item.comments_count.toString()}
-                        </Text>
-                      </View>
-                    </View>
-                    <View style={{height: 30, marginLeft: 20}}>
-                      <Text style={styles.subText}>{item.caption}</Text>
-                      {/* <Text style={styles.hashText}>
-                        #나리 #비숑 #댕댕이 #멍멍이
-                      </Text> */}
-                    </View>
+                    </TouchableOpacity>
                   </View>
-                </TouchableOpacity>
+                ))}
               </View>
-            ))}
-          </View>
-        </ScrollView>
-      )}
-      {props.Stand === '댓글순' && (
-        <ScrollView
-          style={{marginTop: 20}}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}>
-          <View style={{flexDirection: 'row'}}>
-            {props.topMediaByComments.map((item: any) => (
-              <View style={{width: 310}} key={item.id}>
-                <TouchableOpacity>
-                  <View style={styles.cardView}>
-                    <Image
-                      source={{uri: item.media_url}}
-                      style={styles.ImgStyle}
-                    />
-                    <View style={{flexDirection: 'row'}}>
-                      <View style={{flexDirection: 'row', margin: 10}}>
-                        <Icons.AntDesign
-                          name="hearto"
-                          color="black"
-                          size={20}
+            </ScrollView>
+          )}
+          {props.Stand === '댓글순' && (
+            <ScrollView
+              style={{marginTop: 20}}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}>
+              <View style={{flexDirection: 'row'}}>
+                {props.topMediaByComments.map((item: any) => (
+                  <View style={{width: 310}} key={item.id}>
+                    <TouchableOpacity>
+                      <View style={styles.cardView}>
+                        <Image
+                          source={{uri: item.media_url}}
+                          style={styles.ImgStyle}
                         />
-                        <Text style={styles.numText}>
-                          {item.like_count.toString()}
+                        <View style={{flexDirection: 'row'}}>
+                          <View style={{flexDirection: 'row', margin: 10}}>
+                            <Icons.AntDesign
+                              name="hearto"
+                              color="black"
+                              size={20}
+                            />
+                            <Text style={styles.numText}>
+                              {item.like_count.toString()}
+                            </Text>
+                          </View>
+                          <View style={{flexDirection: 'row', margin: 10}}>
+                            <Icons.FontAwesome
+                              name="comment-o"
+                              color="black"
+                              size={20}
+                            />
+                            <Text style={styles.numText}>
+                              {item.comments_count.toString()}
+                            </Text>
+                          </View>
+                        </View>
+                        {/* <View style={{height: 30, marginLeft: 20}}>
+                        <Text style={styles.subText}>
+                          자기가 사람인 줄 아는 댕댕이{' '}
                         </Text>
-                      </View>
-                      <View style={{flexDirection: 'row', margin: 10}}>
-                        <Icons.FontAwesome
-                          name="comment-o"
-                          color="black"
-                          size={20}
-                        />
-                        <Text style={styles.numText}>
-                          {item.comments_count.toString()}
+                        <Text style={styles.hashText}>
+                          #나리 #비숑 #댕댕이 #멍멍이
                         </Text>
+                      </View> */}
+                        <View style={{height: 30, marginLeft: 20}}>
+                          <Text style={styles.subText}>{item.caption}</Text>
+                          {/* <Text style={styles.hashText}>
+                          #나리 #비숑 #댕댕이 #멍멍이
+                        </Text> */}
+                        </View>
                       </View>
-                    </View>
-                    {/* <View style={{height: 30, marginLeft: 20}}>
-                      <Text style={styles.subText}>
-                        자기가 사람인 줄 아는 댕댕이{' '}
-                      </Text>
-                      <Text style={styles.hashText}>
-                        #나리 #비숑 #댕댕이 #멍멍이
-                      </Text>
-                    </View> */}
-                    <View style={{height: 30, marginLeft: 20}}>
-                      <Text style={styles.subText}>{item.caption}</Text>
-                      {/* <Text style={styles.hashText}>
-                        #나리 #비숑 #댕댕이 #멍멍이
-                      </Text> */}
-                    </View>
+                    </TouchableOpacity>
                   </View>
-                </TouchableOpacity>
+                ))}
               </View>
-            ))}
-          </View>
-        </ScrollView>
+            </ScrollView>
+          )}
+        </>
       )}
     </View>
   );

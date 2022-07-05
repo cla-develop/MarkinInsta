@@ -28,7 +28,7 @@ export default function MyRank(props: any) {
       )
       .then(response => {
         console.log(response.data.code);
-        if (response.data.code === 3008) {
+        if (response.data.isSuccess === false) {
           setisFb(1);
         } else {
           setisFb(2);

@@ -93,7 +93,7 @@ export default function Main(props) {
 
           {asd === 1 && (
             <View style={{marginTop: 10, marginBottom: 150, width: '100%'}}>
-              <DoingActivity JWT={JWT} />
+              {/* <DoingActivity JWT={JWT} /> */}
             </View>
           )}
         </ScrollView>

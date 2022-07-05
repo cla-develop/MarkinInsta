@@ -13,6 +13,7 @@ import styles from '../../Styles';
 import Icons from '../../Icons/Icons';
 import UnOAuth from '../../../Utils/UnOAuth/UnOAuth';
 import PostReaction from './PostReaction/PostReaction';
+
 import axios from 'axios';
 export default function MyPic({route}) {
   const navigation = useNavigation();
@@ -22,21 +23,16 @@ export default function MyPic({route}) {
   const [JWT, setJWT] = useState('');
   useEffect(() => {
     AsyncStorage.getItem('JWT').then(value => {
-      setJWT(value);
+      call(value);
     });
   }, []);
   const [asd, setasd] = useState(0);
-  useEffect(() => {
-    setTimeout(() => {
-      setasd(1);
-    }, 1000);
-  }, []);
 
-  useEffect(() => {
+  const call = value => {
     axios
       .get(`https://www.markin-app.site/app/users/feed/${id}`, {
         headers: {
-          'x-access-token': JWT,
+          'x-access-token': value,
         },
       })
       .then(response => {
@@ -46,7 +42,7 @@ export default function MyPic({route}) {
         }
       })
       .catch(err => console.log(err));
-  }, [JWT]);
+  };
   console.log(mediaInsight);
   console.log(id);
   return (

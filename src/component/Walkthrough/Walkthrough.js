@@ -132,7 +132,7 @@ export default function Walkthrough() {
       ) : (
         <View
           style={{position: 'absolute', top: 730, left: '5%', width: '100%'}}>
-          <TouchableOpacity onPress={() => navigation.navigate('ChooseWay')}>
+          <TouchableOpacity onPress={() => navigation.navigate('Body')}>
             <View style={styles.purpleBtn}>
               <Text style={styles.instaText}>마킨 시작하기</Text>
             </View>

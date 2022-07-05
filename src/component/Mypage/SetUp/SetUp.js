@@ -19,7 +19,7 @@ export default function SetUp() {
       await AsyncStorage.removeItem('JWT').then(
         navigation.reset({
           index: 0,
-          routes: [{name: 'ChooseWay'}],
+          routes: [{name: 'Walkthrough'}],
         }),
       );
     } catch (e) {

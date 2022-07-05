@@ -24,8 +24,8 @@ export default function DayChange(props) {
         },
       })
       .then(response => {
-        console.log(response.data.code);
-        if (response.data.code === 3008) {
+        console.log(response.data);
+        if (response.data.isSuccess === false) {
           setisFb(1);
         } else {
           setisFb(2);
