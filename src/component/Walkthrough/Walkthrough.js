@@ -9,118 +9,120 @@ export default function Walkthrough() {
   const [Page, setPage] = useState(0);
   return (
     <View style={styles.allView}>
-      <View style={{alignItems: 'center'}}>
-        {/* 페이지 도트 */}
-        {Page !== 4 && (
-          <View
-            style={{
-              marginTop: 33,
-              flexDirection: 'row',
-              width: '100%',
-              justifyContent: 'center',
-            }}>
-            <TouchableOpacity style={{marginRight: 20, marginLeft: 20}}>
-              {Page === 0 ? (
-                <Icons.FontAwesome name="circle" size={10} color="#7553FF" />
-              ) : (
-                <Icons.FontAwesome name="circle" size={10} color="#DEDEDE" />
-              )}
-            </TouchableOpacity>
-            <TouchableOpacity style={{marginRight: 20}}>
-              {Page === 1 ? (
-                <Icons.FontAwesome name="circle" size={10} color="#7553FF" />
-              ) : (
-                <Icons.FontAwesome name="circle" size={10} color="#DEDEDE" />
-              )}
-            </TouchableOpacity>
-            <TouchableOpacity style={{marginRight: 20}}>
-              {Page === 2 ? (
-                <Icons.FontAwesome name="circle" size={10} color="#7553FF" />
-              ) : (
-                <Icons.FontAwesome name="circle" size={10} color="#DEDEDE" />
-              )}
-            </TouchableOpacity>
-            <TouchableOpacity style={{marginRight: 20}}>
-              {Page === 3 ? (
-                <Icons.FontAwesome name="circle" size={10} color="#7553FF" />
-              ) : (
-                <Icons.FontAwesome name="circle" size={10} color="#DEDEDE" />
-              )}
-            </TouchableOpacity>
-          </View>
-        )}
-        {/* <TouchableOpacity
+      <View style={{flex: 0.9}}>
+        <View style={{alignItems: 'center'}}>
+          {/* 페이지 도트 */}
+          {Page !== 4 && (
+            <View
+              style={{
+                marginTop: 80,
+                flexDirection: 'row',
+                width: '100%',
+                justifyContent: 'center',
+              }}>
+              <TouchableOpacity style={{marginRight: 20, marginLeft: 20}}>
+                {Page === 0 ? (
+                  <Icons.FontAwesome name="circle" size={10} color="#7553FF" />
+                ) : (
+                  <Icons.FontAwesome name="circle" size={10} color="#DEDEDE" />
+                )}
+              </TouchableOpacity>
+              <TouchableOpacity style={{marginRight: 20}}>
+                {Page === 1 ? (
+                  <Icons.FontAwesome name="circle" size={10} color="#7553FF" />
+                ) : (
+                  <Icons.FontAwesome name="circle" size={10} color="#DEDEDE" />
+                )}
+              </TouchableOpacity>
+              <TouchableOpacity style={{marginRight: 20}}>
+                {Page === 2 ? (
+                  <Icons.FontAwesome name="circle" size={10} color="#7553FF" />
+                ) : (
+                  <Icons.FontAwesome name="circle" size={10} color="#DEDEDE" />
+                )}
+              </TouchableOpacity>
+              <TouchableOpacity style={{marginRight: 20}}>
+                {Page === 3 ? (
+                  <Icons.FontAwesome name="circle" size={10} color="#7553FF" />
+                ) : (
+                  <Icons.FontAwesome name="circle" size={10} color="#DEDEDE" />
+                )}
+              </TouchableOpacity>
+            </View>
+          )}
+          {/* <TouchableOpacity
           onPress={() => navigation.goBack()}
           style={{position: 'absolute', left: '5%'}}>
           <Icons.Entypo name="chevron-thin-left" size={20} color="black" />
         </TouchableOpacity>
         <Text style={styles.TitleText}>MARKIN과 연결하기</Text> */}
+        </View>
+        {Page === 0 && (
+          <View style={styles.GreyView}>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={styles.BoldText}>나만을 위한 계정 매니징 📊</Text>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={styles.MediumText}>
+                직관적인 분석 리포트로{'\n'}
+                나의 계정을 분석하고 성장시켜 보세요!
+              </Text>
+            </View>
+          </View>
+        )}
+        {Page === 1 && (
+          <View style={styles.GreyView}>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={styles.BoldText}>진짜 영향력 순위🎖</Text>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={styles.MediumText}>
+                SNS 계정 분석을 통해 진짜 영향력을 분석했어요.{'\n'} 계정
+                카테고리별 순위도 알아보세요!
+              </Text>
+            </View>
+          </View>
+        )}
+        {Page === 2 && (
+          <View style={styles.GreyView}>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={styles.BoldText}>한눈에 관리하는 나의 활동 👀</Text>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={styles.MediumText}>
+                계정 변화, 나의 일정, 진행중인 광고 활동까지{'\n'}한 번에
+                확인하고 관리하세요. 계정
+              </Text>
+            </View>
+          </View>
+        )}
+        {Page === 3 && (
+          <View style={styles.GreyView}>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={styles.BoldText}>다양한 광고 활동 📣</Text>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={styles.MediumText}>
+                광고 활동을 진행하며 돈을 쌓아보세요{'\n'}
+                쌓인 돈은 100% 환급할 수 있어요
+              </Text>
+            </View>
+          </View>
+        )}
+        {Page !== 4 ? (
+          <View style={{marginTop: 33}}>
+            <MyCarousel Page={Page} setPage={setPage} />
+          </View>
+        ) : (
+          <View style={{marginTop: 210, alignItems: 'center'}}>
+            <MyCarousel Page={Page} setPage={setPage} />
+          </View>
+        )}
       </View>
-      {Page === 0 && (
-        <View style={styles.GreyView}>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={styles.BoldText}>나만을 위한 계정 매니징 📊</Text>
-          </View>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={styles.MediumText}>
-              직관적인 분석 리포트로{'\n'}
-              나의 계정을 분석하고 성장시켜 보세요!
-            </Text>
-          </View>
-        </View>
-      )}
-      {Page === 1 && (
-        <View style={styles.GreyView}>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={styles.BoldText}>진짜 영향력 순위🎖</Text>
-          </View>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={styles.MediumText}>
-              SNS 계정 분석을 통해 진짜 영향력을 분석했어요.{'\n'} 계정
-              카테고리별 순위도 알아보세요!
-            </Text>
-          </View>
-        </View>
-      )}
-      {Page === 2 && (
-        <View style={styles.GreyView}>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={styles.BoldText}>한눈에 관리하는 나의 활동 👀</Text>
-          </View>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={styles.MediumText}>
-              계정 변화, 나의 일정, 진행중인 광고 활동까지{'\n'}한 번에 확인하고
-              관리하세요. 계정
-            </Text>
-          </View>
-        </View>
-      )}
-      {Page === 3 && (
-        <View style={styles.GreyView}>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={styles.BoldText}>다양한 광고 활동 📣</Text>
-          </View>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={styles.MediumText}>
-              광고 활동을 진행하며 돈을 쌓아보세요{'\n'}
-              쌓인 돈은 100% 환급할 수 있어요
-            </Text>
-          </View>
-        </View>
-      )}
-      {Page !== 4 ? (
-        <View style={{marginTop: 33}}>
-          <MyCarousel Page={Page} setPage={setPage} />
-        </View>
-      ) : (
-        <View style={{marginTop: 210, alignItems: 'center'}}>
-          <MyCarousel Page={Page} setPage={setPage} />
-        </View>
-      )}
-
-      {Page !== 3 ? (
-        <View style={{top: 120, left: '5%'}}>
-          {/* <TouchableOpacity
+      <View style={{flex: 0.1}}>
+        {Page !== 3 ? (
+          <View style={{top: 120, left: '5%'}}>
+            {/* <TouchableOpacity
             onPress={() => {
               Linking.openURL('https://www.facebook.com/');
             }}>
@@ -128,17 +130,17 @@ export default function Walkthrough() {
               <Text style={styles.instaText}>Facebook으로 로그인 하기</Text>
             </View>
           </TouchableOpacity> */}
-        </View>
-      ) : (
-        <View
-          style={{position: 'absolute', top: 730, left: '5%', width: '100%'}}>
-          <TouchableOpacity onPress={() => navigation.navigate('ChooseWay')}>
-            <View style={styles.purpleBtn}>
-              <Text style={styles.instaText}>마킨 시작하기</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-      )}
+          </View>
+        ) : (
+          <View style={{width: '100%'}}>
+            <TouchableOpacity onPress={() => navigation.navigate('ChooseWay')}>
+              <View style={styles.purpleBtn}>
+                <Text style={styles.instaText}>마킨 시작하기</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
     </View>
   );
 }
@@ -146,7 +148,6 @@ const styles = StyleSheet.create({
   allView: {
     flex: 1,
     backgroundColor: '#FEFEFE',
-    paddingTop: 60,
   },
   TitleText: {
     fontFamily: 'Quantico-Bold',
@@ -179,6 +180,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'absolute',
+    left: '5%',
+    right: 0,
+    bottom: 0,
   },
   instaText: {
     fontFamily: 'NotoSansKR-Medium',
