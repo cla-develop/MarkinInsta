@@ -47,6 +47,7 @@ import EmailSignup from './src/component/SignIn/Email/EmailSignup';
 import SplashPage from './src/component/SplashPage';
 import Loading from './src/component/SignIn/Loading';
 import LinkChanel from './src/component/SignIn/LinkChannel/LinkChanel';
+
 import {Settings} from 'react-native-fbsdk-next';
 
 import SplashScreen from 'react-native-splash-screen';

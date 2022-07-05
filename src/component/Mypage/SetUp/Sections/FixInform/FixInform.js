@@ -251,8 +251,8 @@ export default function FixInform() {
               {showB === true && (
                 <Icons.AntDesign
                   name="check"
-                  color="#57C971"
-                  size={15}
+                  color="#FB7979"
+                  size={30}
                   style={{position: 'absolute', left: 195, top: 15}}
                 />
               )}

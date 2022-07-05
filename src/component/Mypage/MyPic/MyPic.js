@@ -50,34 +50,35 @@ export default function MyPic({route}) {
   console.log(mediaInsight);
   console.log(id);
   return (
-    <View style={styles.allView}>
-      <View style={{height: 35}}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={{position: 'absolute', left: '5%'}}>
-          <Icons.Entypo name="chevron-thin-left" size={20} color="black" />
-        </TouchableOpacity>
-      </View>
-      {asd === 1 && (
-        <>
-          <View style={{height: 35, flexDirection: 'row', marginBottom: 5}}>
-            <View style={inStyle.profileImgV}>
-              <Image source={{uri: profileImg}} />
+    <ScrollView>
+      <View style={styles.allView}>
+        <View style={{height: 35}}>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={{position: 'absolute', left: '5%'}}>
+            <Icons.Entypo name="chevron-thin-left" size={20} color="black" />
+          </TouchableOpacity>
+        </View>
+        {asd === 1 && (
+          <>
+            <View style={{height: 35, flexDirection: 'row', marginBottom: 5}}>
+              <View style={inStyle.profileImgV}>
+                <Image source={{uri: profileImg}} />
+              </View>
+              <View
+                style={{justifyContent: 'center', height: 25, marginLeft: 10}}>
+                <Text style={styles.RoboMe18}>{Data.username}</Text>
+              </View>
             </View>
             <View
-              style={{justifyContent: 'center', height: 25, marginLeft: 10}}>
-              <Text style={styles.RoboMe18}>{Data.username}</Text>
+              style={{backgroundColor: 'black', width: '100%', aspectRatio: 1}}>
+              <Image
+                source={{uri: Data.media_url}}
+                style={{width: '100%', aspectRatio: 1}}
+              />
             </View>
-          </View>
-          <View
-            style={{backgroundColor: 'black', width: '100%', aspectRatio: 1}}>
-            <Image
-              source={{uri: Data.media_url}}
-              style={{width: '100%', aspectRatio: 1}}
-            />
-          </View>
 
-          {/* <View style={{flexDirection: 'row', marginTop: 15, marginLeft: '5%'}}>
+            {/* <View style={{flexDirection: 'row', marginTop: 15, marginLeft: '5%'}}>
           <Icons.AntDesign name="hearto" size={20} />
           <View style={{justifyContent: 'center', marginLeft: 8}}>
             <Text style={styles.SpoqaMe14}>{like_count}</Text>
@@ -92,31 +93,32 @@ export default function MyPic({route}) {
           </View>
         </View> */}
 
-          <PostReaction mediaInsight={mediaInsight} JWT={JWT} />
-          {mediaInsight.length === 0 && (
-            <View
-              style={{
-                position: 'absolute',
-                bottom: 0,
-                backgroundColor: '#FFFFFFEE',
-                width: '100%',
-                height: 260,
-              }}>
-              <UnOAuth />
-            </View>
-          )}
-        </>
-      )}
-      {/* un oAuth */}
+            <PostReaction mediaInsight={mediaInsight} JWT={JWT} />
+            {mediaInsight.length === 0 && (
+              <View
+                style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  backgroundColor: '#FFFFFFEE',
+                  width: '100%',
+                  height: 260,
+                }}>
+                <UnOAuth />
+              </View>
+            )}
+          </>
+        )}
+        {/* un oAuth */}
 
-      {/* <View style={{width: '100%', padding: '5%'}}>
+        {/* <View style={{width: '100%', padding: '5%'}}>
         <TouchableOpacity onPress={() => navigation.navigate('PostReaction')}>
           <View style={inStyle.btn}>
             <Text style={styles.NotoMe16g42}>게시글 리포트 확인하기</Text>
           </View>
         </TouchableOpacity>
       </View> */}
-    </View>
+      </View>
+    </ScrollView>
   );
 }
 const inStyle = StyleSheet.create({
