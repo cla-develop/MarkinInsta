@@ -24,8 +24,8 @@ export default function ChooseWay({navigation}: any) {
         'grant_type=authorization_code' +
         '&code=' +
         asd +
-        '&client_id=3166995646907322' +
-        '&client_secret=27c9680ceb08c5af42f442b5089d6c42' +
+        '&client_id=3188330554823906' +
+        '&client_secret=fe0f7645170c74c34dde0fab7ff5cb86' +
         '&redirect_uri=https://www.markin-app.site/app/auth';
 
       await axios({

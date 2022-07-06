@@ -33,7 +33,7 @@ export default function WebViewModal(props: any) {
         <WebView
           // ref={webviewRef}
           source={{
-            uri: 'https://api.instagram.com/oauth/authorize?client_id=3166995646907322&redirect_uri=https://www.markin-app.site/app/auth&scope=user_profile,user_media,instagram_graph_user_media&response_type=code',
+            uri: 'https://api.instagram.com/oauth/authorize?client_id=3188330554823906&redirect_uri=https://www.markin-app.site/app/auth&scope=user_profile,user_media,instagram_graph_user_media&response_type=code',
           }}
           onNavigationStateChange={e => _onNavigationStateChange(e)}
           style={{marginTop: 40, borderRadius: 20}}
