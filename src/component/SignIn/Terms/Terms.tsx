@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     position: 'absolute',
     left: '5%',
-    top: 750,
+    bottom: 50,
     justifyContent: 'center',
   },
   xbtnDesign: {
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     position: 'absolute',
     left: '5%',
-    top: 750,
+    bottom: 50,
     justifyContent: 'center',
   },
   btnText: {

@@ -131,7 +131,7 @@ export default function ChooseWay({navigation}: any) {
 const styles = StyleSheet.create({
   btnView: {
     position: 'absolute',
-    top: 700,
+    bottom: 50,
     marginLeft: '5%',
     width: '90%',
   },
