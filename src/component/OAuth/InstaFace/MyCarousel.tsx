@@ -52,5 +52,5 @@ const ENTRIES1Page = ({
     illust: string;
   };
 }) => {
-  return <Image style={{width: 320, height: 320}} source={item.illust} />;
+  return <Image style={{width: 320, height: 270}} source={item.illust} />;
 };

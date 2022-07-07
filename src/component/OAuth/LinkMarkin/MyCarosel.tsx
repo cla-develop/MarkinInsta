@@ -62,7 +62,7 @@ const ENTRIES1Page = ({
   //     </View>
   //   );
   // } else {
-  return <Image style={{width: 320, height: 360}} source={item.illust} />;
+  return <Image style={{width: 320, height: 270}} source={item.illust} />;
 };
 
 const styles = StyleSheet.create({

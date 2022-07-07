@@ -6,11 +6,13 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
+  ScrollView,
 } from 'react-native';
 import Icons from '../../Icons/Icons';
 import Sms from '../../../API/LogInSignin/SMS/Sms';
 import OverLapModal from '../Modal/OverLapModal';
 import axios from 'axios';
+
 export default function PhonNum({navigation, route}: any) {
   const {AccessToken, Agreesns, AgreeEmail, Id} = route.params;
   const [isPhNum, setisPhNum] = useState<string>('');
@@ -105,105 +107,108 @@ export default function PhonNum({navigation, route}: any) {
 
   return (
     <View style={styles.allView}>
-      <TouchableOpacity
-        style={{zIndex: 10}}
-        onPress={() => navigation.goBack()}>
-        <Icons.Entypo
-          name="chevron-thin-left"
-          size={20}
-          color="black"
-          style={{left: -5, top: 10}}
-        />
-      </TouchableOpacity>
-      <View style={{marginTop: 40}}>
-        <Text style={{fontFamily: 'Roboto-Bold', fontSize: 28}}>
-          휴대폰 번호 인증이 {'\n'}필요합니다.
-        </Text>
-        <Text style={styles.sebText}>개인정보는 절대 공개되지 않습니다.</Text>
-      </View>
+      <ScrollView>
+        <TouchableOpacity
+          style={{zIndex: 10}}
+          onPress={() => navigation.goBack()}>
+          <Icons.Entypo
+            name="chevron-thin-left"
+            size={20}
+            color="black"
+            style={{left: -5, top: 10}}
+          />
+        </TouchableOpacity>
+        <View style={{marginTop: 40}}>
+          <Text style={{fontFamily: 'Roboto-Bold', fontSize: 28}}>
+            휴대폰 번호 인증이 {'\n'}필요합니다.
+          </Text>
+          <Text style={styles.sebText}>개인정보는 절대 공개되지 않습니다.</Text>
+        </View>
 
-      <View style={{flexDirection: 'row', marginTop: 80}}>
-        <TextInput
-          placeholder="휴대폰 번호를 입력하세요."
-          autoCapitalize={'none'}
-          autoCorrect={false}
-          clearTextOnFocus={true}
-          value={isPhNum}
-          onChangeText={onChangeInput}
-          style={[
-            {width: '65%', borderColor: isPhNum === '' ? '#DEDEDE' : 'black'},
-            styles.input,
-          ]}
-        />
-        {PNVali === true ? (
+        <View style={{flexDirection: 'row', marginTop: 80}}>
+          <TextInput
+            placeholder="휴대폰 번호를 입력하세요."
+            autoCapitalize={'none'}
+            autoCorrect={false}
+            clearTextOnFocus={true}
+            value={isPhNum}
+            onChangeText={onChangeInput}
+            style={[
+              {width: '65%', borderColor: isPhNum === '' ? '#DEDEDE' : 'black'},
+              styles.input,
+            ]}
+          />
+          {PNVali === true ? (
+            <TouchableOpacity
+              onPress={() => CheckOverlap()}
+              style={[styles.xBtnDesign, {backgroundColor: 'black'}]}>
+              <Text style={{color: 'white', fontFamily: 'NotoSansKR-Medium'}}>
+                인증요청
+              </Text>
+            </TouchableOpacity>
+          ) : (
+            <View style={[styles.xBtnDesign, {backgroundColor: '#DEDEDE'}]}>
+              <Text style={{color: 'white', fontFamily: 'NotoSansKR-Medium'}}>
+                인증요청
+              </Text>
+            </View>
+          )}
+        </View>
+        {IsOverlap === true && (
+          <OverLapModal
+            IsOverlap={IsOverlap}
+            setIsOverlap={setIsOverlap}
+            goLogin={goLogin}
+          />
+        )}
+        {IsError === true && (
+          <View style={styles.CheckNum}>
+            <Text style={styles.CheckText}>인증번호를 다시 확인해주세요.</Text>
+          </View>
+        )}
+
+        {PNVali === true ||
+          (isPhNum !== '' && (
+            <View style={styles.warnView}>
+              <Text style={styles.warnText}>
+                전화번호를 올바르게 입력해주세요.
+              </Text>
+            </View>
+          ))}
+        <View style={{marginTop: 20}}>
+          <TextInput
+            placeholder="인증번호 6자리를 입력하세요"
+            autoCapitalize={'none'}
+            autoCorrect={false}
+            value={ProveNum}
+            onChangeText={onChangeProveInput}
+            style={[
+              {
+                width: '92%',
+                borderColor: ProveNum === '' ? '#DEDEDE' : 'black',
+              },
+              styles.input,
+            ]}
+          />
+        </View>
+
+        {/* api */}
+        {SendSMS === true && <Sms isPhNum={isPhNum} SendSMS={SendSMS} />}
+        {/* api */}
+      </ScrollView>
+      <View style={{justifyContent: 'center', marginBottom: 20}}>
+        {SendSMS === true ? (
           <TouchableOpacity
-            onPress={() => CheckOverlap()}
-            style={[styles.xBtnDesign, {backgroundColor: 'black'}]}>
-            <Text style={{color: 'white', fontFamily: 'NotoSansKR-Medium'}}>
-              인증요청
-            </Text>
+            style={[styles.btnDesign, {backgroundColor: 'black'}]}
+            onPress={() => ChooseWay()}>
+            <Text style={styles.btnText}>다음</Text>
           </TouchableOpacity>
         ) : (
-          <View style={[styles.xBtnDesign, {backgroundColor: '#DEDEDE'}]}>
-            <Text style={{color: 'white', fontFamily: 'NotoSansKR-Medium'}}>
-              인증요청
-            </Text>
+          <View style={[styles.btnDesign, {backgroundColor: '#DEDEDE'}]}>
+            <Text style={styles.btnText}>다음</Text>
           </View>
         )}
       </View>
-      {IsOverlap === true && (
-        <OverLapModal
-          IsOverlap={IsOverlap}
-          setIsOverlap={setIsOverlap}
-          goLogin={goLogin}
-        />
-      )}
-      {IsError === true && (
-        <View style={styles.CheckNum}>
-          <Text style={styles.CheckText}>인증번호를 다시 확인해주세요.</Text>
-        </View>
-      )}
-
-      {PNVali === true ||
-        (isPhNum !== '' && (
-          <View style={styles.warnView}>
-            <Text style={styles.warnText}>
-              전화번호를 올바르게 입력해주세요.
-            </Text>
-          </View>
-        ))}
-      <View style={{marginTop: 20}}>
-        <TextInput
-          placeholder="인증번호 6자리를 입력하세요"
-          autoCapitalize={'none'}
-          autoCorrect={false}
-          value={ProveNum}
-          onChangeText={onChangeProveInput}
-          style={[
-            {
-              width: '92%',
-              borderColor: ProveNum === '' ? '#DEDEDE' : 'black',
-            },
-            styles.input,
-          ]}
-        />
-      </View>
-
-      {/* api */}
-      {SendSMS === true && <Sms isPhNum={isPhNum} SendSMS={SendSMS} />}
-      {/* api */}
-
-      {SendSMS === true ? (
-        <TouchableOpacity
-          style={[styles.btnDesign, {backgroundColor: 'black'}]}
-          onPress={() => ChooseWay()}>
-          <Text style={styles.btnText}>다음</Text>
-        </TouchableOpacity>
-      ) : (
-        <View style={[styles.btnDesign, {backgroundColor: '#DEDEDE'}]}>
-          <Text style={styles.btnText}>다음</Text>
-        </View>
-      )}
     </View>
   );
 }
@@ -229,10 +234,9 @@ const styles = StyleSheet.create({
     width: '95%',
     height: 50,
     borderRadius: 10,
-    position: 'absolute',
-    marginLeft: '5%',
-    top: 750,
     justifyContent: 'center',
+
+    marginBottom: 20,
   },
   btnText: {
     textAlign: 'center',

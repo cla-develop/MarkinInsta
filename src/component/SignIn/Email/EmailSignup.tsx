@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  ScrollView,
 } from 'react-native';
 import Icons from '../../Icons/Icons';
 // import InputPW from './Sections/InputPW';
@@ -77,59 +78,60 @@ export default function EmailSignup({navigation, route}: any) {
 
   return (
     <View style={styles.allView}>
-      <View style={{flexDirection: 'row'}}>
-        <TouchableOpacity
-          style={{zIndex: 10}}
-          onPress={() => navigation.goBack()}>
-          <Icons.Entypo
-            name="chevron-thin-left"
-            size={20}
-            color="black"
-            style={{left: -5, top: 10}}
-          />
-        </TouchableOpacity>
-        <Text style={styles.topText}>회원가입</Text>
-      </View>
-      <View style={{marginTop: 50}}>
-        <Text style={{fontFamily: 'NotoSansKR-Medium'}}>이름</Text>
-        <TextInput
-          value={Name}
-          autoCapitalize={'none'}
-          autoCorrect={false}
-          placeholder="본명을 입력해주세요"
-          onChangeText={onChangeName}
-          style={[styles.input, {borderColor: 'black'}]}
-        />
-        <Text style={{marginTop: 30, fontFamily: 'NotoSansKR-Medium'}}>
-          이메일
-        </Text>
+      <ScrollView>
         <View style={{flexDirection: 'row'}}>
+          <TouchableOpacity
+            style={{zIndex: 10}}
+            onPress={() => navigation.goBack()}>
+            <Icons.Entypo
+              name="chevron-thin-left"
+              size={20}
+              color="black"
+              style={{left: -5, top: 10}}
+            />
+          </TouchableOpacity>
+          <Text style={styles.topText}>회원가입</Text>
+        </View>
+        <View style={{marginTop: 50}}>
+          <Text style={{fontFamily: 'NotoSansKR-Medium'}}>이름</Text>
           <TextInput
-            value={Email}
+            value={Name}
             autoCapitalize={'none'}
             autoCorrect={false}
-            placeholder="이메일을 입력해주세요"
-            onChangeText={onChangeEmailInput}
-            style={[
-              styles.Emailinput,
-              {borderColor: Email === '' ? '#DEDEDE' : 'black'},
-            ]}
+            placeholder="본명을 입력해주세요"
+            onChangeText={onChangeName}
+            style={[styles.input, {borderColor: 'black'}]}
           />
+          <Text style={{marginTop: 30, fontFamily: 'NotoSansKR-Medium'}}>
+            이메일
+          </Text>
+          <View style={{flexDirection: 'row'}}>
+            <TextInput
+              value={Email}
+              autoCapitalize={'none'}
+              autoCorrect={false}
+              placeholder="이메일을 입력해주세요"
+              onChangeText={onChangeEmailInput}
+              style={[
+                styles.Emailinput,
+                {borderColor: Email === '' ? '#DEDEDE' : 'black'},
+              ]}
+            />
+          </View>
+          {EVali === true || Email === '' ? (
+            <View>
+              <Text></Text>
+            </View>
+          ) : (
+            <View style={styles.warnView}>
+              <Text style={styles.warnText}>
+                이메일 주소를 올바르게 입력해주세요.
+              </Text>
+            </View>
+          )}
         </View>
-        {EVali === true || Email === '' ? (
-          <View>
-            <Text></Text>
-          </View>
-        ) : (
-          <View style={styles.warnView}>
-            <Text style={styles.warnText}>
-              이메일 주소를 올바르게 입력해주세요.
-            </Text>
-          </View>
-        )}
-      </View>
-      {/* 중복확인 후 비밀번호 받기 */}
-      {/* {isShow === true && (
+        {/* 중복확인 후 비밀번호 받기 */}
+        {/* {isShow === true && (
         <View style={{marginTop: 20}}>
           <InputPW
             IsPassword={IsPassword}
@@ -143,18 +145,23 @@ export default function EmailSignup({navigation, route}: any) {
           />
         </View>
       )} */}
-      {/* api */}
+        {/* api */}
 
-      {/*api*/}
-      {EVali === true ? (
-        <TouchableOpacity style={styles.btnDesign} onPress={() => ChooseWay()}>
-          <Text style={styles.btnText}>다음</Text>
-        </TouchableOpacity>
-      ) : (
-        <View style={styles.xbtnDesign}>
-          <Text style={styles.btnText}>다음</Text>
-        </View>
-      )}
+        {/*api*/}
+      </ScrollView>
+      <View style={{justifyContent: 'center', marginBottom: 20}}>
+        {EVali === true && Email !== '' ? (
+          <TouchableOpacity
+            style={styles.btnDesign}
+            onPress={() => ChooseWay()}>
+            <Text style={styles.btnText}>다음</Text>
+          </TouchableOpacity>
+        ) : (
+          <View style={styles.xbtnDesign}>
+            <Text style={styles.btnText}>다음</Text>
+          </View>
+        )}
+      </View>
     </View>
   );
 }
@@ -220,23 +227,21 @@ const styles = StyleSheet.create({
   },
   btnDesign: {
     backgroundColor: 'black',
-    width: '90%',
+    width: '95%',
     height: 50,
     borderRadius: 10,
-    position: 'absolute',
-    left: '5%',
-    top: 750,
     justifyContent: 'center',
+
+    marginBottom: 20,
   },
   xbtnDesign: {
     backgroundColor: '#DEDEDE',
-    width: '90%',
+    width: '95%',
     height: 50,
     borderRadius: 10,
-    position: 'absolute',
-    left: '5%',
-    top: 750,
     justifyContent: 'center',
+
+    marginBottom: 20,
   },
   btnText: {
     textAlign: 'center',

@@ -55,112 +55,116 @@ export default function LinkMarkin() {
 
   return (
     <View style={styles.allView}>
-      <View style={{alignItems: 'center'}}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={{position: 'absolute', left: '5%'}}>
-          <Icons.Entypo name="chevron-thin-left" size={20} color="black" />
-        </TouchableOpacity>
-        <Text style={styles.TitleText}>MARKIN과 연결하기</Text>
-      </View>
-      {Page === 0 && (
-        <View style={styles.GreyView}>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={styles.BoldText}>
-              Instagram과 연결된 facebook 계정
-            </Text>
-          </View>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={styles.MediumText}>으로 로그인을 진행해주세요.</Text>
-          </View>
+      <View style={{flex: 0.8}}>
+        <View style={{alignItems: 'center'}}>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={{position: 'absolute', left: '5%'}}>
+            <Icons.Entypo name="chevron-thin-left" size={20} color="black" />
+          </TouchableOpacity>
+          <Text style={styles.TitleText}>MARKIN과 연결하기</Text>
         </View>
-      )}
-      {Page === 1 && (
-        <View style={styles.GreyView}>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={styles.BoldText}>연결할 계정을 선택</Text>
-            <Text style={styles.MediumText}> 후 다음 버튼을 눌러주세요.</Text>
+        {Page === 0 && (
+          <View style={styles.GreyView}>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={styles.BoldText}>
+                Instagram과 연결된 facebook 계정
+              </Text>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={styles.MediumText}>으로 로그인을 진행해주세요.</Text>
+            </View>
           </View>
-        </View>
-      )}
-      {Page === 2 && (
-        <View style={styles.GreyView}>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={styles.BoldText}>
-              인스타 계정과 연결된 페이지를 선택
-            </Text>
-            <Text style={styles.MediumText}> 후</Text>
+        )}
+        {Page === 1 && (
+          <View style={styles.GreyView}>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={styles.BoldText}>연결할 계정을 선택</Text>
+              <Text style={styles.MediumText}> 후 다음 버튼을 눌러주세요.</Text>
+            </View>
           </View>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={styles.MediumText}>다음 버튼을 눌러주세요.</Text>
+        )}
+        {Page === 2 && (
+          <View style={styles.GreyView}>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={styles.BoldText}>
+                인스타 계정과 연결된 페이지를 선택
+              </Text>
+              <Text style={styles.MediumText}> 후</Text>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={styles.MediumText}>다음 버튼을 눌러주세요.</Text>
+            </View>
           </View>
-        </View>
-      )}
-      {Page === 3 && (
-        <View style={styles.GreyView}>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={styles.BoldText}>모든 권한을 허용</Text>
-            <Text style={styles.MediumText}>한 후 완료 버튼을 눌러주세요.</Text>
+        )}
+        {Page === 3 && (
+          <View style={styles.GreyView}>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={styles.BoldText}>모든 권한을 허용</Text>
+              <Text style={styles.MediumText}>
+                한 후 완료 버튼을 눌러주세요.
+              </Text>
+            </View>
           </View>
-        </View>
-      )}
-      {Page !== 4 ? (
-        <View style={{marginTop: 33}}>
-          <MyCarousel Page={Page} setPage={setPage} />
-        </View>
-      ) : (
-        <View style={{marginTop: 210, alignItems: 'center'}}>
-          <MyCarousel Page={Page} setPage={setPage} />
-        </View>
-      )}
+        )}
+        {Page !== 4 ? (
+          <View style={{marginTop: 33}}>
+            <MyCarousel Page={Page} setPage={setPage} />
+          </View>
+        ) : (
+          <View style={{marginTop: 210, alignItems: 'center'}}>
+            <MyCarousel Page={Page} setPage={setPage} />
+          </View>
+        )}
 
-      {/* 페이지 도트 */}
+        {/* 페이지 도트 */}
+        {Page !== 4 && (
+          <View
+            style={{
+              marginTop: 33,
+              flexDirection: 'row',
+              width: '100%',
+              justifyContent: 'center',
+            }}>
+            <TouchableOpacity style={{marginRight: 20, marginLeft: 20}}>
+              {Page === 0 ? (
+                <Icons.FontAwesome name="circle" size={10} color="#7553FF" />
+              ) : (
+                <Icons.FontAwesome name="circle" size={10} color="#DEDEDE" />
+              )}
+            </TouchableOpacity>
+            <TouchableOpacity style={{marginRight: 20}}>
+              {Page === 1 ? (
+                <Icons.FontAwesome name="circle" size={10} color="#7553FF" />
+              ) : (
+                <Icons.FontAwesome name="circle" size={10} color="#DEDEDE" />
+              )}
+            </TouchableOpacity>
+            <TouchableOpacity style={{marginRight: 20}}>
+              {Page === 2 ? (
+                <Icons.FontAwesome name="circle" size={10} color="#7553FF" />
+              ) : (
+                <Icons.FontAwesome name="circle" size={10} color="#DEDEDE" />
+              )}
+            </TouchableOpacity>
+            <TouchableOpacity style={{marginRight: 20}}>
+              {Page === 3 ? (
+                <Icons.FontAwesome name="circle" size={10} color="#7553FF" />
+              ) : (
+                <Icons.FontAwesome name="circle" size={10} color="#DEDEDE" />
+              )}
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
       {Page !== 4 && (
-        <View
-          style={{
-            marginTop: 33,
-            flexDirection: 'row',
-            width: '100%',
-            justifyContent: 'center',
-          }}>
-          <TouchableOpacity style={{marginRight: 20, marginLeft: 20}}>
-            {Page === 0 ? (
-              <Icons.FontAwesome name="circle" size={10} color="#7553FF" />
-            ) : (
-              <Icons.FontAwesome name="circle" size={10} color="#DEDEDE" />
-            )}
-          </TouchableOpacity>
-          <TouchableOpacity style={{marginRight: 20}}>
-            {Page === 1 ? (
-              <Icons.FontAwesome name="circle" size={10} color="#7553FF" />
-            ) : (
-              <Icons.FontAwesome name="circle" size={10} color="#DEDEDE" />
-            )}
-          </TouchableOpacity>
-          <TouchableOpacity style={{marginRight: 20}}>
-            {Page === 2 ? (
-              <Icons.FontAwesome name="circle" size={10} color="#7553FF" />
-            ) : (
-              <Icons.FontAwesome name="circle" size={10} color="#DEDEDE" />
-            )}
-          </TouchableOpacity>
-          <TouchableOpacity style={{marginRight: 20}}>
-            {Page === 3 ? (
-              <Icons.FontAwesome name="circle" size={10} color="#7553FF" />
-            ) : (
-              <Icons.FontAwesome name="circle" size={10} color="#DEDEDE" />
-            )}
-          </TouchableOpacity>
-        </View>
-      )}
-      {Page !== 4 && (
-        <View style={{top: 120, left: '5%'}}>
+        <View style={{left: '5%', flex: 0.2, justifyContent: 'center'}}>
           {/* <TouchableOpacity onPress={() => loginWithFacebook()}>
             <View style={styles.purpleBtn}>
               <Text style={styles.instaText}>Facebook으로 로그인 하기</Text>
             </View>
           </TouchableOpacity> */}
-          <View style={{top: 10}}>
+          <View>
             {/* <LoginButton
               style={{width: '90%', height: 50, borderRadius: 20}}
               onLoginFinished={(error, result) => {

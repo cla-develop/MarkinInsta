@@ -1,5 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  ScrollView,
+} from 'react-native';
 import axios from 'axios';
 import Icons from '../../Icons/Icons';
 // import AgeBut from './Sections/AgeBut';
@@ -132,106 +139,110 @@ export default function AgeChoose({navigation, route}: any) {
   };
   return (
     <View style={styles.allView}>
-      <TouchableOpacity
-        style={{zIndex: 10, marginLeft: '2%'}}
-        onPress={() => navigation.goBack()}>
-        <Icons.Entypo
-          name="chevron-thin-left"
-          size={20}
-          color="black"
-          style={{left: -5, top: 10}}
-        />
-      </TouchableOpacity>
-      <View style={{marginTop: 40}}>
-        <Text style={styles.TitleLetter}>
-          성별과 생년월일을 {'\n'}알려주세요
-        </Text>
-      </View>
-      {/* Sex button */}
-      <View style={{marginTop: 50}}>
-        <Text style={{fontSize: 20, color: '#181818'}}>성별</Text>
-        <View style={{flexDirection: 'row', marginTop: 20, width: '100%'}}>
-          <TouchableOpacity style={{width: '45%'}} onPress={handleBoy}>
-            <View
-              style={[
-                stCom.greyBtn,
-                {backgroundColor: Isboy === true ? 'black' : 'white'},
-              ]}>
-              <Text
-                style={[
-                  stCom.greyText,
-                  {color: Isboy === true ? 'white' : '#9C9C9C'},
-                ]}>
-                남성
-              </Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{width: '45%', marginLeft: '5%'}}
-            onPress={handleGirl}>
-            <View
-              style={[
-                stCom.greyBtn,
-                {backgroundColor: Isgirl === true ? 'black' : 'white'},
-              ]}>
-              <Text
-                style={[
-                  stCom.greyText,
-                  {color: Isgirl === true ? 'white' : '#9C9C9C'},
-                ]}>
-                여성
-              </Text>
-            </View>
-          </TouchableOpacity>
+      <ScrollView>
+        <TouchableOpacity
+          style={{zIndex: 10, marginLeft: '2%'}}
+          onPress={() => navigation.goBack()}>
+          <Icons.Entypo
+            name="chevron-thin-left"
+            size={20}
+            color="black"
+            style={{left: -5, top: 10}}
+          />
+        </TouchableOpacity>
+        <View style={{marginTop: 40}}>
+          <Text style={styles.TitleLetter}>
+            성별과 생년월일을 {'\n'}알려주세요
+          </Text>
         </View>
-      </View>
-
-      {Isgirl === true || Isboy === true ? (
-        <View>
-          <View style={{marginTop: 50}}>
-            <Text
-              style={[
-                styles.pickerBtnText,
-                {
-                  color: '#181818',
-                },
-              ]}>
-              생년월일
-            </Text>
+        {/* Sex button */}
+        <View style={{marginTop: 50}}>
+          <Text style={{fontSize: 20, color: '#181818'}}>성별</Text>
+          <View style={{flexDirection: 'row', marginTop: 20, width: '100%'}}>
+            <TouchableOpacity style={{width: '45%'}} onPress={handleBoy}>
+              <View
+                style={[
+                  stCom.greyBtn,
+                  {backgroundColor: Isboy === true ? 'black' : 'white'},
+                ]}>
+                <Text
+                  style={[
+                    stCom.greyText,
+                    {color: Isboy === true ? 'white' : '#9C9C9C'},
+                  ]}>
+                  남성
+                </Text>
+              </View>
+            </TouchableOpacity>
             <TouchableOpacity
-              style={styles.pickerBtn}
-              onPress={() => setDatePickerVisibility(true)}>
-              <Text
-                style={{
-                  fontSize: 18,
-                  fontFamily: 'Roboto-Medium',
-                  color: isDate === '년도/월/일' ? '#DEDEDE' : '#181818',
-                }}>
-                {isDate}
-              </Text>
-              <DateTimePickerModal
-                isVisible={isDatePickerVisible}
-                mode="date"
-                onConfirm={handleConfirm}
-                onCancel={hideDatePicker}
-              />
+              style={{width: '45%', marginLeft: '5%'}}
+              onPress={handleGirl}>
+              <View
+                style={[
+                  stCom.greyBtn,
+                  {backgroundColor: Isgirl === true ? 'black' : 'white'},
+                ]}>
+                <Text
+                  style={[
+                    stCom.greyText,
+                    {color: Isgirl === true ? 'white' : '#9C9C9C'},
+                  ]}>
+                  여성
+                </Text>
+              </View>
             </TouchableOpacity>
           </View>
         </View>
-      ) : (
-        <View></View>
-      )}
-      {isDate !== '년도/월/일' && (Isboy === true || Isgirl === true) ? (
-        <TouchableOpacity
-          style={[styles.btnDesign, {backgroundColor: 'black'}]}
-          onPress={() => (Sex === 0 ? SignInboy() : SignIngirl())}>
-          <Text style={styles.btnText}>다음</Text>
-        </TouchableOpacity>
-      ) : (
-        <View style={[styles.btnDesign, {backgroundColor: '#DEDEDE'}]}>
-          <Text style={styles.btnText}>다음</Text>
-        </View>
-      )}
+
+        {Isgirl === true || Isboy === true ? (
+          <View>
+            <View style={{marginTop: 50}}>
+              <Text
+                style={[
+                  styles.pickerBtnText,
+                  {
+                    color: '#181818',
+                  },
+                ]}>
+                생년월일
+              </Text>
+              <TouchableOpacity
+                style={styles.pickerBtn}
+                onPress={() => setDatePickerVisibility(true)}>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontFamily: 'Roboto-Medium',
+                    color: isDate === '년도/월/일' ? '#DEDEDE' : '#181818',
+                  }}>
+                  {isDate}
+                </Text>
+                <DateTimePickerModal
+                  isVisible={isDatePickerVisible}
+                  mode="date"
+                  onConfirm={handleConfirm}
+                  onCancel={hideDatePicker}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+        ) : (
+          <View></View>
+        )}
+      </ScrollView>
+      <View style={{justifyContent: 'center', marginBottom: 20}}>
+        {isDate !== '년도/월/일' && (Isboy === true || Isgirl === true) ? (
+          <TouchableOpacity
+            style={[styles.btnDesign, {backgroundColor: 'black'}]}
+            onPress={() => (Sex === 0 ? SignInboy() : SignIngirl())}>
+            <Text style={styles.btnText}>다음</Text>
+          </TouchableOpacity>
+        ) : (
+          <View style={[styles.btnDesign, {backgroundColor: '#DEDEDE'}]}>
+            <Text style={styles.btnText}>다음</Text>
+          </View>
+        )}
+      </View>
     </View>
   );
 }
@@ -246,13 +257,12 @@ const styles = StyleSheet.create({
     paddingLeft: '5%',
   },
   btnDesign: {
-    width: '90%',
+    width: '95%',
     height: 50,
     borderRadius: 10,
-    position: 'absolute',
-    top: 750,
     justifyContent: 'center',
-    marginLeft: '5%',
+
+    marginBottom: 20,
   },
   btnText: {
     textAlign: 'center',
