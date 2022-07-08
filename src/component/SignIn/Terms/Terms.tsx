@@ -117,7 +117,7 @@ export default function Terms({navigation, route}: any) {
               onPress={() => setChoose(!Choose)}>
               <Icons.Entypo name="check" size={18} style={{color: '#DEDEDE'}} />
             </TouchableOpacity>
-            <Text style={styles.innerText}>(선택)서비스 이용약관</Text>
+            <Text style={styles.innerText}>(필수)서비스 이용약관</Text>
           </View>
           <View style={styles.TermsLet}>
             <SeviceTerm />

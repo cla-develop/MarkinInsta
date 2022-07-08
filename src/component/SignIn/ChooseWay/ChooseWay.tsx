@@ -40,6 +40,7 @@ export default function ChooseWay({navigation}: any) {
           setAccessToken(response.data.access_token);
           setId(response.data.user_id);
           console.log(response.data.user_id);
+          LinkInsta(response.data.access_token, response.data.user_id);
         })
         .catch(err => {
           console.log(err);
@@ -57,36 +58,36 @@ export default function ChooseWay({navigation}: any) {
       console.log('qwwqqqqqq');
     }
   };
-  useEffect(() => {
-    const LinkInsta = async () => {
-      await axios({
-        url: `https://www.markin-app.site/app/users/instagram/check`,
-        method: 'post',
-        data: {
-          accessToken: AccessToken,
-          instagramId: Id,
-        },
+
+  const LinkInsta = async (accto, idid) => {
+    await axios({
+      url: `https://www.markin-app.site/app/users/instagram/check`,
+      method: 'post',
+      data: {
+        accessToken: accto,
+        instagramId: idid,
+      },
+    })
+      .then(response => {
+        storeData(response.data.result.jwt);
+        console.log(response.data.message);
+        console.log('userId:' + Id);
+        if (response.data.isSuccess === true) {
+          navigation.reset({
+            index: 0,
+            routes: [{name: 'Body'}],
+          });
+        }
+        // else {
+        //
+        // }
       })
-        .then(response => {
-          storeData(response.data.result.jwt);
-          console.log(response.data.message);
-          console.log('userId:' + Id);
-          if (response.data.isSuccess === true) {
-            navigation.navigate('Body', {AccessToken});
-          } else {
-            navigation.navigate('Terms', {AccessToken, Id});
-          }
-        })
-        .catch(err => {
-          console.log(err);
-          console.log('sfdsf');
-          navigation.navigate('Terms', {AccessToken, Id});
-        });
-    };
-    if (AccessToken !== '') {
-      LinkInsta();
-    }
-  }, [AccessToken, Id]);
+      .catch(err => {
+        navigation.navigate('Terms', {AccessToken, Id});
+        console.log(err);
+        console.log('sfdsf');
+      });
+  };
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
