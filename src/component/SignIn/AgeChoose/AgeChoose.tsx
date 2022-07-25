@@ -25,6 +25,33 @@ export default function AgeChoose({navigation, route}: any) {
       console.log('qwwqqqqqq');
     }
   };
+  const [userid, setuserid] = useState('');
+  const [AT, setAT] = useState('');
+  const getid = async () => {
+    try {
+      const value = await AsyncStorage.getItem('userId');
+      if (value !== null) {
+        setuserid(value);
+      } else console.log(value);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const value = await AsyncStorage.getItem('accessToken');
+        if (value !== null) {
+          setAT(value);
+        } else console.log(value);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    getid();
+    getData();
+  }, []);
+
   const stCom = StyleSheet.create({
     greyBtn: {
       width: '100%',
@@ -81,8 +108,8 @@ export default function AgeChoose({navigation, route}: any) {
           method: 'post',
           url: 'https://www.markin-app.site/app/users/instagram',
           data: {
-            access_token: AccessToken,
-            instagramId: Id,
+            access_token: AT,
+            instagramId: userid,
             email: Email,
             name: Name,
             phone: isPhNum,
@@ -113,8 +140,8 @@ export default function AgeChoose({navigation, route}: any) {
           method: 'post',
           url: 'https://www.markin-app.site/app/users/instagram',
           data: {
-            access_token: AccessToken,
-            instagramId: Id,
+            access_token: AT,
+            instagramId: userid,
             email: Email,
             name: Name,
             phone: isPhNum,

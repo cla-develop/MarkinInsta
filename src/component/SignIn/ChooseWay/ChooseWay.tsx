@@ -39,8 +39,11 @@ export default function ChooseWay({navigation}: any) {
           // setPass(true);
           setAccessToken(response.data.access_token);
           setId(response.data.user_id);
-          console.log(response.data.user_id);
+          // console.log('userID : ' + response.data.user_id);
+          console.log('AccessToken:' + response.data.access_token);
           LinkInsta(response.data.access_token, response.data.user_id);
+          storeAT(response.data.AccessToken);
+          storeID(JSON.stringify(response.data.user_id));
         })
         .catch(err => {
           console.log(err);
@@ -50,7 +53,20 @@ export default function ChooseWay({navigation}: any) {
       getToken();
     }
   }, [code]);
-
+  const storeID = async (value: any) => {
+    try {
+      await AsyncStorage.setItem('userId', value);
+    } catch (e) {
+      console.log('qwwqqqqqq');
+    }
+  };
+  const storeAT = async (value: any) => {
+    try {
+      await AsyncStorage.setItem('accessToken', value);
+    } catch (e) {
+      console.log('qwwqqqqqq');
+    }
+  };
   const storeData = async (value: any) => {
     try {
       await AsyncStorage.setItem('JWT', value);
@@ -71,7 +87,7 @@ export default function ChooseWay({navigation}: any) {
       .then(response => {
         storeData(response.data.result.jwt);
         console.log(response.data.message);
-        console.log('userId:' + Id);
+
         if (response.data.isSuccess === true) {
           navigation.reset({
             index: 0,
@@ -83,9 +99,10 @@ export default function ChooseWay({navigation}: any) {
         // }
       })
       .catch(err => {
+        console.log('instagram :' + Id);
+        console.log('acac' + AccessToken);
         navigation.navigate('Terms', {AccessToken, Id});
         console.log(err);
-        console.log('sfdsf');
       });
   };
 

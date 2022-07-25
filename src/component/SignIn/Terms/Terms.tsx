@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from 'react-native';
 import Icons from '../../Icons/Icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -18,6 +19,7 @@ export default function Terms({navigation, route}: any) {
   const [Agreesns, setAgreesns] = useState<boolean>(false);
   const [AgreeEmail, setEmail] = useState<boolean>(false);
   const {AccessToken, Id} = route.params;
+
   const onAllAgree = () => {
     if (IsAll === true) {
       setIsAll(false);
@@ -46,23 +48,9 @@ export default function Terms({navigation, route}: any) {
       setEmail(true);
     }
   };
-  console.log(Id);
+
   const ChooseWay = () => {
     navigation.navigate('PhonNum', {AccessToken, Agreesns, AgreeEmail, Id});
-  };
-  React.useEffect(() => {
-    getData();
-  }, []);
-
-  const getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('accessToken');
-      if (value !== null) {
-        console.log(value);
-      } else console.log(value);
-    } catch (e) {
-      console.log(e);
-    }
   };
 
   return (

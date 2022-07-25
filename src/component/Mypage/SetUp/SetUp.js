@@ -30,14 +30,10 @@ export default function SetUp() {
   useEffect(() => {
     AsyncStorage.getItem('JWT').then(value => {
       setJWT(value);
+      console.log(value);
     });
   }, []);
-  const [asd, setasd] = useState(0);
-  useEffect(() => {
-    setTimeout(() => {
-      setasd(1);
-    }, 100);
-  }, []);
+
   const Logout = () => {
     axios({
       method: 'patch',
@@ -45,6 +41,18 @@ export default function SetUp() {
         'x-access-token': JWT,
       },
       url: 'https://www.markin-app.site/app/users/sign-out',
+    }).then(response => {
+      console.log(response.data.message);
+      storeData();
+    });
+  };
+  const DeleteId = () => {
+    axios({
+      method: 'delete',
+      headers: {
+        'x-access-token': JWT,
+      },
+      url: 'https://www.markin-app.site/app/users/delete',
     }).then(response => {
       console.log(response.data.message);
       storeData();
@@ -133,6 +141,20 @@ export default function SetUp() {
             </View>
             <View style={{justifyContent: 'center', marginLeft: 12.5}}>
               <Text style={styles.NotoReg16}>로그아웃</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => DeleteId()}>
+          <View style={{flexDirection: 'row', height: 50}}>
+            <View style={{justifyContent: 'center'}}>
+              <Icons.AntDesign
+                name="delete"
+                style={{marginLeft: 1}}
+                size={22}
+              />
+            </View>
+            <View style={{justifyContent: 'center', marginLeft: 12.5}}>
+              <Text style={styles.NotoReg16}>회원 탈퇴</Text>
             </View>
           </View>
         </TouchableOpacity>
