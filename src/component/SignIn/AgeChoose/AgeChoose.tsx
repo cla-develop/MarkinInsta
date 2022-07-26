@@ -32,6 +32,7 @@ export default function AgeChoose({navigation, route}: any) {
       const value = await AsyncStorage.getItem('userId');
       if (value !== null) {
         setuserid(value);
+        console.log(value);
       } else console.log(value);
     } catch (e) {
       console.log(e);
@@ -43,6 +44,7 @@ export default function AgeChoose({navigation, route}: any) {
         const value = await AsyncStorage.getItem('accessToken');
         if (value !== null) {
           setAT(value);
+          console.log(value);
         } else console.log(value);
       } catch (e) {
         console.log(e);

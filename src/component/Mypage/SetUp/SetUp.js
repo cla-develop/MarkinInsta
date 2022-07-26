@@ -26,6 +26,20 @@ export default function SetUp() {
       console.log(e);
     }
   };
+  const deleteinId = async () => {
+    try {
+      await AsyncStorage.removeItem('userId').then(DeleteId());
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const deleteinAT = async () => {
+    try {
+      await AsyncStorage.removeItem('accessToken').then(deleteinId());
+    } catch (e) {
+      console.log(e);
+    }
+  };
   const [JWT, setJWT] = useState('');
   useEffect(() => {
     AsyncStorage.getItem('JWT').then(value => {
@@ -144,7 +158,7 @@ export default function SetUp() {
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => DeleteId()}>
+        <TouchableOpacity onPress={() => deleteinAT()}>
           <View style={{flexDirection: 'row', height: 50}}>
             <View style={{justifyContent: 'center'}}>
               <Icons.AntDesign

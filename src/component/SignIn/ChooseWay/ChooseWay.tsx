@@ -19,7 +19,7 @@ export default function ChooseWay({navigation}: any) {
   useEffect(() => {
     const getToken = async () => {
       const asd: string = code[1].substring(0, code[1].length - 2);
-      console.log(asd);
+      // console.log(asd);
       var postVal =
         'grant_type=authorization_code' +
         '&code=' +
@@ -40,10 +40,13 @@ export default function ChooseWay({navigation}: any) {
           setAccessToken(response.data.access_token);
           setId(response.data.user_id);
           // console.log('userID : ' + response.data.user_id);
-          console.log('AccessToken:' + response.data.access_token);
-          LinkInsta(response.data.access_token, response.data.user_id);
-          storeAT(response.data.AccessToken);
-          storeID(JSON.stringify(response.data.user_id));
+          console.log(response.data.access_token);
+          if (response && response.data && response.data.access_token) {
+            storeID(
+              JSON.stringify(response.data.user_id),
+              response.data.access_token,
+            );
+          }
         })
         .catch(err => {
           console.log(err);
@@ -53,18 +56,21 @@ export default function ChooseWay({navigation}: any) {
       getToken();
     }
   }, [code]);
-  const storeID = async (value: any) => {
+
+  const storeID = async (id, at) => {
     try {
-      await AsyncStorage.setItem('userId', value);
+      await AsyncStorage.setItem('userId', id);
+      AsyncStorage.setItem('accessToken', at).then(LinkInsta());
     } catch (e) {
-      console.log('qwwqqqqqq');
+      console.log(e);
     }
   };
   const storeAT = async (value: any) => {
     try {
       await AsyncStorage.setItem('accessToken', value);
+      console.log(value);
     } catch (e) {
-      console.log('qwwqqqqqq');
+      console.log(e);
     }
   };
   const storeData = async (value: any) => {
@@ -75,13 +81,13 @@ export default function ChooseWay({navigation}: any) {
     }
   };
 
-  const LinkInsta = async (accto, idid) => {
+  const LinkInsta = async () => {
     await axios({
       url: `https://www.markin-app.site/app/users/instagram/check`,
       method: 'post',
       data: {
-        accessToken: accto,
-        instagramId: idid,
+        accessToken: AccessToken,
+        instagramId: Id,
       },
     })
       .then(response => {
