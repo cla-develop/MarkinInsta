@@ -60,7 +60,7 @@ export default function ChooseWay({navigation}: any) {
   const storeID = async (id, at) => {
     try {
       await AsyncStorage.setItem('userId', id);
-      AsyncStorage.setItem('accessToken', at).then(LinkInsta());
+      AsyncStorage.setItem('accessToken', at).then(LinkInsta(at, id));
     } catch (e) {
       console.log(e);
     }
@@ -81,13 +81,13 @@ export default function ChooseWay({navigation}: any) {
     }
   };
 
-  const LinkInsta = async () => {
+  const LinkInsta = async (at, id) => {
     await axios({
       url: `https://www.markin-app.site/app/users/instagram/check`,
       method: 'post',
       data: {
-        accessToken: AccessToken,
-        instagramId: Id,
+        accessToken: at,
+        instagramId: id,
       },
     })
       .then(response => {
