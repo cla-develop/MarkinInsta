@@ -38,7 +38,7 @@ export default function Body() {
 
 const styles = StyleSheet.create({
   FooterStyle: {
-    height: 100,
+    height: 80,
     width: '100%',
     backgroundColor: 'white',
     justifyContent: 'center',
