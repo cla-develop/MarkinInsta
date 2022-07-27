@@ -34,14 +34,14 @@ export default function Category(props) {
               styles.nonClickBut,
               {
                 backgroundColor: props.Cat === item.cat ? '#7553FF' : 'white',
-                borderWidth: props.Cat === item.cat ? 0 : 1,
+                borderColor: props.Cat === item.cat ? 'transparent' : '#747474',
               },
             ]}
             key={item.key}>
             <Text
               style={[
                 styles.inText,
-                {color: props.Cat === item.cat ? 'white' : 'black'},
+                {color: props.Cat === item.cat ? 'white' : '#747474'},
               ]}>
               {item.cat}
             </Text>
@@ -56,14 +56,14 @@ export default function Category(props) {
               styles.nonClickBut,
               {
                 backgroundColor: props.Cat === item.cat ? '#7553FF' : 'white',
-                borderWidth: props.Cat === item.cat ? 0 : 1,
+                borderColor: props.Cat === item.cat ? 'transparent' : '#747474',
               },
             ]}
             key={item.key}>
             <Text
               style={[
                 styles.inText,
-                {color: props.Cat === item.cat ? 'white' : 'black'},
+                {color: props.Cat === item.cat ? 'white' : '#747474'},
               ]}>
               {item.cat}
             </Text>
@@ -78,14 +78,14 @@ export default function Category(props) {
               styles.nonClickBut,
               {
                 backgroundColor: props.Cat === item.cat ? '#7553FF' : 'white',
-                borderWidth: props.Cat === item.cat ? 0 : 1,
+                borderColor: props.Cat === item.cat ? 'transparent' : '#747474',
               },
             ]}
             key={item.key}>
             <Text
               style={[
                 styles.inText,
-                {color: props.Cat === item.cat ? 'white' : 'black'},
+                {color: props.Cat === item.cat ? 'white' : '#747474'},
               ]}>
               {item.cat}
             </Text>
@@ -98,7 +98,6 @@ export default function Category(props) {
 
 const styles = StyleSheet.create({
   nonClickBut: {
-    borderColor: 'black',
     height: 30,
     paddingLeft: 8,
     paddingRight: 8,
@@ -106,6 +105,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginLeft: 10,
+    borderWidth: 1,
   },
 
   inText: {
@@ -115,7 +115,6 @@ const styles = StyleSheet.create({
   },
   greyBtn: {
     borderWidth: 1,
-    borderColor: '#747474',
     height: 35,
     borderRadius: 15,
     alignItems: 'center',

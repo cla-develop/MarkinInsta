@@ -31,6 +31,8 @@ export default function Categories(props) {
                   {
                     backgroundColor:
                       props.Selected === it.cat ? '#7553FF' : 'white',
+                    borderColor:
+                      props.Selected === it.cat ? 'transparent' : '#747474',
                   },
                 ]}>
                 <Text
@@ -58,6 +60,8 @@ export default function Categories(props) {
                   {
                     backgroundColor:
                       props.Selected === it.cat ? '#7553FF' : 'white',
+                    borderColor:
+                      props.Selected === it.cat ? 'transparent' : '#747474',
                   },
                 ]}>
                 <Text
@@ -81,7 +85,7 @@ export default function Categories(props) {
 const styles = StyleSheet.create({
   greyBtn: {
     borderWidth: 1,
-    borderColor: '#747474',
+
     height: 35,
     borderRadius: 15,
     alignItems: 'center',
@@ -93,7 +97,7 @@ const styles = StyleSheet.create({
   greyBtn5: {
     backgroundColor: 'white',
     borderWidth: 1,
-    borderColor: '#747474',
+
     height: 35,
     width: 120,
     borderRadius: 15,
@@ -104,7 +108,7 @@ const styles = StyleSheet.create({
   greyBtn4: {
     backgroundColor: 'white',
     borderWidth: 1,
-    borderColor: '#747474',
+
     height: 35,
     width: 90,
     borderRadius: 15,

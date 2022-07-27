@@ -11,9 +11,9 @@ export default function Loading() {
   const [JWT, setJWT] = useState('');
   const [isSuccess, setisSuccess] = useState(false);
   useEffect(() => {
-    AsyncStorage.getItem('JWT').then(value => {
-      setJWT(value);
-      crawl(value);
+    AsyncStorage.getItem('JWT').then(v => {
+      setJWT(v);
+      crawl(v);
     });
   });
   const crawl = () => {
@@ -26,6 +26,9 @@ export default function Loading() {
       .then(response => {
         console.log(response.data.isSuccess + 'asdsasdsd');
         setisSuccess(response.data.isSuccess);
+        if (response.data.isSuccess === true) {
+          setvalue(1);
+        }
       })
       .catch(err => console.log(err));
   };
@@ -40,12 +43,10 @@ export default function Loading() {
 
   useEffect(() => {
     setTimeout(() => {
-      if (value === 1) {
-        navigation.reset({
-          index: 0,
-          routes: [{name: 'Body'}],
-        });
-      }
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'Body'}],
+      });
     }, 100000);
   }, []);
   return (

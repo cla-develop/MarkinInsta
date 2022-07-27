@@ -19,7 +19,7 @@ export default function Announce() {
       </View>
       <WebView
         source={{
-          uri: 'https://ablaze-practice-fb2.notion.site/No-1-fb97a4b9ae464504bceb40c27bcbd7bb',
+          uri: 'https://ablaze-practice-fb2.notion.site/No-1-e01368a25ac1440bb82f89e587fab78c',
         }}
       />
     </View>
